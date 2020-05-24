@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user-routes')
+const HttpError = require('./models/httpError-model');
 
 const port = 5000;
 const app = express();
@@ -10,7 +11,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/v1/posts/', userRoutes);
+app.use('/api/v1/users/', userRoutes);
+
+
+app.use((req, res, next) => {
+  next(
+    new HttpError(`Could not found ${req.originalUrl} route on this server.`, 404)
+  );
+});
+
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({ message: err.message });
+});
 
 
 mongoose
