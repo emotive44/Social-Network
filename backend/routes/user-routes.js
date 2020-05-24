@@ -8,6 +8,8 @@ const userControllers = require('../controllers/user-controllers');
 
 router.get('/', userControllers.getAllUsers);
 
+router.get('/:userId', userControllers.getUserById);
+
 router.post('/register', 
   [
     check('name', 'Name should not be empty.').not().isEmpty(),

@@ -16,13 +16,33 @@ const getAllUsers = async (req, res, next) => {
     );
   }
 
-  if(!users) {
+  if(users.length < 1) {
     return next(
       new HttpError('Does not exist users at data.', 404)
     );
   }
 
   res.status(200).json(users);
+}
+
+const getUserById = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.params.userId).select('-password -__v');
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Does not exist user with this id at data.', 404)
+      );
+    }
+    
+    return next(
+      new HttpError('Fetching user failed, please try again.', 500)
+    );
+  }
+
+
+  res.status(200).json(user);
 }
 
 const register = async (req, res, next) => {
@@ -159,6 +179,7 @@ const login = async (req, res, next) => {
 
 
 module.exports = {
+  getUserById,
   getAllUsers,
   register,
   login
