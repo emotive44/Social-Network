@@ -6,7 +6,7 @@ const HttpError = require('../models/httpError-model');
 const User = require('../models/user-model');
 
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   let users;
   try {
     users = await User.find().select('-password');
@@ -96,8 +96,70 @@ const register = async (req, res, next) => {
   res.status(201).json({ userId: newUser.id, email: newUser.email, token });
 } 
 
+const login = async (req, res, next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    const err = errors.array().map(e => e.msg).join(' ');
+    
+    return next(
+      new HttpError(err, 422)
+    );
+  }
+
+  const { email, password } = req.body;
+
+  let existUser;
+  try {
+    existUser = await User.findOne({ email });
+  } catch (err) {
+    return next(
+      new HttpError('Login failed, please try again.', 500)
+    );
+  }
+
+  if(!existUser) {
+    return next(
+      new HttpError('Invalid email, login failed.', 401)
+    );
+  }
+
+  let isValidPass = false;
+  try {
+    isValidPass = await bcrypt.compare(password, existUser.password);
+  } catch (err) {
+    return next(
+      new HttpError('Login failed, please try again.', 500)
+    );
+  }
+
+  if(!isValidPass) { 
+    return next(
+      new HttpError('Invalid password, login failed.', 401)
+    );
+  }
+
+  let token;
+  try {
+    token = await jwt.sign(
+      { 
+      userId: existUser.id,
+      email: existUser.email
+      },
+      'supersecret',
+      { expiresIn: '1h' }
+    );
+  } catch (err) {
+    return next(
+      new HttpError('Login failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json({ userId: existUser.id, email: existUser.email, token });
+}
+
 
 module.exports = {
   getAllUsers,
   register,
+  login
 }
