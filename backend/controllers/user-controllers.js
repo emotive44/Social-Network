@@ -6,8 +6,23 @@ const HttpError = require('../models/httpError-model');
 const User = require('../models/user-model');
 
 
-const getAllUsers= (req, res) => {
-  res.send('get all users');
+const getAllUsers = async (req, res) => {
+  let users;
+  try {
+    users = await User.find().select('-password');
+  } catch (err) {
+    return next(
+      new HttpError('Fetching users failed, please try again.', 500)
+    );
+  }
+
+  if(!users) {
+    return next(
+      new HttpError('Does not exist users at data.', 404)
+    );
+  }
+
+  res.status(200).json(users);
 }
 
 const register = async (req, res, next) => {
