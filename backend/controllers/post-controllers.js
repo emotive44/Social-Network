@@ -54,6 +54,26 @@ const createPost = async (req, res, next) => {
   res.status(201).json(newPost);
 }
 
+const getAllPosts = async (req, res, next) => {
+  let posts;
+  try {
+    posts = await Post.find().populate('creator', 'name');
+  } catch (err) {
+    return next(
+      new HttpError('Fetching posts failed, please try again.', 500)
+    );
+  }
+
+  if(posts.length < 1) {
+    return next(
+      new HttpError('Does not exist posts at data.', 404)
+    );
+  }
+
+  res.status(200).json(posts);
+}
+
 module.exports = {
   createPost,
+  getAllPosts,
 }

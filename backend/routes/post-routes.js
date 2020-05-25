@@ -13,5 +13,7 @@ router.post('/',
   postControllers.createPost
 );
 
+router.get('/', postControllers.getAllPosts);
+
 
 module.exports = router;
