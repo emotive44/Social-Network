@@ -1,9 +1,11 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const HttpError = require('../models/httpError-model');
 const User = require('../models/user-model');
+const Post = require('../models/post-model');
 
 
 const getAllUsers = async (req, res, next) => {
@@ -178,7 +180,34 @@ const login = async (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
-  //TODO
+  let existUser;
+  try {
+    existUser = await User.findById(req.params.userId);
+  } catch (err) {
+    return next(
+      new HttpError('Delete user failed, please try again.', 500)
+      );
+    }
+    
+  if(!existUser) {
+    return next(
+      new HttpError('Could not found user with this id.', 404)
+    );
+  }
+  
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await existUser.remove({ session: sess });
+    await Post.deleteMany({ creator: req.params.userId });
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(
+      new HttpError('Delete user failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json('Delted profile');
 }
 
 module.exports = {
