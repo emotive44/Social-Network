@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const userRoutes = require('./routes/user-routes')
+const userRoutes = require('./routes/user-routes');
+const postRoutes = require('./routes/post-routes');
 const HttpError = require('./models/httpError-model');
 
 const port = 5000;
@@ -12,6 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/api/v1/users/', userRoutes);
+app.use('/api/v1/posts/', postRoutes);
 
 
 app.use((req, res, next) => {

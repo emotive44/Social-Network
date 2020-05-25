@@ -177,10 +177,14 @@ const login = async (req, res, next) => {
   res.status(200).json({ userId: existUser.id, email: existUser.email, token });
 }
 
+const deleteUser = async (req, res, next) => {
+  //TODO
+}
 
 module.exports = {
   getUserById,
   getAllUsers,
+  deleteUser,
   register,
   login
 }
