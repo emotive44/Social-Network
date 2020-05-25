@@ -1,5 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
+const auth = require('../middleware/chek-auth');
  
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get('/', userControllers.getAllUsers);
 
 router.get('/:userId', userControllers.getUserById);
 
-router.delete('/:userId', userControllers.deleteUser);
+router.delete('/', auth, userControllers.deleteUser);
 
 router.post('/register', 
   [

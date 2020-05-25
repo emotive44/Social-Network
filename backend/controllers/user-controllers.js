@@ -180,9 +180,10 @@ const login = async (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
+  const userId = req.userId;
   let existUser;
   try {
-    existUser = await User.findById(req.params.userId);
+    existUser = await User.findById(userId);
   } catch (err) {
     return next(
       new HttpError('Delete user failed, please try again.', 500)
@@ -199,7 +200,7 @@ const deleteUser = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await existUser.remove({ session: sess });
-    await Post.deleteMany({ creator: req.params.userId });
+    await Post.deleteMany({ creator: userId });
     await sess.commitTransaction();
   } catch (err) {
     return next(
