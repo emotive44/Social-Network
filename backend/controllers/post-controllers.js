@@ -16,7 +16,7 @@ const createPost = async (req, res, next) => {
     );
   }
 
-  const { text, creator } = req.body;
+  const { text, creator, image } = req.body;
 
   let existUser;
   try {
@@ -35,6 +35,7 @@ const createPost = async (req, res, next) => {
 
   const newPost = new Post({
     text,
+    image,
     creator
   });
 
@@ -57,7 +58,7 @@ const createPost = async (req, res, next) => {
 const getAllPosts = async (req, res, next) => {
   let posts;
   try {
-    posts = await Post.find().populate('creator', 'name');
+    posts = await Post.find({}).populate('creator', 'name').sort({ date: -1 });
   } catch (err) {
     return next(
       new HttpError('Fetching posts failed, please try again.', 500)
@@ -130,6 +131,7 @@ const updatePost = async (req, res, next) => {
 
   try {
     post.text = req.body.text;
+    post.date = Date.now();
     await post.save();
   } catch (err) {
     return next(
@@ -140,10 +142,49 @@ const updatePost = async (req, res, next) => {
   res.status(201).json(post);
 }
 
+const deletePost = async (req, res, next) => {
+  let post;
+  try {
+    post = await Post.findById(req.params.postId).populate('creator');
+  } catch (err) {
+    return next(
+      new HttpError('Deleting post failed, please try again.', 500)
+    );
+  }
+
+  if(!post) {
+    return next(
+      new HttpError('Post does not exist.', 404)
+    );
+  }
+
+  if(post.creator.id !== req.userId) {
+    return next(
+      new HttpError('You are not allowed to delete this post.', 401)
+    );
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await post.remove({ session: sess });
+    post.creator.posts.pull(post);
+    await post.creator.save({ session: sess });
+    sess.commitTransaction();
+  } catch (err) {
+    return next(
+      new HttpError('Deleting post failed, please try again.', 500)
+    );
+  }
+  
+  res.status(200).json({ message: 'Deleted post.' });
+}
+
 
 module.exports = {
   createPost,
   getAllPosts,
   getPostsByUser,
   updatePost,
+  deletePost,
 }

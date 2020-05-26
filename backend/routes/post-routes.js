@@ -27,5 +27,7 @@ router.put('/:postId',
   postControllers.updatePost
 );
 
+router.delete('/:postId', auth, postControllers.deletePost);
+
 
 module.exports = router;
