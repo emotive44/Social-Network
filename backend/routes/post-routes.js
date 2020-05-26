@@ -17,5 +17,7 @@ router.post('/',
 
 router.get('/', auth, postControllers.getAllPosts);
 
+router.get('/by/:userId', postControllers.getPostsByUser);
+
 
 module.exports = router;

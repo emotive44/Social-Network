@@ -73,7 +73,32 @@ const getAllPosts = async (req, res, next) => {
   res.status(200).json(posts);
 }
 
+const getPostsByUser = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.params.userId).populate('posts', '-creator');
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('User does not exist.', 404)
+      );
+    }
+    return next(
+      new HttpError('Fetching posts failed, please try again.', 500)
+    );
+  }
+
+  if(user.posts.length < 1) {
+    return next(
+      new HttpError('User does not have any posts.', 404)
+    );
+  }
+
+  res.status(200).json(user.posts);
+}
+
 module.exports = {
   createPost,
   getAllPosts,
+  getPostsByUser
 }
