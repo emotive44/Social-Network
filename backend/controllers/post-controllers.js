@@ -97,8 +97,53 @@ const getPostsByUser = async (req, res, next) => {
   res.status(200).json(user.posts);
 }
 
+const updatePost = async (req, res, next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    const err = errors.array().map(e => e.msg).join(' ');
+
+    return next(
+      new HttpError(err, 422)
+    );
+  }
+
+  let post;
+  try {
+    post = await Post.findById(req.params.postId);
+  } catch (err) {
+    if(!post) {
+      return next(
+        new HttpError('Post does not exist.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Update post failed, please try again.', 500)
+    );
+  }
+
+  if(post.creator.toString() !== req.userId) {
+    return next(
+      new HttpError('You are not allowed to edit this post.', 401)
+    );
+  }
+
+  try {
+    post.text = req.body.text;
+    await post.save();
+  } catch (err) {
+    return next(
+      new HttpError('Update post failed, please try again.', 500)
+    );
+  }
+  
+  res.status(201).json(post);
+}
+
+
 module.exports = {
   createPost,
   getAllPosts,
-  getPostsByUser
+  getPostsByUser,
+  updatePost,
 }

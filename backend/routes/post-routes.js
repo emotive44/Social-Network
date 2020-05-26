@@ -19,5 +19,13 @@ router.get('/', auth, postControllers.getAllPosts);
 
 router.get('/by/:userId', postControllers.getPostsByUser);
 
+router.put('/:postId',
+  auth,
+  [
+    check('text', 'Can not update post without content.').not().isEmpty()
+  ],
+  postControllers.updatePost
+);
+
 
 module.exports = router;
