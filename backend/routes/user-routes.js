@@ -13,6 +13,8 @@ router.get('/:userId', userControllers.getUserById);
 
 router.delete('/', auth, userControllers.deleteUser);
 
+router.delete('/info', auth, userControllers.deletePersonalInfo);
+
 router.put('/info', auth, userControllers.addAndEditPersonalInfo);
 
 router.post('/register', 

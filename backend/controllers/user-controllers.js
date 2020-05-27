@@ -263,8 +263,37 @@ const deleteUser = async (req, res, next) => {
   res.status(200).json('Delted profile');
 }
 
+const deletePersonalInfo = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.userId);
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Deleting information failed, user was not found.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Deleting information failed, please try again.', 500)
+    );
+  }
+
+  user.personalInfo = {};
+  try {
+    await user.save();
+  } catch (err) {
+    return next(
+      new HttpError('Deleting information failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json({ message: 'You delete your personal info success.'});
+}
+
 module.exports = {
   addAndEditPersonalInfo,
+  deletePersonalInfo,
   getUserById,
   getAllUsers,
   deleteUser,
