@@ -98,6 +98,56 @@ const getPostsByUser = async (req, res, next) => {
   res.status(200).json(user.posts);
 }
 
+const likePost = async (req, res, next) => {
+  let post;
+  try {
+    post = await Post.findById(req.params.postId);
+  } catch (err) {
+    if(!post) {
+      return next(
+        new HttpError('Like post failed, post was not found.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Like post failed, please try again.', 500)
+    );
+  }
+
+  let existUser;
+  try {
+    existUser = await User.findById(req.userId);
+  } catch (err) {
+    if(!existUser) {
+      return next(
+        new HttpError('Like post failed, user was not found.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Like post failed, please try again.', 500)
+    );
+  }
+
+  if(!post.likes.includes(existUser.id)){
+    post.likes.unshift(existUser);
+  } else {
+    return next(
+      new HttpError('You are alredy like this post.', 422)
+    );
+  }
+
+  try {
+    await post.save();
+  } catch (err) {
+    return next(
+      new HttpError('Like post failed, please try again.', 500)
+    );
+  }
+
+  res.status(201).json(post);
+}
+
 const updatePost = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -187,4 +237,5 @@ module.exports = {
   getPostsByUser,
   updatePost,
   deletePost,
+  likePost,
 }
