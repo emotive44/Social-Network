@@ -47,6 +47,52 @@ const getUserById = async (req, res, next) => {
   res.status(200).json(user);
 }
 
+const addPersonalInfo = async (req, res, next) => {
+  const userId = req.userId;
+  const {
+    bio,
+    job,
+    city,
+    bDay,
+    relShip,
+    university
+  } = req.body;
+
+  let user;
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Adding information failed, user was not found.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Adding information failed, please try again.', 500)
+    );
+  }
+
+  let personalInfo = {};
+  if(bio) personalInfo.bio = bio;
+  if(job) personalInfo.job = job;
+  if(city) personalInfo.city = city;
+  if(bDay) personalInfo.bDay = bDay;
+  if(relShip) personalInfo.relShip = relShip;
+  if(university) personalInfo.university = university;
+
+  user.personalInfo = personalInfo;
+  try {
+    await user.save();
+  } catch (err) {
+    return next(
+      new HttpError('Adding information failed, please try again.', 500)
+    );
+  }
+
+  res.status(201).json(user);
+}
+
 const register = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -212,6 +258,7 @@ const deleteUser = async (req, res, next) => {
 }
 
 module.exports = {
+  addPersonalInfo,
   getUserById,
   getAllUsers,
   deleteUser,

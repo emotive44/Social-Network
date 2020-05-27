@@ -13,6 +13,8 @@ router.get('/:userId', userControllers.getUserById);
 
 router.delete('/', auth, userControllers.deleteUser);
 
+router.post('/info', auth, userControllers.addPersonalInfo);
+
 router.post('/register', 
   [
     check('name', 'Name should not be empty.').not().isEmpty(),
