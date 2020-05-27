@@ -47,7 +47,7 @@ const getUserById = async (req, res, next) => {
   res.status(200).json(user);
 }
 
-const addPersonalInfo = async (req, res, next) => {
+const addAndEditPersonalInfo = async (req, res, next) => {
   const userId = req.userId;
   const {
     bio,
@@ -75,13 +75,19 @@ const addPersonalInfo = async (req, res, next) => {
 
   let personalInfo = {};
   if(bio) personalInfo.bio = bio;
+    else personalInfo.bio = user.personalInfo.bio || undefined;
   if(job) personalInfo.job = job;
+    else personalInfo.job =  user.personalInfo.job || undefined;
   if(city) personalInfo.city = city;
+    else personalInfo.city = user.personalInfo.city || undefined;
   if(bDay) personalInfo.bDay = bDay;
+    else personalInfo.bDay = user.personalInfo.bDay || undefined;
   if(relShip) personalInfo.relShip = relShip;
+    else personalInfo.relShip = user.personalInfo.relShip || undefined;
   if(university) personalInfo.university = university;
+    else personalInfo.university =  user.personalInfo.university || undefined;
 
-  user.personalInfo = personalInfo;
+  user.personalInfo = { ...user.personalInfo, ...personalInfo };
   try {
     await user.save();
   } catch (err) {
@@ -258,7 +264,7 @@ const deleteUser = async (req, res, next) => {
 }
 
 module.exports = {
-  addPersonalInfo,
+  addAndEditPersonalInfo,
   getUserById,
   getAllUsers,
   deleteUser,
