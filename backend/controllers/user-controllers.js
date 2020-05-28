@@ -99,6 +99,57 @@ const addAndEditPersonalInfo = async (req, res, next) => {
   res.status(201).json(user);
 }
 
+const followUnfollowUser = async (req, res, next) => {
+  let followedUser;
+  try {
+    followedUser = await User.findById(req.params.userId);
+  } catch (err) {
+    if(!followedUser) {
+      return next(
+        new HttpError('Following user failed, user was not found', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Following user failed.', 500)
+    );
+  }
+
+  let existUser;
+  try {
+    existUser = await User.findById(req.userId);
+  } catch (err) {
+    return next(
+      new HttpError('Following user failed.', 500)
+    );
+  }
+
+  
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    
+    if(existUser.following.includes(followedUser.id)) {
+      existUser.following.pull(followedUser);
+      followedUser.followers.pull(existUser);
+    } else {
+      existUser.following.unshift(followedUser);
+      followedUser.followers.unshift(existUser);
+    }
+
+    existUser.save({ session: sess });
+    followedUser.save({ session: sess });
+
+    sess.commitTransaction();
+  } catch (err) {
+    return next(
+      new HttpError('Following user failed.', 500)
+    );
+  }
+
+  res.status(201).json(existUser);
+}
+
 const register = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -296,6 +347,7 @@ const deletePersonalInfo = async (req, res, next) => {
 module.exports = {
   addAndEditPersonalInfo,
   deletePersonalInfo,
+  followUnfollowUser,
   getUserById,
   getAllUsers,
   deleteUser,

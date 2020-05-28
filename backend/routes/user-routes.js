@@ -17,6 +17,8 @@ router.delete('/info', auth, userControllers.deletePersonalInfo);
 
 router.put('/info', auth, userControllers.addAndEditPersonalInfo);
 
+router.put('/:userId/follow', auth, userControllers.followUnfollowUser);
+
 router.post('/register', 
   [
     check('name', 'Name should not be empty.').not().isEmpty(),

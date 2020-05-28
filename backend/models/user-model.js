@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 6 },
   posts: [{ type: mongoose.Types.ObjectId, ref: 'Post' }],
   avatar: { type: String, default: 'annonimous' },
+  followers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   personalInfo: {
     bio: { type: String, minlength: 6, maxlength: 45 },
     university: { type: String },
