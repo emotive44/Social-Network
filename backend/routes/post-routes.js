@@ -37,6 +37,8 @@ router.put('/:postId',
   postControllers.updatePost
 );
 
+router.delete('/:postId/comments/:commentId', auth, postControllers.deleteComment);
+
 router.delete('/:postId', auth, postControllers.deletePost);
 
 

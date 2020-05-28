@@ -248,6 +248,64 @@ const updatePost = async (req, res, next) => {
   res.status(201).json(post);
 }
 
+const deleteComment = async (req, res, next) => {
+  const { postId, commentId } = req.params;
+
+  let post;
+  try {
+    post = await Post.findById(postId);
+  } catch (err) {
+    if(!post) {
+      return next(
+        new HttpError('Delete comment failed, post was not found', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Delete comment failed, please trq again.', 500)
+    );
+  }
+
+  let existUser;
+  try {
+    existUser = await Post.findById(req.userId);
+  } catch (err) {
+    if(!existUser) {
+      return next(
+        new HttpError('Delete comment failed, user was not found', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Delete comment failed, please trq again.', 500)
+    );
+  }
+
+  const comment = post.comments.find(comment => comment.id === commentId);
+  if(!comment) {
+    return next(
+      new HttpError('Delete comment failed, comment was not found', 404)
+    );
+  }
+  
+  if(comment.creator.toString() !== req.userId) {
+    return next(
+      new HttpError('Delete comment failed, you are not authorized.', 403)
+    );
+  }
+
+  try {
+    post.comments.pull(comment);
+    post.save();
+  } catch (err) {
+    return next(
+      new HttpError('Delete comment failed, comment was not found', 404)
+    );
+  }
+
+  res.status(200).json(post);
+}
+
 const deletePost = async (req, res, next) => {
   let post;
   try {
@@ -295,4 +353,5 @@ module.exports = {
   deletePost,
   likeUnlikePost,
   createComment,
+  deleteComment,
 }
