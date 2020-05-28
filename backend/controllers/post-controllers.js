@@ -16,11 +16,11 @@ const createPost = async (req, res, next) => {
     );
   }
 
-  const { text, creator, image } = req.body;
+  const { text, image } = req.body;
 
   let existUser;
   try {
-    existUser = await User.findById(creator);
+    existUser = await User.findById(req.userId);
   } catch (err) {
     if(!existUser) {
       return next(
@@ -36,7 +36,7 @@ const createPost = async (req, res, next) => {
   const newPost = new Post({
     text,
     image,
-    creator
+    creator: req.userId
   });
 
   try {
