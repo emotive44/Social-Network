@@ -98,7 +98,7 @@ const getPostsByUser = async (req, res, next) => {
   res.status(200).json(user.posts);
 }
 
-const likePost = async (req, res, next) => {
+const likeUnlikePost = async (req, res, next) => {
   let post;
   try {
     post = await Post.findById(req.params.postId);
@@ -132,9 +132,7 @@ const likePost = async (req, res, next) => {
   if(!post.likes.includes(existUser.id)){
     post.likes.unshift(existUser);
   } else {
-    return next(
-      new HttpError('You are alredy like this post.', 422)
-    );
+    post.likes = post.likes.filter(u => u.toString() !== existUser.id);
   }
 
   try {
@@ -146,6 +144,10 @@ const likePost = async (req, res, next) => {
   }
 
   res.status(201).json(post);
+}
+
+const unlikePost = async (req, res, next) => {
+
 }
 
 const updatePost = async (req, res, next) => {
@@ -237,5 +239,5 @@ module.exports = {
   getPostsByUser,
   updatePost,
   deletePost,
-  likePost,
+  likeUnlikePost,
 }
