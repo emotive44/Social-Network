@@ -15,6 +15,14 @@ router.post('/',
   postControllers.createPost
 );
 
+router.post('/:postId/comments', 
+  auth,
+  [
+    check('text', 'Content should be between 5 and 30 characters.').isLength({ min: 5, max: 30 })
+  ], 
+  postControllers.createComment
+);
+
 router.get('/', auth, postControllers.getAllPosts);
 
 router.get('/by/:userId', postControllers.getPostsByUser);

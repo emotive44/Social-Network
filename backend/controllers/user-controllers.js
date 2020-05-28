@@ -112,7 +112,8 @@ const register = async (req, res, next) => {
   const {
     name,
     email,
-    password
+    password,
+    avatar
   } = req.body;
 
   let existUser;
@@ -142,6 +143,7 @@ const register = async (req, res, next) => {
   const newUser = new User({
     name,
     email,
+    avatar,
     password: hashedPassword
   });
 

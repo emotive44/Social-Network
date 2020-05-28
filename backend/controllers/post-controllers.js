@@ -55,6 +55,64 @@ const createPost = async (req, res, next) => {
   res.status(201).json(newPost);
 }
 
+const createComment = async (req, res, next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) { 
+    const err = errors.array().map(e => e.msg).join(' ');
+
+    return next(
+      new HttpError(err, 422)
+    );
+  }
+
+  let post;
+  try {
+    post = await Post.findById(req.params.postId);
+  } catch (err) {
+    if(!post) {
+      return next(
+        new HttpError('Add comment failed, post was not found', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Add comment failed, please try again.', 500)
+    );
+  }
+
+  let existUser;
+  try {
+    existUser = await User.findById(req.userId);
+  } catch (err) {
+    if(!existUser) {
+      return next(
+        new HttpError('Add comment failed, user was not found', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Add comment failed, please try again.', 500)
+    );
+  }
+
+  const comment = { 
+    creator: req.userId,
+    text: req.body.text,
+    avatar: existUser.avatar
+  }
+
+  try {
+    post.comments.unshift(comment);
+    await post.save();
+  } catch (err) {
+    return next(
+      new HttpError('Add comment failed, please try again.', 500)
+    );
+  }
+
+  res.status(201).json(post);
+}
+
 const getAllPosts = async (req, res, next) => {
   let posts;
   try {
@@ -144,10 +202,6 @@ const likeUnlikePost = async (req, res, next) => {
   }
 
   res.status(201).json(post);
-}
-
-const unlikePost = async (req, res, next) => {
-
 }
 
 const updatePost = async (req, res, next) => {
@@ -240,4 +294,5 @@ module.exports = {
   updatePost,
   deletePost,
   likeUnlikePost,
+  createComment,
 }
