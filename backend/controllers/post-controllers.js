@@ -156,6 +156,25 @@ const getPostsByUser = async (req, res, next) => {
   res.status(200).json(user.posts);
 }
 
+const getPostById = async (req, res, next) => {
+  let post;
+  try {
+    post = await Post.findById(req.params.postId);
+  } catch (err) {
+    if(!post) {
+      return next(
+        new HttpError('Fetching post failed, post was not found.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Fetching post failed.', 500)
+    );
+  }
+
+  res.status(200).json(post);
+}
+
 const likeUnlikePost = async (req, res, next) => {
   let post;
   try {
@@ -348,6 +367,7 @@ const deletePost = async (req, res, next) => {
 module.exports = {
   createPost,
   getAllPosts,
+  getPostById,
   getPostsByUser,
   updatePost,
   deletePost,
