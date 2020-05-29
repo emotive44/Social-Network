@@ -124,7 +124,7 @@ const followUnfollowUser = async (req, res, next) => {
     );
   }
 
-  
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
