@@ -1,0 +1,75 @@
+nav {
+  justify-content: space-between;
+  min-width: 45rem;
+  background: gray;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  color: whitesmoke;
+  top: 0;
+
+  .logo {
+    align-self: center;
+    width: 150px;
+    height: 30px;
+    background-image: url('/logo.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.2rem;
+    margin-left: 1rem;
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+
+    li:not(:last-child) { 
+      margin-right: 1rem;
+    }
+  }
+
+  .user { 
+    display: flex;
+    margin: 0.5rem;
+    align-items: center;
+
+    &-image {
+      width: 30px;
+      height: 30px;
+      background-image: url('https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 50%;
+      margin: 0 0.5rem 0 0.4rem;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  nav {
+
+    ul{
+      flex-direction: column;
+
+      li:not(:last-child){ 
+        margin-right: 0;
+      }
+    }
+    
+    .logo { 
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .user {
+      flex-direction: column;
+
+      &-image {
+        align-self: flex-end;
+      }
+    }
+  }
+}
