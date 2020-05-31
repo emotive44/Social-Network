@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Input.scss';
 
-const Input = (props, ref) =>  {
+const Input = React.forwardRef((props, ref) =>  {
   const [isHover, setIsHover] = useState(false);
 
   const hover = (e) => {
@@ -24,14 +24,17 @@ const Input = (props, ref) =>  {
           {props.label}
         </label>
         <input 
+            className={props.err ? 'error' : null}
             type={props.type} 
             name={props.name}
             onClick={hover}
             onBlur={blur}
+            ref={ref}
         />
       </div>
+      {props.err && <span>{props.err}</span>}
     </div>
   );
-}
+})
 
 export default Input;

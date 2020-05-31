@@ -1,3 +1,5 @@
+@import '../../index.scss';
+
 .input {
   &-wrapper {
     position: relative;
@@ -8,12 +10,19 @@
       margin: 0 auto;
       margin-top: 3rem;
       border: 1px solid black;
+      border-radius: 0.3rem;
+
+      &.error {
+        border: 1px solid red;
+      }
     }
   }
+  
   label {
     position: absolute;
     bottom: 0.4rem; left: 7rem;
     width: 80%;
+    color: $primary-color;
     margin-bottom: 0.5rem;
     pointer-events: none;
     transition: 0.3s ease-in-out;
@@ -22,7 +31,14 @@
     &.top {
       bottom: 3rem;
       left: 6rem;
+      color: black;
     }
+  }
+
+  span { 
+    display: block;
+    margin: 0.5rem 0 0 6rem;
+    color: red;
   }
 }
 
