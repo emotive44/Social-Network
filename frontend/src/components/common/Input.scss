@@ -1,0 +1,39 @@
+.input {
+  &-wrapper {
+    position: relative;
+    input {
+      display: block;
+      width: 80%;
+      padding: 0.8rem;
+      margin: 0 auto;
+      margin-top: 3rem;
+      border: 1px solid black;
+    }
+  }
+  label {
+    position: absolute;
+    bottom: 0.4rem; left: 7rem;
+    width: 80%;
+    margin-bottom: 0.5rem;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+    transition-property: bottom, left;
+
+    &.top {
+      bottom: 3rem;
+      left: 6rem;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .input {
+    label {
+      left: 5rem;
+
+      &.top {
+        left: 4.7rem;
+      }
+    }
+  }
+}
