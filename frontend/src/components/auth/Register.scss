@@ -1,45 +1,9 @@
-@import '../../index.scss';
-
-.form {
-  max-width: 70rem;
-  min-width: 45rem;
+button { 
+  width: 5rem;
+  padding: 0.6rem;
+  display: block;
+  margin: 1rem auto;
+  outline: none;
   border: 1px solid black;
-  margin: 0 auto;
-  margin-top: 15rem;
-  margin-bottom: 1rem;
-  position: relative;
-  border-radius: 0.3rem;
-
-  .login { 
-    position: absolute;
-    top: -23px; left: -1px;
-    border: 1px solid black;
-    display: inline-block;
-    width: 11rem;
-    border-radius: 0.2rem 0.2rem 0.2rem 0;
-    padding: 1rem;
-    background: $white-color;
-  }
-
-  form {
-    width: 80%;
-    padding: 2rem 0;
-    margin: 0 auto;
-    
-    button { 
-      width: 5rem;
-      padding: 0.6rem;
-      display: block;
-      margin: 1rem auto;
-      outline: none;
-      border: 1px solid black;
-      border-radius: 0.2rem;
-    }
-  }
-}
-
-@media (max-width: 700px) {
-  .form {
-    margin: 24rem 7rem 0 7rem;
-  }
+  border-radius: 0.2rem;
 }
