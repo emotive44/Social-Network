@@ -1,5 +1,9 @@
 $primary-color: gray;
+$light-color: lightgray;
 $white-color: whitesmoke;
+$info-color: skyblue;
+$danger-color: tomato;
+$warning-color: yellow;
 
 
 * {
@@ -11,7 +15,7 @@ $white-color: whitesmoke;
 html {
   font-family: 'Open Sans', sans-serif;
   font-size: 10px;
-  
+
   body {
     font-size: 1.6rem;
 

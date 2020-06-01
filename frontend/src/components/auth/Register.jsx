@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import './Register.scss';
 
 import emailValidate from '../../utils/emailValidate';
 
 import FormWrapper from '../common/FormWrapper';
 import Input from '../common/Input';
+import Button from '../common/Button';
 
 
 const Register = () => {
@@ -57,7 +57,7 @@ const Register = () => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-      <button type='submit'>Submit</button>
+      <Button type='submit' light animation>Submit</Button>
     </FormWrapper>
   );
 }

@@ -19,6 +19,12 @@
     border-radius: 0.2rem 0.2rem 0.2rem 0;
     padding: 1rem;
     background: $white-color;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      color: $white-color;
+      background: $primary-color;
+    }
   }
 
   form {
@@ -30,6 +36,6 @@
 
 @media (max-width: 700px) {
   .form {
-    margin: 24rem 7rem 0 7rem;
+    margin-top: 24rem;
   }
 }
