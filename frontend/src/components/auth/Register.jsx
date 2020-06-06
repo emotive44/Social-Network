@@ -3,16 +3,21 @@ import { useForm } from 'react-hook-form';
 
 import emailValidate from '../../utils/emailValidate';
 
+import { connect } from 'react-redux';
+
+import { registerUser } from '../../store/actions/auth-action';
+
 import FormWrapper from '../common/FormWrapper';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
 
-const Register = () => {
+const Register = ({ registerUser }) => {
   const {register, handleSubmit, errors, watch} = useForm();
  
   const submit = (data) => {
-    console.log(data);
+    const { name, email, password } = data;
+    registerUser(name, email, password);
   }
 
   return (
@@ -62,4 +67,4 @@ const Register = () => {
   );
 }
 
-export default Register;
+export default connect(null, { registerUser })(Register);

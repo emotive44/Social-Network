@@ -6,6 +6,25 @@ import {
 } from '../types';
 
 
-export default register = () => async dispatch => {
-  
+const baseUrl = 'http://localhost:5000/api/v1/'
+
+export const registerUser = (name, email, password) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ name, email, password });
+
+  try {
+    const res = await axios.post(baseUrl + 'users/register', body, config);
+
+    dispatch({ 
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({ type: REGISTER_FAIL});
+  }
 }
