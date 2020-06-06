@@ -9,7 +9,7 @@ import {
 } from '../types';
 
 
-const baseUrl = 'http://localhost:5000/api/v1/'
+const baseUrl = 'http://localhost:5000/api/v1/';
 
 export const registerUser = (name, email, password) => async dispatch => {
   const config = {
