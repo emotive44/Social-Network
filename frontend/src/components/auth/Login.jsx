@@ -1,18 +1,29 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom';
 
 import emailValidate from '../../utils/emailValidate';
+
+import { connect } from 'react-redux';
+
+import { login } from '../../store/actions/auth-action';
 
 import FormWrapper from '../common/FormWrapper';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
 
-const Login = () => {
+const Login = ({ isAuth, login }) => {
   const {register, handleSubmit, errors, watch} = useForm();
  
   const submit = (data) => {
-    console.log(data);
+    const { email, password } = data;
+
+    login(email, password);
+  }
+
+  if(isAuth) {
+    return <Redirect to='/' />
   }
 
   return (
@@ -52,4 +63,8 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuth: state.auth.userId
+});
+
+export default connect(mapStateToProps, { login })(Login);

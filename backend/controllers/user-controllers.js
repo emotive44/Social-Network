@@ -281,7 +281,7 @@ const login = async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ userId: existUser.id, email: existUser.email, token });
+  res.status(200).json({ userId: existUser.id, name: existUser.name, token });
 }
 
 const deleteUser = async (req, res, next) => {
