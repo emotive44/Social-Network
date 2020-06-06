@@ -1,42 +1,22 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
 
 import emailValidate from '../../utils/emailValidate';
-
-import { connect } from 'react-redux';
-
-import { registerUser } from '../../store/actions/auth-action';
 
 import FormWrapper from '../common/FormWrapper';
 import Input from '../common/Input';
 import Button from '../common/Button';
 
 
-const Register = ({ isAuth, registerUser }) => {
+const Login = () => {
   const {register, handleSubmit, errors, watch} = useForm();
  
   const submit = (data) => {
-    const { name, email, password } = data;
-    registerUser(name, email, password);
-  }
-
-  if(isAuth) {
-    return <Redirect to='/'/>
+    console.log(data);
   }
 
   return (
-    <FormWrapper submitHandler={handleSubmit(submit)} title='Register Form'>
-      <Input 
-        type='text'
-        name='name'
-        label='Your Name'
-        ref={register({
-          required: 'Name is required.',
-          minLength: { value: 3, message: 'Name must be at least 3 characters long.'}
-        })}
-        err={errors.name && errors.name.message}
-      />
+    <FormWrapper submitHandler={handleSubmit(submit)} title='Login Form'>
       <Input 
         label='Email'
         name='email'
@@ -67,13 +47,9 @@ const Register = ({ isAuth, registerUser }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-      <Button type='submit' light animation>Register</Button>
+      <Button type='submit' light animation>Login</Button>
     </FormWrapper>
   );
 }
 
-const mapStateToProps = state => ({
-  isAuth: state.auth.userId
-});
-
-export default connect(mapStateToProps, { registerUser })(Register);
+export default Login;

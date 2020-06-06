@@ -6,6 +6,7 @@ import store from './store/store';
 
 import NavBar from './components/common/Navbar';
 import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <NavBar />
         <Switch>
           <Route path='/register' component={Register} />
+          <Route path='/login' component={Login} />
         </Switch>
       </Router>
     </Provider>

@@ -26,7 +26,7 @@ const NavBar = ({ isAuth, userName, logout }) => {
         {isAuth && <li><NavLink to=''>Posts</NavLink></li>}
         {isAuth && <li><NavLink to=''>Create Post</NavLink></li>}
         {!isAuth && <li><NavLink to='/register'>Register</NavLink></li>}
-        {!isAuth && <li><NavLink to=''>Login</NavLink></li>}
+        {!isAuth && <li><NavLink to='/login'>Login</NavLink></li>}
         {isAuth && <li>
           <Link to='' onClick={logout}>Logout</Link>
         </li>}
