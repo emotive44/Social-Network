@@ -4,8 +4,10 @@ import './NavBar.scss';
 
 import { connect } from 'react-redux';
 
+import { logout } from '../../store/actions/auth-action';
 
-const NavBar = ({ isAuth }) => {
+
+const NavBar = ({ isAuth, userName, logout }) => {
   const [toggle, setToggle] = useState(false);
 
   const toggleBar = () => {
@@ -25,19 +27,22 @@ const NavBar = ({ isAuth }) => {
         {isAuth && <li><NavLink to=''>Create Post</NavLink></li>}
         {!isAuth && <li><NavLink to='/register'>Register</NavLink></li>}
         {!isAuth && <li><NavLink to=''>Login</NavLink></li>}
-        {isAuth && <li><Link to=''>Logout</Link></li>}
+        {isAuth && <li>
+          <Link to='' onClick={logout}>Logout</Link>
+        </li>}
       </ul>
 
-      <p className='user'>
-        <span>Hello User</span>
+      {isAuth && <p className='user'>
+        <span>Hello {userName}</span>
         <Link to='' className='user-image' />
-      </p>
+      </p>}
     </nav>
   );
 }
 
 const mapStateToProps = state => ({
-  isAuth: state.auth.userId
+  isAuth: state.auth.userId,
+  userName: state.auth.name
 });
 
-export default connect(mapStateToProps, null)(NavBar);
+export default connect(mapStateToProps, { logout })(NavBar);

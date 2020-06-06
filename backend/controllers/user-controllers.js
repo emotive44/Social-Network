@@ -220,7 +220,7 @@ const register = async (req, res, next) => {
     );
   }
 
-  res.status(201).json({ userId: newUser.id, email: newUser.email, token });
+  res.status(201).json({ userId: newUser.id, name: newUser.name, token });
 } 
 
 const login = async (req, res, next) => {

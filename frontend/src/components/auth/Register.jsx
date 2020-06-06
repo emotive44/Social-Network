@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom';
 
 import emailValidate from '../../utils/emailValidate';
 
@@ -12,12 +13,16 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 
 
-const Register = ({ registerUser }) => {
+const Register = ({ isAuth, registerUser }) => {
   const {register, handleSubmit, errors, watch} = useForm();
  
   const submit = (data) => {
     const { name, email, password } = data;
     registerUser(name, email, password);
+  }
+
+  if(isAuth) {
+    return <Redirect to='/'/>
   }
 
   return (
@@ -67,4 +72,8 @@ const Register = ({ registerUser }) => {
   );
 }
 
-export default connect(null, { registerUser })(Register);
+const mapStateToProps = state => ({
+  isAuth: state.auth.userId
+});
+
+export default connect(mapStateToProps, { registerUser })(Register);

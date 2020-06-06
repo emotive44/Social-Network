@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGOUT,
 } from '../types';
 
 
@@ -27,4 +28,8 @@ export const registerUser = (name, email, password) => async dispatch => {
   } catch (err) {
     dispatch({ type: REGISTER_FAIL});
   }
+}
+
+export const logout = () => async dispatch => {
+  dispatch({ type: LOGOUT });
 }
