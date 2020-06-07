@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Users.scss';
 
 import Card from '../common/Card';
+import Pagination from '../common/Pagination';
 
 
 const Users = () => {
@@ -54,21 +55,14 @@ const Users = () => {
   return (
     <section className="users">
       {loading && <div>Loading....</div>}
-      <div className="pagination">
-        <button className="previous" onClick={prevPage}>Previous</button>
-        <div>
-          {countOfPages.map((p,i) => {
-            return <span 
-              key={i} 
-              onClick={() => choosedPage(p)}
-              className={page === p ? 'active' : null}
-            >
-              {p}
-            </span>
-          })}
-        </div>
-        <button className="next" onClick={nextPage}>Next</button>
-      </div>
+
+      <Pagination 
+        page={page}
+        prevPage={prevPage}
+        nextPage={nextPage}
+        choosedPage={choosedPage}
+        countOfPages={countOfPages}
+      />
       <div className="users-wrapper"> {fetchedUsers} </div>
     </section>
   );

@@ -1,0 +1,30 @@
+@import '../../index.scss';
+
+.pagination { 
+  width: 60%;
+  min-width: 20rem;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+
+  div {
+    display: flex;
+  }
+
+  span {
+    border: 1px solid black;
+    padding: 0.7rem;
+    margin-left: 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .active { 
+    background: $primary-color;
+    color: $white-color;
+  }
+}
