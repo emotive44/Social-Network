@@ -11,7 +11,7 @@ const Post = require('../models/post-model');
 const getAllUsers = async (req, res, next) => {
   let users;
   try {
-    users = await User.find().select('-password');
+    users = await User.find().select('name _id email avatar');
   } catch (err) {
     return next(
       new HttpError('Fetching users failed, please try again.', 500)
