@@ -9,9 +9,17 @@ const Post = require('../models/post-model');
 
 
 const getAllUsers = async (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 3;
+  let countPost;
+
   let users;
   try {
-    users = await User.find().select('name _id email avatar');
+    await User.count({}).then(count => countPost = count);
+    users = await User.find()
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage) 
+      .select('name _id email avatar');
   } catch (err) {
     return next(
       new HttpError('Fetching users failed, please try again.', 500)
@@ -24,7 +32,7 @@ const getAllUsers = async (req, res, next) => {
     );
   }
 
-  res.status(200).json(users);
+  res.status(200).json({users, countPost});
 }
 
 const getUserById = async (req, res, next) => {
@@ -164,7 +172,7 @@ const register = async (req, res, next) => {
     name,
     email,
     password,
-    avatar
+    // avatar
   } = req.body;
 
   let existUser;
@@ -194,7 +202,7 @@ const register = async (req, res, next) => {
   const newUser = new User({
     name,
     email,
-    avatar,
+    avatar: 'uploads/images/defaultUserImg.jpg',
     password: hashedPassword
   });
 
