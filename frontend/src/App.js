@@ -11,6 +11,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import CreatePost from './components/create-post/CreatePost';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import Users from './components/users/Users';
 
 
 if(localStorage.token) { 
@@ -25,6 +26,7 @@ const App = () => {
         <Switch>
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
+          <Route path='/users' component={Users} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
         </Switch>
       </Router>

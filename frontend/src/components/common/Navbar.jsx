@@ -22,7 +22,7 @@ const NavBar = ({ isAuth, userName, logout }) => {
         {toggle && <i className='fas fa-times' onClick={toggleBar} />}
         
         {isAuth && <li><NavLink exact to='/' activeClassName='active'>Home</NavLink></li>}
-        <li><NavLink to=''>Users</NavLink></li>
+        <li><NavLink to='/users'>Users</NavLink></li>
         {isAuth && <li><NavLink to=''>Posts</NavLink></li>}
         {isAuth && <li><NavLink to='create-post'>Create Post</NavLink></li>}
         {!isAuth && <li><NavLink to='/register'>Register</NavLink></li>}
