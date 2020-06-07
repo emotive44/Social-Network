@@ -1,7 +1,8 @@
 @import '../../index.scss';
 
 .btn { 
-  width: 9rem;
+  width: auto;
+  min-width: 9rem;
   outline: none;
   display: block;
   cursor: pointer;

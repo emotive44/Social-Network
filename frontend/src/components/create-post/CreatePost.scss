@@ -1,0 +1,16 @@
+.post {
+  &-content {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0.7rem;
+    border: 1px solid black;
+    font-size: 1.6rem;
+  }
+
+  &-err { 
+    color: red;
+  }
+}
