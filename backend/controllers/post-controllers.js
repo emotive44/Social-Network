@@ -35,7 +35,7 @@ const createPost = async (req, res, next) => {
 
   const newPost = new Post({
     text,
-    image,
+    image: image ? image : undefined,
     creator: req.userId
   });
 

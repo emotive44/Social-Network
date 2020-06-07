@@ -2,16 +2,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import './CreatePost.scss';
 
+import { connect } from 'react-redux';
+import { createPost } from '../../store/actions/post-action';
+
 import FormWrapper from '../common/FormWrapper';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
 
-const CreatePost = () => {
+const CreatePost = ({ createPost }) => {
   const { register, handleSubmit, errors } = useForm();
 
   const submit = (data) => {
-    console.log(data);
+    const { text, image } = data;
+
+    createPost(text, image)
   }
 
   return (
@@ -39,4 +44,4 @@ const CreatePost = () => {
   );
 }
 
-export default CreatePost;
+export default connect(null, { createPost })(CreatePost);
