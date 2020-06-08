@@ -125,6 +125,7 @@ const getAllPosts = async (req, res, next) => {
       .skip((currentPage - 1) * perPage)
       .limit(perPage) 
       .populate('creator', 'name')
+      .select('text image')
       .sort({ date: -1 });
   } catch (err) {
     return next(

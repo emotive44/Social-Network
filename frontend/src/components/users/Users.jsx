@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Users.scss';
 
 import Card from '../common/Card';
 import Pagination from '../common/Pagination';
+import CardsContainer from '../common/CardsContainer';
 
 
 const Users = () => {
@@ -53,7 +53,7 @@ const Users = () => {
   }
 
   return (
-    <section className="users">
+    <CardsContainer fetchedData={fetchedUsers}>
       {loading && <div>Loading....</div>}
 
       <Pagination 
@@ -63,8 +63,7 @@ const Users = () => {
         choosedPage={choosedPage}
         countOfPages={countOfPages}
       />
-      <div className="users-wrapper"> {fetchedUsers} </div>
-    </section>
+    </CardsContainer>
   );
 }
 

@@ -32,7 +32,7 @@ const Pagination = ({ prevPage, nextPage, page, choosedPage, countOfPages }) => 
         clickHandler={nextPage}
         style={{'margin': '0'}}
       >
-        Previous
+        Next
       </Button>
     </div>
   );

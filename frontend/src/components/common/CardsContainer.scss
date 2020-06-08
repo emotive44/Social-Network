@@ -1,28 +1,27 @@
-.posts {
+.cards {
   margin-top: 7rem;
   min-width: 45rem;
 
-  &-wrapper {
-    margin: 1rem;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+  &-wrapper { 
     width: 90%;
-    margin: 0 auto;
     padding: 1rem;
+    display: grid;
+    margin: 0 auto;
     min-width: 30rem;
-    border: 1px solid gray;
     border-radius: 0.3rem;
+    border: 1px solid gray;
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
 @media (max-width: 1024px) {
-  .posts-wrapper {
+  .cards-wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 600px) {
-  .posts-wrapper {
+  .cards-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }

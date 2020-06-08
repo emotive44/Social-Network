@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Posts.scss';
 
 import Pagination from '../common/Pagination';
 import Card from '../common/Card';
+import CardsContainer from '../common/CardsContainer';
 
 
 const Posts = () => {
@@ -53,7 +53,7 @@ const Posts = () => {
   }
 
   return (
-    <section className='posts'>
+    <CardsContainer fetchedData={fetchedPosts}>
       {loading && <div>Loading....</div>}
 
       <Pagination 
@@ -63,9 +63,7 @@ const Posts = () => {
         choosedPage={choosedPage}
         countOfPages={countOfPages}
       />
-
-      <div className='posts-wrapper'> {fetchedPosts} </div>
-    </section>
+    </CardsContainer>
   );
 }
 
