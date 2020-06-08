@@ -9,3 +9,13 @@
     transform: translate(-50%, -5%);
   }
 }
+
+@media (max-width: 700px) {
+  .spinner {
+    img {
+      top: 6%;
+      left: 55%;
+      transform: translate(-55%, -6%);
+    }
+  }
+}

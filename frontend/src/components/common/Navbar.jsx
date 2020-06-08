@@ -14,6 +14,10 @@ const NavBar = ({ isAuth, userName, logout }) => {
     setToggle(!toggle);
   }
 
+  const closeMenu = () => {
+    setToggle(false);
+  }
+
   return (
     <nav>
       <Link to='' className='logo' />
@@ -21,12 +25,12 @@ const NavBar = ({ isAuth, userName, logout }) => {
         {!toggle && <i className='fas fa-bars' onClick={toggleBar} />}
         {toggle && <i className='fas fa-times' onClick={toggleBar} />}
         
-        {isAuth && <li><NavLink exact to='/' activeClassName='active'>Home</NavLink></li>}
-        <li><NavLink to='/users'>Users</NavLink></li>
-        {isAuth && <li><NavLink to='/posts'>Posts</NavLink></li>}
-        {isAuth && <li><NavLink to='create-post'>Create Post</NavLink></li>}
-        {!isAuth && <li><NavLink to='/register'>Register</NavLink></li>}
-        {!isAuth && <li><NavLink to='/login'>Login</NavLink></li>}
+        {isAuth && <li><NavLink exact to='/' activeClassName='active' onClick={closeMenu}>Home</NavLink></li>}
+        <li><NavLink to='/users' onClick={closeMenu}>Users</NavLink></li>
+        {isAuth && <li><NavLink to='/posts' onClick={closeMenu}>Posts</NavLink></li>}
+        {isAuth && <li><NavLink to='create-post' onClick={closeMenu}>Create Post</NavLink></li>}
+        {!isAuth && <li><NavLink to='/register' onClick={closeMenu}>Register</NavLink></li>}
+        {!isAuth && <li><NavLink to='/login' onClick={closeMenu}>Login</NavLink></li>}
         {isAuth && <li>
           <Link to='' onClick={logout}>Logout</Link>
         </li>}
