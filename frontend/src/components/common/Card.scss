@@ -37,6 +37,23 @@
       font-size: 1.6rem;
     }
   }
+
+  .name,
+  .email { 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 19rem;
+  }
+
+  .text {
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    overflow: hidden;
+  }
 }
 
 .no-image {
