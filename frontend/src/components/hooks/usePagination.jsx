@@ -13,6 +13,7 @@ const usePagination = (collection) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`http://localhost:5000/api/v1/${collection}?page=${page}`);
         
         setCountArticles(res.data.countPost);

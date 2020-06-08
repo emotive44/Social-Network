@@ -2,6 +2,7 @@ import React from 'react';
 
 import usePagination from '../hooks/usePagination';
 
+import Spinner from '../common/Spinner';
 import Pagination from '../common/Pagination';
 import CardsContainer from '../common/CardsContainer';
 
@@ -19,7 +20,7 @@ const Posts = () => {
 
   return (
     <CardsContainer fetchedData={fetchedData}>
-      {loading && <div>Loading....</div>}
+      {loading && <Spinner />}
 
       <Pagination 
         page={page}

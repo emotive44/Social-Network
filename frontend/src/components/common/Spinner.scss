@@ -1,0 +1,11 @@
+.spinner {
+  img { 
+    width: 100px;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -5%);
+  }
+}
