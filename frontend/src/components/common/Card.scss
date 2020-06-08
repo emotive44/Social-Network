@@ -6,6 +6,8 @@
   margin-bottom: 1rem;
   border-radius: 1.3rem;
   flex-direction: column;
+  min-height: 20rem;
+  padding-top: 1rem;
 
   img { 
     width: 60%;
@@ -15,6 +17,7 @@
   }
 
   p { 
+    margin-top: 0.5rem;
     text-align: center;
   }
 
@@ -49,5 +52,27 @@
   
   p {
     order: 3;
+  }
+}
+
+.landscape { 
+  flex-direction: column-reverse;
+
+  button { 
+    order: 1;
+  }
+  
+  span {
+    order: 2;
+  }
+  
+  p {
+    order: 3;
+  }
+
+  img {
+    width: 90%;
+    margin: auto;
+    order: 4;
   }
 }
