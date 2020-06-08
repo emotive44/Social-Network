@@ -120,13 +120,20 @@ const getAllPosts = async (req, res, next) => {
 
   let posts;
   try {
-    await Post.count({}).then(count => countPost = count);
+    await Post.count({})
+      .populate('creator', 'name')
+      .where('creator')
+      .ne(req.userId)
+      .then(count => countPost = count);
+      
     posts = await Post.find({})
       .skip((currentPage - 1) * perPage)
       .limit(perPage) 
       .populate('creator', 'name')
+      .where('creator')
+      .ne(req.userId)
       .select('text image')
-      .sort({ date: -1 });
+      .sort({ date: -1 })
   } catch (err) {
     return next(
       new HttpError('Fetching posts failed, please try again.', 500)
