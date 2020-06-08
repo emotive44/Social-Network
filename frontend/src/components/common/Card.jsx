@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './Card.scss';
 
 import Button from './Button';
 
 
-const Card = ({ name, email, _id}) => {
+const Card = ({ avatar, name, email, _id, text, image, creator }) => {
   return (
-    <article className="card">
-      <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt=""/>
-      <span>Name: {name}</span>
-      <span>Email: {email}</span>
+    <article className={`card ${!avatar && !image && 'no-image'}`}>
+      {avatar && <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt=""/>}
+      {image && <img src={image} alt=""/>}
 
-      <Link to={`/users/${_id}`}>
+      {name && email ? (<Fragment>
+        <span>Name: {name}</span>
+        <span>Email: {email}</span>
+      </Fragment>) : (<Fragment>
+        <p>{text}</p>
+        <span className='posted-by'>Posted by <small>{creator.name}</small></span>
+      </Fragment>)}
+
+      <Link to={`/${avatar ? 'users' : 'posts'}/${_id}`}>
         <Button 
           type='button'
           primary animation
           style={{ 'borderRadius': '1.3rem', 'width': '100%', 'marginBottom': '0'}}
         >
-          View Profile
+          View {avatar ? 'Profile' : 'Post'}
         </Button>
       </Link>
     </article>

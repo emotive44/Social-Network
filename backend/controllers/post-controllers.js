@@ -114,9 +114,18 @@ const createComment = async (req, res, next) => {
 }
 
 const getAllPosts = async (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 3;
+  let countPost;
+
   let posts;
   try {
-    posts = await Post.find({}).populate('creator', 'name').sort({ date: -1 });
+    await Post.count({}).then(count => countPost = count);
+    posts = await Post.find({})
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage) 
+      .populate('creator', 'name')
+      .sort({ date: -1 });
   } catch (err) {
     return next(
       new HttpError('Fetching posts failed, please try again.', 500)
@@ -129,7 +138,7 @@ const getAllPosts = async (req, res, next) => {
     );
   }
 
-  res.status(200).json(posts);
+  res.status(200).json({ posts, countPost });
 }
 
 const getPostsByUser = async (req, res, next) => {

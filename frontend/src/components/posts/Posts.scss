@@ -1,27 +1,28 @@
-.users {
+.posts {
   margin-top: 7rem;
   min-width: 45rem;
 
-  &-wrapper { 
-    width: 90%;
-    padding: 1rem;
+  &-wrapper {
+    margin: 1rem;
     display: grid;
-    margin: 0 auto;
-    min-width: 30rem;
-    border-radius: 0.3rem;
-    border: 1px solid gray;
     grid-template-columns: repeat(5, 1fr);
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+    min-width: 30rem;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
   }
 }
 
 @media (max-width: 1024px) {
-  .users-wrapper {
+  .posts-wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 600px) {
-  .users-wrapper {
+  .posts-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }

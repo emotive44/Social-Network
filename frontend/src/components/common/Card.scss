@@ -14,9 +14,40 @@
     border-radius: 0.3rem;
   }
 
+  p { 
+    text-align: center;
+  }
+
   span {
     text-align: center;
     margin-bottom: 0.5rem;
   }
 
+  .posted-by { 
+    text-align: end;
+    font-style: italic;
+    margin: 1rem 0.3rem 0 0;
+    
+    small {
+      font-weight: bold;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.no-image {
+  flex-direction: column-reverse;
+  padding-top: 3rem;
+
+  button { 
+    order: 1;
+  }
+  
+  span {
+    order: 2;
+  }
+  
+  p {
+    order: 3;
+  }
 }
