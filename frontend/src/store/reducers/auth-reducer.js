@@ -4,6 +4,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  LOAD_USER_FAIL,
+  LOAD_USER,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -20,6 +22,12 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch(type) {
+    case LOAD_USER:
+      return {
+        ...state,
+        ...payload,
+        loading: false
+      }
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
@@ -29,6 +37,7 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false,
       };
+    case LOAD_USER_FAIL:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:

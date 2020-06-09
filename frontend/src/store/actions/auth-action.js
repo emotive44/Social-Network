@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  LOAD_USER,
+  LOAD_USER_FAIL,
 } from '../types';
 
 
@@ -55,4 +57,16 @@ export const login = (email, password) => async dispatch => {
 
 export const logout = () => async dispatch => {
   dispatch({ type: LOGOUT });
+}
+
+export const loadUser = () => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + 'users/me');
+    dispatch({ 
+      type: LOAD_USER,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({ type: LOAD_USER_FAIL});
+  }
 }

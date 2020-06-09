@@ -58,6 +58,25 @@ const getUserById = async (req, res, next) => {
   res.status(200).json(user);
 }
 
+const getMe = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.userId).select('name _id');
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Your token is expired, please log in.', 401)
+      );
+    }
+    
+    return next(
+      new HttpError('Fetching user failed, please try again.', 500)
+    );
+  }
+  
+  res.status(200).json({ userId: user._id, name: user.name});
+}
+
 const addAndEditPersonalInfo = async (req, res, next) => {
   const userId = req.userId;
   const {
@@ -363,5 +382,6 @@ module.exports = {
   getAllUsers,
   deleteUser,
   register,
-  login
+  login,
+  getMe
 }
