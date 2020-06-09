@@ -1,0 +1,18 @@
+.landing { 
+  display: flex;
+  flex-direction: column-reverse;
+  height: 95vh;
+  min-width: 90rem;
+  margin-top: 3rem;
+  background: url('/landing.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.buttons { 
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  text-align: center;
+}
