@@ -1,0 +1,54 @@
+@import '../../index.scss';
+
+.not-found {
+  height: 96vh;
+  display: flex;
+  margin-top: 2rem;
+  min-width: 90rem;
+  flex-direction: column;
+  background: url('/not-found.png');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  a {
+    width: auto;
+    color: white;
+    margin: 0 auto;
+    padding: 1.3rem;
+    margin-top: 15rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    background: $info-color;
+    transition: 0.3s ease-in-out;
+    border: 1px solid $primary-color;
+
+    &:hover {
+      color: darkblue;
+      background: $white-color;
+      border: 1px solid darkblue;
+    }
+  }
+}
+
+
+@media (max-width: 700px) {
+  .not-found { 
+    height: 92vh;
+    margin-top: 7rem;
+
+    a {
+      margin-top: 9rem;
+    }
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1200px) {
+  .not-found { 
+    height: 93vh;
+    margin-top: 4.5rem;
+
+    a {
+      margin-top: 11rem;
+    }
+  }
+}

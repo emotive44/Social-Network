@@ -14,6 +14,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import Users from './components/users/Users';
 import Posts from './components/posts/Posts';
 import LandingPage from './components/landing-page/LandingPage';
+import NotFoundPage from './components/not-found-page/NotFoundPage';
 
 
 if(localStorage.token) { 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path='/users' component={Users} />
           <Route path='/posts' component={Posts} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
+          <Route component={NotFoundPage} />
         </Switch>
       </Router>
     </Provider>
