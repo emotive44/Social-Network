@@ -12,11 +12,14 @@ const getAllUsers = async (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 3;
   let countPost;
+  const query = req.query.user.trim();
+
+  const regexp = new RegExp("^" + query);
 
   let users;
   try {
-    await User.count({}).then(count => countPost = count);
-    users = await User.find()
+    await User.count(query ? { name: regexp } : {}).then(count => countPost = count);
+    users = await User.find(query ? { name: regexp } : {})
       .skip((currentPage - 1) * perPage)
       .limit(perPage) 
       .select('name _id email avatar');
@@ -28,7 +31,7 @@ const getAllUsers = async (req, res, next) => {
 
   if(users.length < 1) {
     return next(
-      new HttpError('Does not exist users at data.', 404)
+      new HttpError('Sorry, user with this name was not found, please try with other name.', 404)
     );
   }
 

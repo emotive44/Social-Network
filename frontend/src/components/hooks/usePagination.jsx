@@ -4,32 +4,42 @@ import axios from 'axios';
 import Card from '../common/Card';
 
 
-const usePagination = (collection) => {
+const usePagination = (collection, search) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [countArticles, setCountArticles] = useState(0);
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/v1/${collection}?page=${page}`);
+        setErr(null);
         
+        const res = await axios.get(`http://localhost:5000/api/v1/${collection}?page=${page}&user=${search}`);
+
         setCountArticles(res.data.countPost);
         setData(res.data[collection]);
         setLoading(false);
+
       } catch(err) {
+        setErr(err.response.data.message);
+        setCountArticles(1);
         setLoading(false);
       }
     }
     fetchData();
-  }, [page, collection]);
+  }, [page, collection, search]);
 
-
-  const fetchedData = data.map(x => {
-    return <Card {...x} key={x._id}/>
-  });
+  let fetchedData;
+  if(err) {
+    fetchedData = <div style={{gridColumn: 'span 3', color: 'tomato'}}>{err}</div>;
+  } else {
+    fetchedData = data.map(x => {
+      return <Card {...x} key={x._id}/>
+    });
+  }
 
   const prevPage = () => {
     if(page >= 2) {
