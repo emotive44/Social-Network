@@ -1,0 +1,27 @@
+@import '../../index.scss';
+
+.post-comments {
+  height: 10rem;
+  overflow: auto;
+  margin-top: 1rem;
+  border-radius: 0 0 0 0.4rem;
+  background: $light-color;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+  }
+}
+
+.single-post .post-comments {
+  height: 20rem;
+}

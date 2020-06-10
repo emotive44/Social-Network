@@ -16,6 +16,7 @@ import Users from './components/users/Users';
 import Posts from './components/posts/Posts';
 import LandingPage from './components/landing-page/LandingPage';
 import NotFoundPage from './components/not-found-page/NotFoundPage';
+import Post from './components/post/Post';
 
 
 if(localStorage.token) { 
@@ -36,7 +37,8 @@ const App = () => {
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route path='/users' component={Users} />
-          <Route path='/posts' component={Posts} />
+          <Route exact path='/posts' component={Posts} />
+          <Route path='/posts/:postId' component={() => <Post single/>} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
           <Route component={NotFoundPage} />
         </Switch>
