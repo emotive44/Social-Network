@@ -25,9 +25,7 @@
     }
   }
 
-  &-content { 
-    width: auto;
-    border: none;
+  &-contents { 
     margin: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -41,6 +39,7 @@
     }
 
     p { 
+      width: 100%;
       margin-bottom: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid $primary-color;
@@ -49,6 +48,13 @@
     .posted-on { 
       margin-left: auto;
       font-style: italic;
+    }
+
+    &_footer {
+      width: 100%;
+      display: flex;
+      margin-top: 1rem;
+      margin-bottom: -1.5rem;
     }
   }
 
@@ -68,4 +74,21 @@
   width: 50%;
   margin-top: 7rem;
   min-width: 60rem;
+}
+
+.img-portrait { 
+  flex-direction: column;
+  img {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .post-contents_footer {
+    width: 60%;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: -1.5rem;
+  }
 }

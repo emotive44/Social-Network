@@ -37,7 +37,7 @@ const App = () => {
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route path='/users' component={Users} />
-          <Route exact path='/posts' component={Posts} />
+          <Route exact path='/posts' component={Posts} onLeave={store.dispatch(loadUser())}/>
           <Route path='/posts/:postId' component={(props) => <Post single {...props}/>} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
           <Route component={NotFoundPage} />

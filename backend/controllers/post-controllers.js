@@ -176,7 +176,7 @@ const getPostsByUser = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   let post;
   try {
-    post = await Post.findById(req.params.postId);
+    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name');
   } catch (err) {
     if(!post) {
       return next(
