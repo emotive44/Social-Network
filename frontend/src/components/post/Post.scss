@@ -51,6 +51,17 @@
       font-style: italic;
     }
   }
+
+  &-buttons { 
+    width: 98%;
+    display: flex;
+    margin: 0 auto;
+
+    a{
+      width: 100%;
+      color: darkblue;
+    }
+  }
 }
 
 .single-post { 

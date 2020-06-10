@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Post.scss';
 
 import CommentsList from './CommentsList';
-import PostButtons from './PostButtons';
 import Button from '../common/Button';
 
 
 const Post = ({ single }) => {
+  const [toggle, setToggle] = useState(false);
+
+  const commentsToggle = () => {
+    setToggle(!toggle);
+  }
+
   return (
     <article className={`post ${single && 'single-post'}`}>
     <div className="post-header">
@@ -14,6 +19,13 @@ const Post = ({ single }) => {
       <p>Marko Streleshki</p>
     </div>
     <div className="post-content">
+    <Button
+        type='button'
+        primary animation
+        style={{marginTop: '-4rem', width: '16rem'}}
+      >
+        <i className="fas fa-edit" /> Edit Post
+      </Button>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui amet veritatis aperiam magni dolores blanditiis!</p>
       <img src="https://www.programers.in/assets/images/short_term/fornsic.jpg" alt="" />
       <span>
@@ -23,7 +35,7 @@ const Post = ({ single }) => {
       <span className="posted-on">Posted on 26/05/2020</span>
     </div>
   
-    <PostButtons>
+    <div className='post-buttons'>
       <Button 
         type='button'
         light animation
@@ -31,16 +43,19 @@ const Post = ({ single }) => {
       >
         <i className="fas fa-thumbs-up" /> Like
       </Button>
-      <Button
-        type='button'
-        info animation
-        style={{ flex: '1 1 33%', marginRight: '1px'}}
-      >
-        <i className="fas fa-external-link-alt" /> View Post
-      </Button>
+      {single && (
+        <Button
+          type='button'
+          info animation
+          style={{ flex: '1 1 33%', marginRight: '1px'}}
+        >
+          <i className="fas fa-external-link-alt" /> View Post
+        </Button>
+      )}
       <Button
         type='button'
         primary animation
+        clickHandler={commentsToggle}
         style={{ flex: '1 1 33%', marginRight: '1px'}}
       >
         <i className="fas fa-comment-dots" /> Comment
@@ -51,11 +66,11 @@ const Post = ({ single }) => {
         danger animation
         style={{ flex: '1 1 33%', marginRight: '1px'}}
       >
-        <i class="fas fa-trash-alt" /> Delete Post
+        <i className="fas fa-trash-alt" /> Delete Post
       </Button>
-    </PostButtons>
+    </div>
     
-    <CommentsList />
+    {toggle && <CommentsList />}
   </article>
   );
 }

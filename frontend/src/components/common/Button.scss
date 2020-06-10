@@ -48,8 +48,7 @@
     background: $white-color;
 
     &-animation:hover {
-      color: $white-color;
-      background: $primary-color;
+      background: transparent;
       border: 1px solid black;
     }
   }

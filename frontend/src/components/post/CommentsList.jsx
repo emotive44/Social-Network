@@ -4,7 +4,7 @@ import './CommentsList.scss';
 import Comment from './Comment';
 
 
-const CommentsList = () => {
+const CommentsList = ({toggle}) => {
   return (
     <div className='post-comments'>
       <Comment />
