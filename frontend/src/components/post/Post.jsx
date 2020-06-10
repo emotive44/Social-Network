@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Post.scss';
+
+import { connect } from 'react-redux';
+import { getPost } from '../../store/actions/post-action';
 
 import CommentsList from './CommentsList';
 import Button from '../common/Button';
 
 
-const Post = ({ single }) => {
+const Post = ({ single, getPost, match, post }) => {
   const [toggle, setToggle] = useState(false);
 
+  useEffect(() => {
+    getPost(match.params.postId);
+  }, [getPost, match.params.postId]);
+  
   const commentsToggle = () => {
     setToggle(!toggle);
   }
+  
+  console.log(post)
 
   return (
     <article className={`post ${single && 'single-post'}`}>
@@ -75,4 +84,8 @@ const Post = ({ single }) => {
   );
 }
 
-export default Post;
+const mapStateToProps = state => ({
+  post: state.post.post
+}); 
+
+export default connect(mapStateToProps, { getPost })(Post);

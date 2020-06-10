@@ -38,7 +38,7 @@ const App = () => {
           <Route path='/login' component={Login} />
           <Route path='/users' component={Users} />
           <Route exact path='/posts' component={Posts} />
-          <Route path='/posts/:postId' component={() => <Post single/>} />
+          <Route path='/posts/:postId' component={(props) => <Post single {...props}/>} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
           <Route component={NotFoundPage} />
         </Switch>

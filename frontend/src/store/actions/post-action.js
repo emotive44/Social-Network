@@ -3,6 +3,8 @@ import axios from 'axios';
 import {
   CREATE_POST,
   CREATE_POST_FAIL,
+  GET_POST_FAIL,
+  GET_POST
 } from '../types';
 
 
@@ -26,6 +28,20 @@ export const createPost = (text, image) => async dispatch => {
     });
   } catch (err) {
     dispatch({ type: CREATE_POST_FAIL });
+    console.log(err.response.data.message)
+  }
+}
+
+export const getPost = (postId) => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + 'posts/' + postId);
+
+    dispatch({
+      type: GET_POST,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({ type: GET_POST_FAIL });
     console.log(err.response.data.message)
   }
 }

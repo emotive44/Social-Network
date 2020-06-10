@@ -1,6 +1,8 @@
 import {
   CREATE_POST,
   CREATE_POST_FAIL,
+  GET_POST_FAIL,
+  GET_POST,
 } from '../types';
 
 
@@ -20,7 +22,14 @@ export default function (state = initialState , action) {
         loading: false,
         posts: [payload, ...state.posts]
       }
+    case GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false
+      }
     case CREATE_POST_FAIL:
+    case GET_POST_FAIL:
       return {
         ...state,
         loading: false,
