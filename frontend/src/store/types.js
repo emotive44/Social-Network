@@ -9,4 +9,5 @@ export const LOAD_USER_FAIL = 'LOAD_USER_FAIL';
 export const CREATE_POST = 'CREATE_POST';
 export const CREATE_POST_FAIL = 'CREATE_POST_FAIL';
 export const GET_POST = 'GET_POST';
+export const GET_POST_RESET = 'GET_POST_RESET';
 export const GET_POST_FAIL = 'GET_POST_FAIL';

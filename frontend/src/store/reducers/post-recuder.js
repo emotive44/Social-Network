@@ -3,6 +3,7 @@ import {
   CREATE_POST_FAIL,
   GET_POST_FAIL,
   GET_POST,
+  GET_POST_RESET,
 } from '../types';
 
 
@@ -28,8 +29,19 @@ export default function (state = initialState , action) {
         post: payload,
         loading: false
       }
-    case CREATE_POST_FAIL:
     case GET_POST_FAIL:
+      return {
+        ...state,
+        post: null,
+        loading: false
+      }
+    case GET_POST_RESET:
+      return {
+        ...state,
+        post: null,
+        loading: true
+      }
+    case CREATE_POST_FAIL:
       return {
         ...state,
         loading: false,
