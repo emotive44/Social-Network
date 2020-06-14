@@ -10,6 +10,8 @@ import {
   UPDATE_POST_FAIL,
   DELETE_POST_FAIL,
   DELETE_POST,
+  CREATE_COMMENT,
+  CREATE_COMMENT_FAIL,
 } from '../types';
 
 
@@ -53,6 +55,12 @@ export default function (state = initialState , action) {
         loading: false,
         post: { ...state.post, likes: payload }
       }
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        loading: false,
+        post: { ...state.post, comments: [payload, ...state.post.comments]}
+      }
     case GET_POST_RESET:
       return {
         ...state,
@@ -64,6 +72,7 @@ export default function (state = initialState , action) {
     case CREATE_POST_FAIL:
     case UPDATE_POST_FAIL:
     case DELETE_POST_FAIL:
+    case CREATE_COMMENT_FAIL:
       return {
         ...state,
         loading: false,

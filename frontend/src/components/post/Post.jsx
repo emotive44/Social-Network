@@ -143,7 +143,9 @@ const Post = ({
             clickHandler={commentsToggle}
             style={{ flex: '1 1 33%', marginRight: '1px'}}
           >
-            <i className="fas fa-comment-dots" /> Comment
+            <i className="fas fa-comment-dots" /> Comments ({
+              post && post.comments && post.comments.length
+            })
           </Button>
 
           {post && post.creator && post.creator._id === userId && (
@@ -158,7 +160,7 @@ const Post = ({
           )}
         </div>
 
-        {toggle && <CommentsList comments={post.comments}/>}
+        {toggle && <CommentsList comments={post.comments} postId={match.params.postId} />}
       </article>
     </Fragment>
   );

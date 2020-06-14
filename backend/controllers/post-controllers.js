@@ -101,6 +101,15 @@ const createComment = async (req, res, next) => {
     avatar: existUser.avatar
   }
 
+  const currentComment = { 
+    creator: {
+      _id: existUser._id,
+      name: existUser.name
+    },
+    text: req.body.text,
+    avatar: existUser.avatar
+  }
+
   try {
     post.comments.unshift(comment);
     await post.save();
@@ -110,7 +119,7 @@ const createComment = async (req, res, next) => {
     );
   }
 
-  res.status(201).json(post);
+  res.status(201).json(currentComment);
 }
 
 const getAllPosts = async (req, res, next) => {
@@ -176,7 +185,15 @@ const getPostsByUser = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   let post;
   try {
-    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name');
+    post = await Post.findById(req.params.postId)
+      .populate('creator', 'avatar _id name')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'creator',
+          select: 'name',
+        }
+      });
   } catch (err) {
     if(!post) {
       return next(

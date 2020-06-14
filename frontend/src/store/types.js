@@ -17,6 +17,8 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const UPDATE_POST_FAIL = 'UPDATE_POST_FAIL';
 export const DELETE_POST = 'DELETE_POST';
 export const DELETE_POST_FAIL = 'DELETE_POST_FAIL';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const CREATE_COMMENT_FAIL = 'CREATE_COMMENT_FAIL';
 
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';

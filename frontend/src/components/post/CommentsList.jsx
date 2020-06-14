@@ -5,16 +5,19 @@ import './CommentsList.scss';
 import Comment from './Comment';
 import Button from '../common/Button';
 
+import { connect } from 'react-redux';
+import { createComment } from '../../store/actions/post-action';
 
-const CommentsList = ({ comments }) => {
+
+const CommentsList = ({ comments, createComment, postId }) => {
   const { register, handleSubmit, errors } = useForm();
 
   const submit = (data, e) => {
-    console.log(data);
+    createComment(postId, data.text);
     e.target.reset()
   }
-
-  const allComments = comments.map(comment => <Comment />);
+  
+  const allComments = comments.map(comment => <Comment key={comment._id} comment={comment} />);
 
   return (
     <div className='post-comments'>
@@ -52,4 +55,4 @@ const CommentsList = ({ comments }) => {
   );
 }
 
-export default CommentsList;
+export default connect(null, { createComment })(CommentsList);

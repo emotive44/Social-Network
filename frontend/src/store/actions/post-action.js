@@ -11,6 +11,8 @@ import {
   UPDATE_POST,
   DELETE_POST,
   DELETE_POST_FAIL,
+  CREATE_COMMENT_FAIL,
+  CREATE_COMMENT,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -101,5 +103,27 @@ export const deletePost = (postId) => async dispatch => {
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: DELETE_POST_FAIL });
+  }
+}
+
+export const createComment = (postId, text) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ text });
+
+  try {
+    const res = await axios.post(baseUrl + `posts/${postId}/comments`, body, config);
+
+    dispatch({
+      type: CREATE_COMMENT,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: CREATE_COMMENT_FAIL });
   }
 }
