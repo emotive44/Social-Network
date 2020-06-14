@@ -1,10 +1,15 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import './Post.scss';
 
 import { connect } from 'react-redux';
-import { getPost, likeUnlikePost, updatePost } from '../../store/actions/post-action';
+import { 
+  getPost, 
+  deletePost, 
+  updatePost, 
+  likeUnlikePost, 
+} from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types';
 import store from '../../store/store';
 
@@ -25,11 +30,13 @@ const Post = ({
   getPost,
   loading,
   updatePost, 
+  deletePost,
   likeUnlikePost,
 }) => {
   const [toggle, setToggle] = useState(false);
   const [edit, setEdit] = useState(false);
   const { register, handleSubmit, errors } = useForm();
+  const history = useHistory();
   
   useEffect(() => {
     getPost(match.params.postId);
@@ -40,16 +47,15 @@ const Post = ({
     setEdit(!edit);
   }
   
-  const commentsToggle = () => {
-    setToggle(!toggle);
-  }
+  const commentsToggle = () => setToggle(!toggle);
 
-  const likePost = () => {
-    likeUnlikePost(match.params.postId);
-  }
+  const likePost = () => likeUnlikePost(match.params.postId);
 
-  const editPost = () => {
-    setEdit(!edit);
+  const editPost = () => setEdit(!edit);
+
+  const deleteCurrentPost = () => {
+    deletePost(match.params.postId);
+    history.push('/');
   }
 
   return (
@@ -63,6 +69,7 @@ const Post = ({
             }
           }}
         />
+
         <div className="post-header">
           <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt="" />
           {post && post.creator && <p>{post.creator.name}</p>}
@@ -100,7 +107,6 @@ const Post = ({
             </form>
           )}
 
-          
           {post && post.image && <img src={post.image} alt=""/>}
           <div className='post-contents_footer'>
             <span>
@@ -144,6 +150,7 @@ const Post = ({
             <Button
               type='button'
               danger animation
+              clickHandler={deleteCurrentPost}
               style={{ flex: '1 1 33%', marginRight: '1px'}}
             >
               <i className="fas fa-trash-alt" /> Delete Post
@@ -163,4 +170,4 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 }); 
 
-export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost })(Post);
+export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost, deletePost })(Post);

@@ -8,6 +8,8 @@ import {
   LIKE_POST,
   UPDATE_POST,
   UPDATE_POST_FAIL,
+  DELETE_POST_FAIL,
+  DELETE_POST,
 } from '../types';
 
 
@@ -33,6 +35,12 @@ export default function (state = initialState , action) {
         loading: false,
         post: { ...state.post, text: payload }
       }
+    case DELETE_POST:
+      return { 
+        ...state,
+        post: null,
+        loading: false
+      }
     case GET_POST:
       return {
         ...state,
@@ -55,6 +63,7 @@ export default function (state = initialState , action) {
     case LIKE_POST_FAIL:
     case CREATE_POST_FAIL:
     case UPDATE_POST_FAIL:
+    case DELETE_POST_FAIL:
       return {
         ...state,
         loading: false,

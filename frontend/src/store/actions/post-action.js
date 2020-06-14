@@ -9,6 +9,8 @@ import {
   LIKE_POST_FAIL,
   UPDATE_POST_FAIL,
   UPDATE_POST,
+  DELETE_POST,
+  DELETE_POST_FAIL,
 } from '../types';
 
 
@@ -81,5 +83,15 @@ export const updatePost = (postId, text) => async dispatch => {
   } catch (err) {
     console.log(err)
     dispatch({ type: UPDATE_POST_FAIL })
+  }
+}
+
+export const deletePost = (postId) => async dispatch => {
+  try {
+    await axios.delete(baseUrl + `posts/${postId}`);
+
+    dispatch({ type: DELETE_POST });
+  } catch (err) {
+    dispatch({ type: DELETE_POST_FAIL });
   }
 }

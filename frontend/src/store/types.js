@@ -15,3 +15,5 @@ export const LIKE_POST = 'LIKE_POST';
 export const LIKE_POST_FAIL = 'LIKE_POST_FAIL';
 export const UPDATE_POST = 'UPDATE_POST';
 export const UPDATE_POST_FAIL = 'UPDATE_POST_FAIL';
+export const DELETE_POST = 'DELETE_POST';
+export const DELETE_POST_FAIL = 'DELETE_POST_FAIL';
