@@ -20,6 +20,36 @@
     background: grey;
     border-radius: 10px;
   }
+
+  .no-comments { 
+    width: 90%;
+    margin: 0 auto;
+    color: tomato;
+    text-align: center;
+  }
+
+  form {
+    margin-bottom: 1em;
+
+    .create-comment { 
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+    
+    .create-comment input { 
+      flex: 1 1 50%;
+      padding: 0.6em;
+      border-radius: 1em;
+      margin: 0 0.5em;
+      border: 1px solid $primary-color;
+    }
+  }
+
+  .comment-error {
+    margin: 0.5em 0 0 0.5em;
+    color: red;
+  }
 }
 
 .single-post .post-comments {

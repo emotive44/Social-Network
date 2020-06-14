@@ -60,7 +60,7 @@ const Post = ({
 
   return (
     <Fragment>
-      {loading && <Spinner />}
+      {loading && <Spinner style={{width: '50px'}} />}
       <article className={`post ${single && 'single-post'}`}>
         <Prompt 
           message={(location) => {
@@ -158,7 +158,7 @@ const Post = ({
           )}
         </div>
 
-        {toggle && <CommentsList />}
+        {toggle && <CommentsList comments={post.comments}/>}
       </article>
     </Fragment>
   );
