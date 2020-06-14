@@ -10,6 +10,8 @@ import {
   LOAD_USER_FAIL,
 } from '../types';
 
+import { setAlert } from './alert-action';
+
 
 const baseUrl = 'http://localhost:5000/api/v1/';
 
@@ -29,7 +31,10 @@ export const registerUser = (name, email, password) => async dispatch => {
       type: REGISTER_SUCCESS,
       payload: res.data
     });
+
+    dispatch(setAlert('You are register successfully.', 'success'));
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: REGISTER_FAIL});
   }
 }
@@ -50,12 +55,16 @@ export const login = (email, password) => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: res.data
     });
+
+    dispatch(setAlert('You are logged in successfully.', 'success'));
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: LOGIN_FAIL });
   }
 }
 
 export const logout = () => async dispatch => {
+  dispatch(setAlert('You are logout successfully.', 'success'));
   dispatch({ type: LOGOUT });
 }
 
@@ -67,6 +76,7 @@ export const loadUser = () => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: LOAD_USER_FAIL});
   }
 }

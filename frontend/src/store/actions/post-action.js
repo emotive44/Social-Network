@@ -13,6 +13,8 @@ import {
   DELETE_POST_FAIL,
 } from '../types';
 
+import { setAlert } from './alert-action';
+
 
 const baseUrl = 'http://localhost:5000/api/v1/';
 
@@ -32,9 +34,12 @@ export const createPost = (text, image) => async dispatch => {
       type: CREATE_POST,
       payload: res.data
     });
+
+    dispatch(setAlert('Creat post successfully.', 'success'));
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: CREATE_POST_FAIL });
-    console.log(err.response.data.message)
+
   }
 }
 
@@ -47,8 +52,8 @@ export const getPost = (postId) => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: GET_POST_FAIL });
-    console.log(err.response.data.message)
   }
 }
 
@@ -61,6 +66,7 @@ export const likeUnlikePost = (postId) => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: LIKE_POST_FAIL });
   }
 }
@@ -91,7 +97,9 @@ export const deletePost = (postId) => async dispatch => {
     await axios.delete(baseUrl + `posts/${postId}`);
 
     dispatch({ type: DELETE_POST });
+    dispatch(setAlert('Delete post successfully.', 'success'));
   } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: DELETE_POST_FAIL });
   }
 }
