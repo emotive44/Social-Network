@@ -1,0 +1,32 @@
+@import '../../index.scss';
+
+.alert {
+  top: 7rem;
+  left: 4rem;
+  width: 50%;
+  z-index: 9;
+  opacity: 0.9;
+  position: fixed;
+  padding: 0.8rem;
+  font-size: 1.7rem;
+  border-radius: 0.3em;
+  animation: cssAnimation 3s forwards;
+}
+
+@keyframes cssAnimation {
+  0%    { opacity: 1; }
+  25%   { opacity: 0.7; }
+  50%   { opacity: 0.5; }
+  75%   { opacity: 0.3; }
+  100%  { opacity: 0; }
+}
+
+.alert-danger {
+  background: rgb(168, 13, 13);
+  color: $white-color;
+}
+
+.alert-success {
+  background: rgb(14, 128, 14);
+  color: $white-color;
+}

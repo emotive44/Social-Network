@@ -17,6 +17,7 @@ import Posts from './components/posts/Posts';
 import LandingPage from './components/landing-page/LandingPage';
 import NotFoundPage from './components/not-found-page/NotFoundPage';
 import Post from './components/post/Post';
+import Alert from './components/common/Alert';
 
 
 if(localStorage.token) { 
@@ -32,6 +33,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <NavBar />
+        <Alert />
         <Switch>
           <Route exact path='/' component={LandingPage} />
           <Route path='/register' component={Register} />
