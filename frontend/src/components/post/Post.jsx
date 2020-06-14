@@ -3,7 +3,7 @@ import { Prompt } from 'react-router-dom';
 import './Post.scss';
 
 import { connect } from 'react-redux';
-import { getPost } from '../../store/actions/post-action';
+import { getPost, likeUnlikePost } from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types';
 import store from '../../store/store';
 
@@ -16,7 +16,15 @@ import Button from '../common/Button';
 import Spinner from '../common/Spinner';
 
 
-const Post = ({ single,getPost, match, post, loading, userId }) => {
+const Post = ({ 
+  post, 
+  match, 
+  single, 
+  userId, 
+  getPost,
+  loading,
+  likeUnlikePost, 
+}) => {
   const [toggle, setToggle] = useState(false);
   console.log(match)
   
@@ -26,6 +34,10 @@ const Post = ({ single,getPost, match, post, loading, userId }) => {
   
   const commentsToggle = () => {
     setToggle(!toggle);
+  }
+
+  const likePost = () => {
+    likeUnlikePost(match.params.postId);
   }
 
   return (
@@ -56,7 +68,7 @@ const Post = ({ single,getPost, match, post, loading, userId }) => {
           <div className='post-contents_footer'>
             <span>
               <i className="fas fa-thumbs-up" />{'    '}
-              {post && post.likes.length} likes
+              {post && post.likes && post.likes.length} likes
             </span>
             <span className="posted-on">
               Posted on <Moment format='YYYY/MM/DD'>{post && post.date}</Moment>
@@ -69,6 +81,7 @@ const Post = ({ single,getPost, match, post, loading, userId }) => {
             type='button'
             light animation
             style={{ flex: '1 1 33%', marginRight: '1px'}}
+            clickHandler={likePost}
             >
             <i className="fas fa-thumbs-up" /> Like
           </Button>
@@ -113,4 +126,4 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 }); 
 
-export default connect(mapStateToProps, { getPost })(Post);
+export default connect(mapStateToProps, { getPost, likeUnlikePost })(Post);

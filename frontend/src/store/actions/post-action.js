@@ -4,7 +4,9 @@ import {
   CREATE_POST,
   CREATE_POST_FAIL,
   GET_POST_FAIL,
-  GET_POST
+  GET_POST,
+  LIKE_POST,
+  LIKE_POST_FAIL,
 } from '../types';
 
 
@@ -43,5 +45,18 @@ export const getPost = (postId) => async dispatch => {
   } catch (err) {
     dispatch({ type: GET_POST_FAIL });
     console.log(err.response.data.message)
+  }
+}
+
+export const likeUnlikePost = (postId) => async dispatch => {
+  try {
+    const res = await axios.put(baseUrl + `posts/${postId}/like`);
+
+    dispatch({
+      type: LIKE_POST,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({ type: LIKE_POST_FAIL });
   }
 }

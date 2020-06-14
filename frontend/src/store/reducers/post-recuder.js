@@ -4,6 +4,8 @@ import {
   GET_POST_FAIL,
   GET_POST,
   GET_POST_RESET,
+  LIKE_POST_FAIL,
+  LIKE_POST,
 } from '../types';
 
 
@@ -29,11 +31,11 @@ export default function (state = initialState , action) {
         post: payload,
         loading: false
       }
-    case GET_POST_FAIL:
+    case LIKE_POST:
       return {
         ...state,
-        post: null,
-        loading: false
+        loading: false,
+        post: { ...state.post, likes: payload }
       }
     case GET_POST_RESET:
       return {
@@ -41,6 +43,8 @@ export default function (state = initialState , action) {
         post: null,
         loading: true
       }
+    case GET_POST_FAIL:
+    case LIKE_POST_FAIL:
     case CREATE_POST_FAIL:
       return {
         ...state,

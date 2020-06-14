@@ -237,7 +237,7 @@ const likeUnlikePost = async (req, res, next) => {
     );
   }
 
-  res.status(201).json(post);
+  res.status(201).json(post.likes);
 }
 
 const updatePost = async (req, res, next) => {

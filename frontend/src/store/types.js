@@ -11,3 +11,5 @@ export const CREATE_POST_FAIL = 'CREATE_POST_FAIL';
 export const GET_POST = 'GET_POST';
 export const GET_POST_RESET = 'GET_POST_RESET';
 export const GET_POST_FAIL = 'GET_POST_FAIL';
+export const LIKE_POST = 'LIKE_POST';
+export const LIKE_POST_FAIL = 'LIKE_POST_FAIL';
