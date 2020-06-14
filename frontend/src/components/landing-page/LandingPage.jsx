@@ -4,33 +4,41 @@ import './LandingPage.scss';
 
 import Button from '../common/Button';
 
+import { connect } from 'react-redux';
 
-const LandingPage = () => {
+
+const LandingPage = ({ isAuth }) => {
   return (
     <section className="landing">
-      <div className="buttons">
-        <Link to='/login'>
-          <Button 
-            type='button' 
-            primary animation
-            style={{display: 'inline-block', fontSize: '1.6rem', padding: '1.5rem'}}
-          >
-            Login
-          </Button>
-        </Link>
+      {!isAuth && (
+        <div className="buttons">
+          <Link to='/login'>
+            <Button 
+              type='button' 
+              primary animation
+              style={{display: 'inline-block', fontSize: '1.6rem', padding: '1.5rem'}}
+            >
+              Login
+            </Button>
+          </Link>
 
-        <Link to='/register'>
-          <Button 
-            type='button' 
-            info animation
-            style={{display: 'inline-block', marginLeft: '2.2rem', fontSize: '1.6rem', padding: '1.5rem'}}
-          >
-            Register
-          </Button>
-        </Link>
-      </div>
+          <Link to='/register'>
+            <Button 
+              type='button' 
+              info animation
+              style={{display: 'inline-block', marginLeft: '2.2rem', fontSize: '1.6rem', padding: '1.5rem'}}
+            >
+              Register
+            </Button>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
 
-export default LandingPage;
+const mapStateToProps = state => ({
+  isAuth: state.auth.userId
+});
+
+export default connect(mapStateToProps)(LandingPage);
