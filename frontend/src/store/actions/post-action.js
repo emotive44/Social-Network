@@ -7,6 +7,8 @@ import {
   GET_POST,
   LIKE_POST,
   LIKE_POST_FAIL,
+  UPDATE_POST_FAIL,
+  UPDATE_POST,
 } from '../types';
 
 
@@ -58,5 +60,26 @@ export const likeUnlikePost = (postId) => async dispatch => {
     });
   } catch (err) {
     dispatch({ type: LIKE_POST_FAIL });
+  }
+}
+
+export const updatePost = (postId, text) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ text });
+
+  try {
+    const res = await axios.put(baseUrl + `posts/${postId}`, body, config);
+    dispatch({
+      type: UPDATE_POST,
+      payload: res.data
+    });
+  } catch (err) {
+    console.log(err)
+    dispatch({ type: UPDATE_POST_FAIL })
   }
 }

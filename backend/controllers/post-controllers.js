@@ -281,7 +281,7 @@ const updatePost = async (req, res, next) => {
     );
   }
   
-  res.status(201).json(post);
+  res.status(201).json(post.text);
 }
 
 const deleteComment = async (req, res, next) => {

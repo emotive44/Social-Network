@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Prompt } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import './Post.scss';
 
 import { connect } from 'react-redux';
-import { getPost, likeUnlikePost } from '../../store/actions/post-action';
+import { getPost, likeUnlikePost, updatePost } from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types';
 import store from '../../store/store';
 
@@ -23,14 +24,21 @@ const Post = ({
   userId, 
   getPost,
   loading,
-  likeUnlikePost, 
+  updatePost, 
+  likeUnlikePost,
 }) => {
   const [toggle, setToggle] = useState(false);
-  console.log(match)
+  const [edit, setEdit] = useState(false);
+  const { register, handleSubmit, errors } = useForm();
   
   useEffect(() => {
     getPost(match.params.postId);
   }, [getPost, match.params.postId]);
+
+  const submit = (data) => {
+    updatePost(match.params.postId, data.text);
+    setEdit(!edit);
+  }
   
   const commentsToggle = () => {
     setToggle(!toggle);
@@ -38,6 +46,10 @@ const Post = ({
 
   const likePost = () => {
     likeUnlikePost(match.params.postId);
+  }
+
+  const editPost = () => {
+    setEdit(!edit);
   }
 
   return (
@@ -56,14 +68,39 @@ const Post = ({
           {post && post.creator && <p>{post.creator.name}</p>}
         </div>
         <div className={`post-contents img-${post && post.image && imageOrientation(post.image)}`}>
-          <Button
-            type='button'
-            primary animation
-            style={{marginTop: '-4rem', width: '16rem'}}
-            >
-            <i className="fas fa-edit" /> Edit Post
-          </Button>
-          {post && <p>{post.text}</p>}
+          {post && post.creator && post.creator._id === userId && (
+            <Button
+              type='button'
+              primary animation
+              clickHandler={editPost}
+              style={{marginTop: '-4rem', width: '16rem'}}
+              >
+              <i className="fas fa-edit" /> Edit Post
+            </Button>
+          )}
+
+          {post && !edit && <p>{post.text}</p>}
+          {post && edit && (
+            <form className='post-edit' onSubmit={handleSubmit(submit)}>
+              <textarea 
+                name='text'
+                defaultValue={post.text}
+                ref={register({ 
+                  required: 'Description is required.',
+                  validate: value => value === post.text ? 'You have to make changes first.' : undefined
+                })}
+              />
+             {errors && errors.text && <span>{errors.text.message}</span>}
+              <Button 
+                type='submit'
+                light animation
+              >
+                Send
+              </Button> 
+            </form>
+          )}
+
+          
           {post && post.image && <img src={post.image} alt=""/>}
           <div className='post-contents_footer'>
             <span>
@@ -80,8 +117,8 @@ const Post = ({
           <Button 
             type='button'
             light animation
-            style={{ flex: '1 1 33%', marginRight: '1px'}}
             clickHandler={likePost}
+            style={{ flex: '1 1 33%', marginRight: '1px'}}
             >
             <i className="fas fa-thumbs-up" /> Like
           </Button>
@@ -126,4 +163,4 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 }); 
 
-export default connect(mapStateToProps, { getPost, likeUnlikePost })(Post);
+export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost })(Post);
