@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './Comment.scss';
+
+import Moment from 'react-moment';
 
 import { connect } from 'react-redux';
 import { deleteComment } from '../../store/actions/post-action';
@@ -19,9 +21,17 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
           {comment.text}
         </p>
         {comment.creator._id === isAuth && (
-          <small className="delete-comment" onClick={deleteCurrComment}>
-            Delete Comment
-          </small>
+          <Fragment>
+            <small className="delete-comment" onClick={deleteCurrComment}>
+              Delete Comment
+            </small>
+            <small className='comment-date'>
+              Commented on {'    '}
+              <Moment format='YYYY/MM/DD'>
+                {comment.date}
+              </Moment>
+            </small>
+          </Fragment>
         )}
       </div>
     </div>

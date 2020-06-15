@@ -1,3 +1,5 @@
+@import '../../index.scss';
+
 .post-comment { 
   margin: 1rem;
   display: flex;
@@ -25,8 +27,15 @@
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-    padding-bottom: 0.1rem;
     background: transparent;
     border-bottom: 1px solid red;
+  }
+
+  .comment-date { 
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-left: 0.5em;
+    color: $primary-color;
+    border-bottom: 1px solid $primary-color;
   }
 }
