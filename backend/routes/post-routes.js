@@ -27,6 +27,8 @@ router.get('/', postControllers.getAllPosts);
 
 router.get('/by/:userId', postControllers.getPostsByUser);
 
+router.get('/:postId/comments', postControllers.getPostComments);
+
 router.get('/:postId', postControllers.getPostById);
 
 router.put('/:postId/like', postControllers.likeUnlikePost);

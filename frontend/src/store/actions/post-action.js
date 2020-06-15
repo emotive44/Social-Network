@@ -8,6 +8,7 @@ import {
   DELETE_POST,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  GET_POST_COMMENTS,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -22,6 +23,19 @@ export const getPost = (postId) => async dispatch => {
     dispatch({
       type: GET_POST,
       payload: res.data
+    });
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: POST_ERROR });
+  }
+}
+
+export const getPostComments = (postId, count) => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + `posts/${postId}/comments?count=${count}`);
+    dispatch({
+      type: GET_POST_COMMENTS,
+      payload: res.data.comments
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));

@@ -9,6 +9,7 @@ import {
   deletePost, 
   updatePost, 
   likeUnlikePost, 
+  getPostComments,
 } from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types';
 import store from '../../store/store';
@@ -32,6 +33,7 @@ const Post = ({
   updatePost, 
   deletePost,
   likeUnlikePost,
+  getPostComments,
 }) => {
   const [toggle, setToggle] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -140,7 +142,7 @@ const Post = ({
           <Button
             type='button'
             primary animation
-            clickHandler={commentsToggle}
+            clickHandler={()=>{commentsToggle(); getPostComments(match.params.postId)}}
             style={{ flex: '1 1 33%', marginRight: '1px'}}
           >
             <i className="fas fa-comment-dots" /> Comments ({
@@ -172,4 +174,4 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 }); 
 
-export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost, deletePost })(Post);
+export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost, deletePost, getPostComments })(Post);

@@ -123,6 +123,34 @@ const createComment = async (req, res, next) => {
   res.status(201).json(currentComment);
 }
 
+const getPostComments =async (req, res, next) => {
+  const countOfComments = +req.query.count || 3;
+  let postComments;
+  try {
+    postComments = await Post.findById(req.params.postId)
+      .select('comments')
+      .slice('comments', countOfComments)
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'creator',
+          select: 'name',
+        }
+      });
+  } catch (err) {
+    if(!postComments) {
+      return next(
+        new HttpError('Fetching comments failed, does not exist any comments.', 404)
+      );
+    }
+    return next(
+      new HttpError('Fetching post failed.', 500)
+    );
+  }
+
+  res.status(200).json(postComments);
+}
+
 const getAllPosts = async (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 3;
@@ -186,15 +214,8 @@ const getPostsByUser = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   let post;
   try {
-    post = await Post.findById(req.params.postId)
-      .populate('creator', 'avatar _id name')
-      .populate({
-        path: 'comments',
-        populate: {
-          path: 'creator',
-          select: 'name',
-        }
-      });
+    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name');
+
   } catch (err) {
     if(!post) {
       return next(
@@ -409,4 +430,5 @@ module.exports = {
   likeUnlikePost,
   createComment,
   deleteComment,
+  getPostComments,
 }

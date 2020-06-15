@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './CommentsList.scss';
 
@@ -6,20 +6,30 @@ import Comment from './Comment';
 import Button from '../common/Button';
 
 import { connect } from 'react-redux';
-import { createComment } from '../../store/actions/post-action';
+import { createComment, getPostComments } from '../../store/actions/post-action';
 
 
-const CommentsList = ({ comments, createComment, postId }) => {
+const CommentsList = ({ comments, createComment, postId, currComments, getPostComments }) => {
   const { register, handleSubmit, errors } = useForm();
+  const [countOfComments, setCountOfComments] = useState(6);
+
+  const showComments = () => {
+    if(countOfComments - 3 > comments.length) { 
+      return;
+    }
+
+    setCountOfComments(countOfComments + 3);
+    getPostComments(postId, countOfComments);
+  }
 
   const submit = (data, e) => {
     createComment(postId, data.text);
     e.target.reset()
   }
-  
-  const allComments = comments.map(comment => (
-    <Comment key={comment._id} comment={comment} postId={postId}/>)
-  );
+
+  const allComments = currComments && currComments.map(comment => (
+    <Comment key={comment._id} comment={comment} postId={postId}/>
+  ));
 
   return (
     <div className='post-comments'>
@@ -50,6 +60,13 @@ const CommentsList = ({ comments, createComment, postId }) => {
 
       {allComments}
 
+      {countOfComments - 3 > comments.length ? (
+          comments.length > 1 && <span className='no-more-comments'>Does not have more comments</span>
+        ) : (
+          <span onClick={showComments} className='more-comments'>show more comments</span>
+        )
+      }
+
       {comments.length < 1 && <p className='no-comments'>
         Not comments yet. Write first comment here.
       </p>}
@@ -57,4 +74,8 @@ const CommentsList = ({ comments, createComment, postId }) => {
   );
 }
 
-export default connect(null, { createComment })(CommentsList);
+const mapStateToProps = state => ({
+  currComments: state.post.post.currComments
+});
+
+export default connect(mapStateToProps, { createComment, getPostComments })(CommentsList);

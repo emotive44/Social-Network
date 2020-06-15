@@ -11,6 +11,7 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const GET_POST_COMMENTS = 'GET_POST_COMMENTS';
 export const POST_ERROR = 'POST_ERROR';
 
 export const SET_ALERT = 'SET_ALERT';

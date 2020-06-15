@@ -7,6 +7,7 @@ import {
   GET_POST_RESET,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  GET_POST_COMMENTS,
 } from '../types';
 
 
@@ -38,6 +39,12 @@ export default function (state = initialState , action) {
         post: payload,
         loading: false
       }
+    case GET_POST_COMMENTS:
+      return {
+        ...state,
+        loading: false,
+        post: { ...state.post, currComments: [...payload] }
+      }
     case LIKE_POST:
       return {
         ...state,
@@ -48,13 +55,21 @@ export default function (state = initialState , action) {
       return {
         ...state,
         loading: false,
-        post: { ...state.post, comments: [payload, ...state.post.comments]}
+        post: { 
+          ...state.post, 
+          comments: [payload, ...state.post.comments], 
+          currComments: [payload, ...state.post.currComments]
+        }
       }
     case DELETE_COMMENT:
       return {
         ...state,
         loading: false,
-        post: { ...state.post, comments: state.post.comments.filter(comment => comment._id !== payload) }
+        post: { 
+          ...state.post, 
+          comments: state.post.comments.filter(comment => comment._id !== payload),
+          currComments: state.post.currComments.filter(comment => comment._id !== payload) 
+        }
       }
     case GET_POST_RESET:
       return {
