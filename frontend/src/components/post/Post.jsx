@@ -146,7 +146,7 @@ const Post = ({
             style={{ flex: '1 1 33%', marginRight: '1px'}}
           >
             <i className="fas fa-comment-dots" /> Comments ({
-              post && post.comments && post.comments.length
+              post && post.comments && post.comments
             })
           </Button>
 

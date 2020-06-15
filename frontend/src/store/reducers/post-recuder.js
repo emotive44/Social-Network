@@ -57,7 +57,7 @@ export default function (state = initialState , action) {
         loading: false,
         post: { 
           ...state.post, 
-          comments: [payload, ...state.post.comments], 
+          comments: state.post.comments + 1,
           currComments: [payload, ...state.post.currComments]
         }
       }
@@ -67,7 +67,7 @@ export default function (state = initialState , action) {
         loading: false,
         post: { 
           ...state.post, 
-          comments: state.post.comments.filter(comment => comment._id !== payload),
+          comments: state.post.comments - 1,
           currComments: state.post.currComments.filter(comment => comment._id !== payload) 
         }
       }

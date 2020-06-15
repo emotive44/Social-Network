@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/httpError-model');
 const Post = require('../models/post-model');
 const User = require('../models/user-model');
+const { count } = require('../models/post-model');
 
 
 const createPost = async (req, res, next) => {
@@ -214,7 +215,7 @@ const getPostsByUser = async (req, res, next) => {
 const getPostById = async (req, res, next) => {
   let post;
   try {
-    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name');
+    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name')
 
   } catch (err) {
     if(!post) {
@@ -228,7 +229,17 @@ const getPostById = async (req, res, next) => {
     );
   }
 
-  res.status(200).json(post);
+  const { _id, text, likes, creator, comments } = post;
+
+  const currentPost = {
+    _id,
+    text,
+    likes,
+    creator,
+    comments: comments.length
+  }
+  
+  res.status(200).json(currentPost);
 }
 
 const likeUnlikePost = async (req, res, next) => {
