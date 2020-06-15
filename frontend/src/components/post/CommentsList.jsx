@@ -17,7 +17,7 @@ const CommentsList = ({ comments, createComment, postId }) => {
     e.target.reset()
   }
   
-  const allComments = comments.map(comment => <Comment key={comment._id} comment={comment} />);
+  const allComments = comments.map(comment => <Comment key={comment._id} comment={comment} postId={postId}/>);
 
   return (
     <div className='post-comments'>

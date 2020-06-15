@@ -12,6 +12,8 @@ import {
   DELETE_POST,
   CREATE_COMMENT,
   CREATE_COMMENT_FAIL,
+  DELETE_COMMENT_FAIL,
+  DELETE_COMMENT,
 } from '../types';
 
 
@@ -61,6 +63,12 @@ export default function (state = initialState , action) {
         loading: false,
         post: { ...state.post, comments: [payload, ...state.post.comments]}
       }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        loading: false,
+        post: { ...state.post, comments: state.post.comments.filter(comment => comment._id != payload) }
+      }
     case GET_POST_RESET:
       return {
         ...state,
@@ -72,6 +80,7 @@ export default function (state = initialState , action) {
     case CREATE_POST_FAIL:
     case UPDATE_POST_FAIL:
     case DELETE_POST_FAIL:
+    case DELETE_COMMENT_FAIL:
     case CREATE_COMMENT_FAIL:
       return {
         ...state,

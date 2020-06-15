@@ -113,6 +113,7 @@ const createComment = async (req, res, next) => {
   try {
     post.comments.unshift(comment);
     await post.save();
+    currentComment._id = post.comments[0]._id;
   } catch (err) {
     return next(
       new HttpError('Add comment failed, please try again.', 500)

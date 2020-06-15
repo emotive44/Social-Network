@@ -13,6 +13,8 @@ import {
   DELETE_POST_FAIL,
   CREATE_COMMENT_FAIL,
   CREATE_COMMENT,
+  DELETE_COMMENT,
+  DELETE_COMMENT_FAIL,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -125,5 +127,17 @@ export const createComment = (postId, text) => async dispatch => {
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: CREATE_COMMENT_FAIL });
+  }
+}
+
+export const deleteComment = (postId, commentId) => async dispatch => {
+  try {
+    await axios.delete(baseUrl + `posts/${postId}/comments/${commentId}`);
+    
+    dispatch({ type: DELETE_COMMENT, payload: commentId });
+    dispatch(setAlert('Delete comment successfully.', 'success'));
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: DELETE_COMMENT_FAIL });
   }
 }

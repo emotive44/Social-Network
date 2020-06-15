@@ -2,9 +2,14 @@ import React from 'react';
 import './Comment.scss';
 
 import { connect } from 'react-redux';
+import { deleteComment } from '../../store/actions/post-action';
 
 
-const Comment = ({ comment, isAuth }) => {
+const Comment = ({ comment, isAuth, deleteComment, postId }) => {
+  const deleteCurrComment = () => {
+    deleteComment(postId, comment._id)
+  }
+  
   return (
     <div className="post-comment">
       <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt="" />
@@ -14,7 +19,9 @@ const Comment = ({ comment, isAuth }) => {
           {comment.text}
         </p>
         {comment.creator._id === isAuth && (
-          <small className="delete-comment">Delete Comment</small>
+          <small className="delete-comment" onClick={deleteCurrComment}>
+            Delete Comment
+          </small>
         )}
       </div>
     </div>
@@ -25,4 +32,4 @@ const mapStateToProps = state => ({
   isAuth: state.auth.userId
 });
 
-export default connect(mapStateToProps)(Comment);
+export default connect(mapStateToProps, { deleteComment })(Comment);
