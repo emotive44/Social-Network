@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
   LOGOUT,
   LOAD_USER,
-  LOAD_USER_FAIL,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -35,7 +33,7 @@ export const registerUser = (name, email, password) => async dispatch => {
     dispatch(setAlert('You are register successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: REGISTER_FAIL});
+    dispatch({ type: AUTH_ERROR });
   }
 }
 
@@ -59,7 +57,7 @@ export const login = (email, password) => async dispatch => {
     dispatch(setAlert('You are logged in successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: LOGIN_FAIL });
+    dispatch({ type: AUTH_ERROR });
   }
 }
 
@@ -77,6 +75,6 @@ export const loadUser = () => async dispatch => {
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: LOAD_USER_FAIL});
+    dispatch({ type: AUTH_ERROR });
   }
 }

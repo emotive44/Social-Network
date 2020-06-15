@@ -1,11 +1,9 @@
 import { 
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
   LOGOUT,
-  LOAD_USER_FAIL,
   LOAD_USER,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -37,9 +35,7 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false,
       };
-    case LOAD_USER_FAIL:
-    case REGISTER_FAIL:
-    case LOGIN_FAIL:
+    case AUTH_ERROR:
     case LOGOUT:
       localStorage.removeItem('token');
       return {

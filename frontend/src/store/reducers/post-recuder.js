@@ -1,18 +1,12 @@
 import {
-  CREATE_POST,
-  CREATE_POST_FAIL,
-  GET_POST_FAIL,
   GET_POST,
-  GET_POST_RESET,
-  LIKE_POST_FAIL,
   LIKE_POST,
+  POST_ERROR,
+  CREATE_POST,
   UPDATE_POST,
-  UPDATE_POST_FAIL,
-  DELETE_POST_FAIL,
   DELETE_POST,
+  GET_POST_RESET,
   CREATE_COMMENT,
-  CREATE_COMMENT_FAIL,
-  DELETE_COMMENT_FAIL,
   DELETE_COMMENT,
 } from '../types';
 
@@ -67,7 +61,7 @@ export default function (state = initialState , action) {
       return {
         ...state,
         loading: false,
-        post: { ...state.post, comments: state.post.comments.filter(comment => comment._id != payload) }
+        post: { ...state.post, comments: state.post.comments.filter(comment => comment._id !== payload) }
       }
     case GET_POST_RESET:
       return {
@@ -75,13 +69,7 @@ export default function (state = initialState , action) {
         post: null,
         loading: true
       }
-    case GET_POST_FAIL:
-    case LIKE_POST_FAIL:
-    case CREATE_POST_FAIL:
-    case UPDATE_POST_FAIL:
-    case DELETE_POST_FAIL:
-    case DELETE_COMMENT_FAIL:
-    case CREATE_COMMENT_FAIL:
+    case POST_ERROR:
       return {
         ...state,
         loading: false,

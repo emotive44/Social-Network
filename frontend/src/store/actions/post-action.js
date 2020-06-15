@@ -1,20 +1,14 @@
 import axios from 'axios';
 
 import {
-  CREATE_POST,
-  CREATE_POST_FAIL,
-  GET_POST_FAIL,
   GET_POST,
   LIKE_POST,
-  LIKE_POST_FAIL,
-  UPDATE_POST_FAIL,
+  POST_ERROR,
   UPDATE_POST,
   DELETE_POST,
-  DELETE_POST_FAIL,
-  CREATE_COMMENT_FAIL,
+  CREATE_POST,
   CREATE_COMMENT,
   DELETE_COMMENT,
-  DELETE_COMMENT_FAIL,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -42,7 +36,7 @@ export const createPost = (text, image) => async dispatch => {
     dispatch(setAlert('Creat post successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: CREATE_POST_FAIL });
+    dispatch({ type: POST_ERROR });
 
   }
 }
@@ -57,7 +51,7 @@ export const getPost = (postId) => async dispatch => {
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: GET_POST_FAIL });
+    dispatch({ type: POST_ERROR });
   }
 }
 
@@ -71,7 +65,7 @@ export const likeUnlikePost = (postId) => async dispatch => {
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: LIKE_POST_FAIL });
+    dispatch({ type: POST_ERROR });
   }
 }
 
@@ -91,8 +85,8 @@ export const updatePost = (postId, text) => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    console.log(err)
-    dispatch({ type: UPDATE_POST_FAIL })
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: POST_ERROR });
   }
 }
 
@@ -104,7 +98,7 @@ export const deletePost = (postId) => async dispatch => {
     dispatch(setAlert('Delete post successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: DELETE_POST_FAIL });
+    dispatch({ type: POST_ERROR });
   }
 }
 
@@ -126,7 +120,7 @@ export const createComment = (postId, text) => async dispatch => {
     })
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: CREATE_COMMENT_FAIL });
+    dispatch({ type: POST_ERROR });
   }
 }
 
@@ -138,6 +132,6 @@ export const deleteComment = (postId, commentId) => async dispatch => {
     dispatch(setAlert('Delete comment successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: DELETE_COMMENT_FAIL });
+    dispatch({ type: POST_ERROR });
   }
 }
