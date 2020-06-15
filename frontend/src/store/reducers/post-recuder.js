@@ -2,7 +2,6 @@ import {
   GET_POST,
   LIKE_POST,
   POST_ERROR,
-  CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
   GET_POST_RESET,
@@ -21,12 +20,6 @@ export default function (state = initialState , action) {
   const { type, payload } = action;
 
   switch(type) {
-    case CREATE_POST:
-      return {
-        ...state,
-        loading: false,
-        posts: [payload, ...state.posts]
-      }
     case UPDATE_POST:
       return {
         ...state,

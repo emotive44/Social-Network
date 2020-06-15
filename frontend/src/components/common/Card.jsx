@@ -18,7 +18,7 @@ const Card = ({ avatar, name, email, _id, text, image, creator }) => {
         <span className='email'>Email: {email}</span>
       </Fragment>) : (<Fragment>
         <p className='text'>{text}</p>
-        <span className='posted-by'>Posted by <small>{creator.name}</small></span>
+        <span className='posted-by'>Posted by <small>{creator && creator.name}</small></span>
       </Fragment>)}
 
       <Link to={`/${avatar ? 'users' : 'posts'}/${_id}`}>

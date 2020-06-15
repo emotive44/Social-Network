@@ -6,7 +6,6 @@ import {
   POST_ERROR,
   UPDATE_POST,
   DELETE_POST,
-  CREATE_POST,
   CREATE_COMMENT,
   DELETE_COMMENT,
 } from '../types';
@@ -15,31 +14,6 @@ import { setAlert } from './alert-action';
 
 
 const baseUrl = 'http://localhost:5000/api/v1/';
-
-export const createPost = (text, image) => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const body = JSON.stringify({ text, image });
-
-  try {
-    const res = await axios.post(baseUrl + 'posts', body, config);
-
-    dispatch({
-      type: CREATE_POST,
-      payload: res.data
-    });
-
-    dispatch(setAlert('Creat post successfully.', 'success'));
-  } catch (err) {
-    dispatch(setAlert(err.response.data.message, 'danger'));
-    dispatch({ type: POST_ERROR });
-
-  }
-}
 
 export const getPost = (postId) => async dispatch => {
   try {

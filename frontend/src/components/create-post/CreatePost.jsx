@@ -1,21 +1,41 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import './CreatePost.scss';
 
+import axios from 'axios';
+
 import { connect } from 'react-redux';
-import { createPost } from '../../store/actions/post-action';
+import { setAlert } from '../../store/actions/alert-action';
 
 import FormWrapper from '../common/FormWrapper';
 import Button from '../common/Button';
 import Input from '../common/Input';
 
 
-const CreatePost = ({ createPost }) => {
+const CreatePost = ({ setAlert }) => {
   const { register, handleSubmit, errors } = useForm();
+  const history = useHistory();
 
+  const createPost = async (text, image) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const body = JSON.stringify({ text, image });
+  
+    try {
+      await axios.post('http://localhost:5000/api/v1/posts', body, config);
+      setAlert('Creat post successfully.', 'success');
+      history.push('/posts');
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
+  
   const submit = (data) => {
     const { text, image } = data;
-
     createPost(text, image)
   }
 
@@ -44,4 +64,4 @@ const CreatePost = ({ createPost }) => {
   );
 }
 
-export default connect(null, { createPost })(CreatePost);
+export default connect(null, { setAlert })(CreatePost);
