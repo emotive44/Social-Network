@@ -27,6 +27,7 @@
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
+    margin-right: 0.5em;
     background: transparent;
     border-bottom: 1px solid red;
   }
@@ -34,7 +35,6 @@
   .comment-date { 
     font-size: 1.4rem;
     font-style: italic;
-    margin-left: 0.5em;
     color: $primary-color;
     border-bottom: 1px solid $primary-color;
   }

@@ -229,12 +229,13 @@ const getPostById = async (req, res, next) => {
     );
   }
 
-  const { _id, text, likes, creator, comments } = post;
+  const { _id, text, likes, creator, comments, image } = post;
 
   const currentPost = {
     _id,
     text,
     likes,
+    image,
     creator,
     comments: comments.length
   }

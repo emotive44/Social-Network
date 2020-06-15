@@ -25,14 +25,14 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
             <small className="delete-comment" onClick={deleteCurrComment}>
               Delete Comment
             </small>
-            <small className='comment-date'>
-              Commented on {'    '}
-              <Moment format='YYYY/MM/DD'>
-                {comment.date}
-              </Moment>
-            </small>
           </Fragment>
         )}
+        <small className='comment-date'>
+          Commented {'    '}
+          <Moment fromNow>
+            {comment.date}
+          </Moment>
+        </small>
       </div>
     </div>
   );
