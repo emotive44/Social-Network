@@ -1,0 +1,24 @@
+.user-profile { 
+  width: 80%;
+  min-width: 45rem;
+  margin: auto;
+  margin-top: 7rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: 
+    'header header'
+    'aside main'
+    '. main';
+
+  grid-gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .user-profile {
+    margin-top: 9rem;
+    grid-template-areas: 
+    'header header'
+    'aside aside'
+    'main main';
+  }
+}

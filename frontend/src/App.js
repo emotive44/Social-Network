@@ -18,6 +18,7 @@ import LandingPage from './components/landing-page/LandingPage';
 import NotFoundPage from './components/not-found-page/NotFoundPage';
 import Post from './components/post/Post';
 import Alert from './components/common/Alert';
+import UserProfile from './components/user/UserProfile';
 
 
 if(localStorage.token) { 
@@ -38,8 +39,9 @@ const App = () => {
           <Route exact path='/' component={LandingPage} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
-          <Route path='/users' component={Users} />
-          <Route exact path='/posts' component={Posts} onLeave={store.dispatch(loadUser())}/>
+          <Route exact path='/users' component={Users} />
+          <Route path='/users/:userId' component={UserProfile} />
+          <Route exact path='/posts' component={Posts} />
           <Route path='/posts/:postId' component={(props) => <Post single {...props}/>} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
           <Route component={NotFoundPage} />

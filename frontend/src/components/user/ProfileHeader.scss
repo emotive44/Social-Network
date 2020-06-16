@@ -1,0 +1,63 @@
+@import '../../index.scss';
+
+.profile {
+  &-header {
+    grid-area: header;
+  }
+
+  &-image {
+    background: silver;
+  }
+
+  &-image img { 
+    width: 200px;
+    display: block;
+    margin: 0 auto;
+    padding: 1rem 0;
+    border-radius: 50%;
+  }
+
+  &-image > ul {
+    width: 20rem;
+    margin: 1rem auto;
+    margin-bottom: 0;
+  }
+
+  &-image > ul {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-nav { 
+    border: 1px solid $primary-color;
+
+    ul { 
+      width: 50%;
+      display: flex;
+      margin: 0 auto;
+      justify-content: space-between;
+
+      li { 
+        padding: 1rem;
+        border-right: 1px solid $primary-color;
+
+        a { 
+          color: black;
+        } 
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .profile-nav {
+    li:nth-child(2) {
+      border-left: 1px solid $primary-color;
+    }
+
+    li:nth-child(1) {
+      border: none;
+      align-self: flex-end;
+    }
+  }
+}
