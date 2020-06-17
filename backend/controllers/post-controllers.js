@@ -191,7 +191,14 @@ const getAllPosts = async (req, res, next) => {
 const getPostsByUser = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.params.userId).populate('posts', '-creator');
+    user = await User.findById(req.params.userId)
+      .populate({
+        path: 'posts',
+        populate: {
+          path: 'creator',
+          select: 'avatar _id name'
+        }
+      });
   } catch (err) {
     if(!user) {
       return next(
@@ -288,7 +295,7 @@ const likeUnlikePost = async (req, res, next) => {
     );
   }
 
-  res.status(201).json(post.likes);
+  res.status(201).json({likes:post.likes, postId: post._id});
 }
 
 const updatePost = async (req, res, next) => {
@@ -332,7 +339,7 @@ const updatePost = async (req, res, next) => {
     );
   }
   
-  res.status(201).json(post.text);
+  res.status(201).json({text: post.text, postId: post._id});
 }
 
 const deleteComment = async (req, res, next) => {
@@ -428,7 +435,7 @@ const deletePost = async (req, res, next) => {
     );
   }
   
-  res.status(200).json({ message: 'Deleted post.' });
+  res.status(200).json(post._id);
 }
 
 

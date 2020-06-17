@@ -9,6 +9,7 @@ import {
   CREATE_COMMENT,
   DELETE_COMMENT,
   GET_POST_COMMENTS,
+  GET_POSTS_BY_USER,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -24,6 +25,17 @@ export const getPost = (postId) => async dispatch => {
       type: GET_POST,
       payload: res.data
     });
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: POST_ERROR });
+  }
+}
+
+export const getPosts = (userId) => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + `posts/by/${userId}`);
+
+    dispatch({type: GET_POSTS_BY_USER, payload: res.data})
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: POST_ERROR });
@@ -80,9 +92,12 @@ export const updatePost = (postId, text) => async dispatch => {
 
 export const deletePost = (postId) => async dispatch => {
   try {
-    await axios.delete(baseUrl + `posts/${postId}`);
+    const res = await axios.delete(baseUrl + `posts/${postId}`);
 
-    dispatch({ type: DELETE_POST });
+    dispatch({ 
+      type: DELETE_POST,
+      payload: res.data
+    });
     dispatch(setAlert('Delete post successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));

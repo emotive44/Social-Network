@@ -13,7 +13,7 @@ import Button from '../common/Button';
 import Input from '../common/Input';
 
 
-const CreatePost = ({ setAlert }) => {
+const CreatePost = ({ setAlert, userId }) => {
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
 
@@ -28,7 +28,7 @@ const CreatePost = ({ setAlert }) => {
     try {
       await axios.post('http://localhost:5000/api/v1/posts', body, config);
       setAlert('Creat post successfully.', 'success');
-      history.push('/posts');
+      history.push(`/users/${userId}`);
     } catch (err) {
       setAlert(err.response.data.message, 'danger');
     }
@@ -64,4 +64,8 @@ const CreatePost = ({ setAlert }) => {
   );
 }
 
-export default connect(null, { setAlert })(CreatePost);
+const mapStateToProps = state => ({
+  userId: state.auth.userId
+});
+
+export default connect(mapStateToProps, { setAlert })(CreatePost);

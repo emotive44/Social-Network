@@ -8,6 +8,7 @@ import {
   CREATE_COMMENT,
   DELETE_COMMENT,
   GET_POST_COMMENTS,
+  GET_POSTS_BY_USER,
 } from '../types';
 
 
@@ -25,19 +26,31 @@ export default function (state = initialState , action) {
       return {
         ...state,
         loading: false,
-        post: { ...state.post, text: payload }
+        post: { ...state.post, text: payload.text },
+        posts: state.posts.map(post => {
+          if(post._id === payload.postId) {
+            post.text = payload.text;
+            return post;
+          } else return post;
+        })
       }
     case DELETE_POST:
       return { 
         ...state,
         post: null,
-        loading: false
+        loading: false,
+        posts: state.posts.filter(post => post._id !== payload)
       }
     case GET_POST:
       return {
         ...state,
         post: payload,
         loading: false
+      }
+    case GET_POSTS_BY_USER: 
+      return {
+        ...state,
+        posts: payload,
       }
     case GET_POST_COMMENTS:
       return {
@@ -49,7 +62,13 @@ export default function (state = initialState , action) {
       return {
         ...state,
         loading: false,
-        post: { ...state.post, likes: payload }
+        post: { ...state.post, likes: payload.likes },
+        posts: state.posts.map(post => {
+          if(post._id === payload.postId){
+            post.likes = payload.likes
+            return post;
+          } else return post
+        })
       }
     case CREATE_COMMENT:
       return {
@@ -74,6 +93,7 @@ export default function (state = initialState , action) {
     case GET_POST_RESET:
       return {
         ...state,
+        posts: [],
         post: null,
         loading: true
       }
