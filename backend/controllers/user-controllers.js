@@ -41,7 +41,7 @@ const getAllUsers = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.params.userId).select('-password -__v');
+    user = await User.findById(req.params.userId).select('-password -__v -created -posts');
   } catch (err) {
     if(!user) {
       return next(
@@ -54,8 +54,17 @@ const getUserById = async (req, res, next) => {
     );
   }
 
+  const { avatar, _id, name, email, followers, following } = user;
+  const currentUser = {
+    _id,
+    name,
+    email,
+    avatar,
+    followers: followers.length,
+    following: following.length,
+  }
 
-  res.status(200).json(user);
+  res.status(200).json(currentUser);
 }
 
 const getMe = async (req, res, next) => {

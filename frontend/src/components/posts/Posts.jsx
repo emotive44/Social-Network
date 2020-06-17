@@ -20,7 +20,7 @@ const Posts = () => {
 
   return (
     <CardsContainer fetchedData={fetchedData}>
-      {loading && <Spinner />}
+      {loading && <Spinner style={{ marginTop: '1rem' }} />}
 
       <Pagination 
         page={page}

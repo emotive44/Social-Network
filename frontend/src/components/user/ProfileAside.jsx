@@ -35,7 +35,6 @@ const ProfileAside = () => {
         </div>
         <div className='personal-info'>
           <i className="fas fa-heart" />
-          <span></span>
           <p>In relationship</p>
         </div>
       </section>
@@ -43,7 +42,7 @@ const ProfileAside = () => {
       <div className="profile-buttons">
         <Button 
           type='button' 
-          info animation
+          light 
           style={{ flex: '1 0 55%', marginRight: '1rem' }}
         >
           <i className="fas fa-user-edit" />   
@@ -51,7 +50,7 @@ const ProfileAside = () => {
         </Button>
         <Button
           type='button'
-          danger animation
+          danger 
           style={{ marginRight: '1rem' }}
         >
           <i className="fas fa-trash-alt" />

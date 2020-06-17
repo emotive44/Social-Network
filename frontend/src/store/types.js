@@ -4,6 +4,9 @@ export const LOGOUT = 'LOGOUT';
 export const LOAD_USER = 'LOAD_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
+export const GET_USER = 'GET_USER';
+export const USER_ERROR = 'USER_ERROR';
+
 export const GET_POST = 'GET_POST';
 export const GET_POST_RESET = 'GET_POST_RESET';
 export const LIKE_POST = 'LIKE_POST';

@@ -7,6 +7,14 @@
 
   &-image {
     background: silver;
+    
+    p {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
   }
 
   &-image img { 
@@ -39,11 +47,8 @@
 
       li { 
         padding: 1rem;
+        cursor: pointer;
         border-right: 1px solid $primary-color;
-
-        a { 
-          color: black;
-        } 
       }
     }
   }

@@ -1,21 +1,11 @@
 .spinner {
   img { 
-    width: 100px;
-    margin: auto;
-    display: block;
-    position: absolute;
     top: 5%;
     left: 50%;
+    z-index: 2;
+    width: 100px;
+    position: fixed;
+    margin-top: 2rem;
     transform: translate(-50%, -5%);
-  }
-}
-
-@media (max-width: 700px) {
-  .spinner {
-    img {
-      top: 6%;
-      left: 55%;
-      transform: translate(-55%, -6%);
-    }
   }
 }
