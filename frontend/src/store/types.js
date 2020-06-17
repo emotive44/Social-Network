@@ -5,6 +5,7 @@ export const LOAD_USER = 'LOAD_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const GET_USER = 'GET_USER';
+export const FOLLOW_USER = 'FOLLOW_USER';
 export const USER_ERROR = 'USER_ERROR';
 
 export const GET_POST = 'GET_POST';

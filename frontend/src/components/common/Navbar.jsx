@@ -38,7 +38,7 @@ const NavBar = ({ isAuth, userName, logout }) => {
 
       {isAuth && <p className='user'>
         <span>Hello {userName}</span>
-        <Link to='' className='user-image' />
+        <Link to={`/users/${isAuth}`} className='user-image' />
       </p>}
     </nav>
   );

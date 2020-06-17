@@ -54,17 +54,7 @@ const getUserById = async (req, res, next) => {
     );
   }
 
-  const { avatar, _id, name, email, followers, following } = user;
-  const currentUser = {
-    _id,
-    name,
-    email,
-    avatar,
-    followers: followers.length,
-    following: following.length,
-  }
-
-  res.status(200).json(currentUser);
+  res.status(200).json(user);
 }
 
 const getMe = async (req, res, next) => {
@@ -163,7 +153,6 @@ const followUnfollowUser = async (req, res, next) => {
     );
   }
 
-
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -185,8 +174,10 @@ const followUnfollowUser = async (req, res, next) => {
       new HttpError('Following user failed.', 500)
     );
   }
+  
+  const followers = followedUser.followers.map(follower => follower._id);
 
-  res.status(201).json(existUser);
+  res.status(201).json(followers);
 }
 
 const register = async (req, res, next) => {

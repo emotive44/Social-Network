@@ -25,15 +25,8 @@
     border-radius: 50%;
   }
 
-  &-image > ul {
-    width: 20rem;
-    margin: 1rem auto;
-    margin-bottom: 0;
-  }
-
-  &-image > ul {
-    display: flex;
-    justify-content: space-between;
+  &-image > div {
+    padding-bottom: 0.5rem;
   }
 
   &-nav { 

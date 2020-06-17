@@ -1,6 +1,7 @@
 import { 
   GET_USER,
   USER_ERROR,
+  FOLLOW_USER,
 } from '../types';
 
 const initialState = {
@@ -17,6 +18,11 @@ export default function (state = initialState, action) {
         ...state,
         user: payload,
         loading: false
+      }
+    case FOLLOW_USER:
+      return {
+        ...state,
+        user: { ...state.user, followers: payload }
       }
     case USER_ERROR:
       return {
