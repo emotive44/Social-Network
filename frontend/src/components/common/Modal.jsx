@@ -11,7 +11,7 @@ const Modal = ({ children, closeModal, title }) => {
       <p className='modal-close'>
         <Button type='button' danger clickHandler={closeModal}>X</Button>
       </p>
-      <p class='modal-title'>{title}</p>
+      <p className='modal-title'>{title}</p>
       {children}
     </section>
   );

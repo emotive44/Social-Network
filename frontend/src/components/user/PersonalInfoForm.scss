@@ -1,3 +1,84 @@
-.personal-info {
-  background:red
+@import '../../index.scss';
+
+.personalInfo-form {
+  article {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  div {
+    display: flex;
+    margin-left: 1rem;
+    flex-direction: column;
+
+    &:nth-child(4),
+    &:nth-child(5) {
+      margin-top: 1rem;
+
+      label { 
+        width: 9rem;
+        margin: 0 auto;
+      }
+    }
+
+    input[type='date'],
+    select {
+      width: 15rem;
+      height: 3.3rem;
+      margin-left: 3rem;
+      border-radius: 0.3rem;
+      border: 1px solid black;
+    }
+
+    select {
+      margin-left: 4.5rem;
+    }
+
+    @media (max-width: 1240px) {
+      select { 
+        margin-left: 3rem; 
+        margin-bottom: 2rem; 
+      } 
+    }
+
+    label { 
+      left: 3rem;
+
+      &.top { 
+        left: 2.5rem;
+        color: $white-color;
+      }
+    }
+  }
+
+  .bio {
+    width: 80%;
+    margin: 0 auto;
+    
+    input {
+      height: 5rem;
+      width: 100%;
+    }
+
+    label { 
+      bottom: 1rem;
+      left: 2rem;
+
+      &.top { 
+        left: 1rem;
+        bottom: 5rem;
+        color: $white-color;
+      }
+    }
+  }
+
+  button {
+    margin-top: 2rem;
+    width: 45%;
+    font-size: 1.7rem;
+
+    &:hover {
+      color: $white-color
+    } 
+  }
 }
