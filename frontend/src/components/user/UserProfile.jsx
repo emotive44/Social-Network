@@ -56,7 +56,11 @@ const UserProfile = ({
         meId={meId}
         followUser={followUser}
       />
-      <ProfileAside />
+      <ProfileAside 
+        meId={meId} 
+        userId={userId}
+        personalInfo={user.personalInfo}
+      />
       <main>
         {posts.map(post => {
           return <Post postD={post} key={post._id}/>
