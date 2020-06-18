@@ -1,0 +1,37 @@
+@import '../../index.scss';
+
+.modal { 
+  position: relative;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 50%;
+  min-width: 40rem;
+  min-height: 25rem;
+  color: $white-color;
+  border-radius: 0.4rem;
+  background: $primary-color;
+  transform: translate(-50%, -30%);
+
+  &-close { 
+    top: 0;
+    right: -3px;
+    min-width: 30px;
+    position: absolute;
+
+    button {
+      margin: 0;
+      width: 27px;
+      min-width: 10px;
+      border: 1px solid $danger-color;
+    }
+  }
+
+  &-title {
+    width: 50%;
+    font-size: 2rem;
+    margin: 1rem auto;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+}

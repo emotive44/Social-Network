@@ -123,7 +123,7 @@ const createComment = async (req, res, next) => {
   res.status(201).json(currentComment);
 }
 
-const getPostComments =async (req, res, next) => {
+const getPostComments = async (req, res, next) => {
   const countOfComments = +req.query.count || 3;
   let postComments;
   try {
@@ -192,11 +192,13 @@ const getPostsByUser = async (req, res, next) => {
   let user;
   try {
     user = await User.findById(req.params.userId)
+      .select('posts')
+      .slice('posts', countOfPosts)
       .populate({
         path: 'posts',
         populate: {
           path: 'creator',
-          select: 'avatar _id name'
+          select: 'avatar _id name',
         }
       });
   } catch (err) {
@@ -210,13 +212,14 @@ const getPostsByUser = async (req, res, next) => {
     );
   }
 
-  if(user.posts.length < 1) {
-    return next(
-      new HttpError('User does not have any posts.', 404)
-    );
-  }
+  // if(user.posts.length < 1) {
+  //   return next(
+  //     new HttpError('User does not have any posts.', 404)
+  //   );
+  // }
   
-  res.status(200).json(user.posts.slice(0,countOfPosts));
+  res.status(200).json(user.posts);
+  // res.status(200).json(user.posts.slice(0,countOfPosts));
 }
 
 const getPostById = async (req, res, next) => {

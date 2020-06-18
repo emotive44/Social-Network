@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import Button from '../common/Button';
 
 
-const ProfileAside = ({ personalInfo, userId, meId }) => {
+const ProfileAside = ({ personalInfo, userId, meId, showModal }) => {
   return (
     <aside className="profile-aside">
       <div className="bio">
@@ -59,8 +59,9 @@ const ProfileAside = ({ personalInfo, userId, meId }) => {
       <div className="profile-buttons">
         {userId === meId && (
           <Button 
-            type='button' 
             light 
+            type='button' 
+            clickHandler={showModal}
             style={{ flex: '1 0 55%', marginRight: '1rem' }}
           >
             <i className="fas fa-user-edit" />   

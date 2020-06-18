@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Prompt } from 'react-router-dom';
 import './UserProfile.scss';
 
+import useModal from '../hooks/useModal';
+
 import { connect } from 'react-redux';
 import { getUser, followUser } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types'
 import store from '../../store/store';
 
+import PersonalInfoForm from './PersonalInfoForm';
 import ProfileHeader from './ProfileHeader';
 import ProfileAside from './ProfileAside';
 import Spinner from '../common/Spinner';
+import Modal from '../common/Modal';
 import Post from '../post/Post';
+
 
 
 const UserProfile = ({ 
@@ -25,6 +30,7 @@ const UserProfile = ({
   followUser, 
 }) => {
   const [countOfPosts, setCountOfPosts] = useState(8);
+  const { toggleModal, closeModal, showModal } = useModal();
   const userId = match.params.userId;
 
   const showPosts = () => {
@@ -51,6 +57,16 @@ const UserProfile = ({
           }
         }}
       />
+
+      {toggleModal && (
+        <Modal 
+          closeModal={closeModal}
+          title='Edit Your Personal Information'
+        >
+          <PersonalInfoForm />
+        </Modal>
+      )}
+
       <ProfileHeader  
         user={user}
         meId={meId}
@@ -59,6 +75,7 @@ const UserProfile = ({
       <ProfileAside 
         meId={meId} 
         userId={userId}
+        showModal={showModal}
         personalInfo={user.personalInfo}
       />
       <main>
