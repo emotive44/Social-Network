@@ -40,9 +40,9 @@ const App = () => {
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route exact path='/users' component={Users} />
-          <Route path='/users/:userId' component={UserProfile} />
-          <Route exact path='/posts' component={Posts} />
-          <Route path='/posts/:postId' component={(props) => <Post single {...props}/>} />
+          <ProtectedRoute path='/users/:userId' component={UserProfile} />
+          <ProtectedRoute exact path='/posts' component={Posts} />
+          <ProtectedRoute path='/posts/:postId' component={(props) => <Post single {...props}/>} />
           <ProtectedRoute path='/create-post' component={CreatePost} />
           <Route component={NotFoundPage} />
         </Switch>

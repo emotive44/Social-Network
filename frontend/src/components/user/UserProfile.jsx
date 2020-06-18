@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Prompt } from 'react-router-dom';
 import './UserProfile.scss';
 
@@ -24,7 +24,17 @@ const UserProfile = ({
   getPosts,
   followUser, 
 }) => {
+  const [countOfPosts, setCountOfPosts] = useState(8);
   const userId = match.params.userId;
+
+  const showPosts = () => {
+    if(countOfPosts - 4 > posts.length) { 
+      return;
+    }
+
+    setCountOfPosts(countOfPosts + 4);
+    getPosts(userId, countOfPosts);
+  }
 
   useEffect(() => {
     getUser(userId);
@@ -51,6 +61,14 @@ const UserProfile = ({
         {posts.map(post => {
           return <Post postD={post} key={post._id}/>
         })}
+
+
+        {countOfPosts - 4 > posts.length ? 
+          posts.length < 1 ? 
+            <span className='no-more-posts'>User does not have posts yet.</span> : 
+            <span className='no-more-posts'>Does not have more posts.</span> : 
+          <span onClick={showPosts} className='more-posts'>show more posts</span>
+        }
       </main>
     </section>
   );

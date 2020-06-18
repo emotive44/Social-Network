@@ -31,9 +31,9 @@ export const getPost = (postId) => async dispatch => {
   }
 }
 
-export const getPosts = (userId) => async dispatch => {
+export const getPosts = (userId, count) => async dispatch => {
   try {
-    const res = await axios.get(baseUrl + `posts/by/${userId}`);
+    const res = await axios.get(baseUrl + `posts/by/${userId}?count=${count}`);
 
     dispatch({type: GET_POSTS_BY_USER, payload: res.data})
   } catch (err) {

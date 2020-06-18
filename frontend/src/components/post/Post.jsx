@@ -94,7 +94,7 @@ const Post = ({
               type='button'
               primary animation
               clickHandler={editPost}
-              style={{marginTop: '-4rem', width: '16rem'}}
+              style={{marginTop: '-2rem', width: '16rem'}}
               >
               <i className="fas fa-edit" /> Edit Post
             </Button>

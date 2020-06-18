@@ -106,12 +106,28 @@
       color: darkblue;
     }
   }
+
+  @media (max-width: 1024px) {
+    &-buttons {
+      flex-direction: column;
+    }
+    
+    button {
+      width: 100%;
+    }
+  }
 }
 
 .single-post { 
   width: 50%;
   margin-top: 7rem;
   min-width: 60rem;
+
+  @media (max-width: 1024px) {
+    .post-buttons {
+      flex-direction: row;
+    }
+  }
 }
 
 .img-portrait { 

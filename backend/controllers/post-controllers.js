@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/httpError-model');
 const Post = require('../models/post-model');
 const User = require('../models/user-model');
-const { count } = require('../models/post-model');
 
 
 const createPost = async (req, res, next) => {
@@ -189,6 +188,7 @@ const getAllPosts = async (req, res, next) => {
 }
 
 const getPostsByUser = async (req, res, next) => {
+  const countOfPosts = +req.query.count || 4;
   let user;
   try {
     user = await User.findById(req.params.userId)
@@ -215,8 +215,8 @@ const getPostsByUser = async (req, res, next) => {
       new HttpError('User does not have any posts.', 404)
     );
   }
-
-  res.status(200).json(user.posts);
+  
+  res.status(200).json(user.posts.slice(0,countOfPosts));
 }
 
 const getPostById = async (req, res, next) => {
