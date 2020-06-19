@@ -59,11 +59,8 @@ const UserProfile = ({
       />
 
       {toggleModal && (
-        <Modal 
-          closeModal={closeModal}
-          title='Edit Your Personal Information'
-        >
-          <PersonalInfoForm info={user.personalInfo}/>
+        <Modal closeModal={closeModal} title='Edit Your Personal Information'>
+          <PersonalInfoForm info={user.personalInfo} />
         </Modal>
       )}
 

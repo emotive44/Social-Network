@@ -5,6 +5,7 @@ import {
   GET_USER,
   USER_ERROR,
   FOLLOW_USER,
+  ADD_PERSONAL_INFO,
 } from '../types';
 
 
@@ -32,6 +33,29 @@ export const followUser = (userId) => async dispatch => {
       type: FOLLOW_USER,
       payload: res.data
     });
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: USER_ERROR });
+  }
+}
+
+export const addPersonalInfo = (personInfo) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  
+    const body = JSON.stringify({ personInfo });
+    const res = await axios.put(baseUrl + 'users/info', body, config);
+
+    dispatch({
+      type: ADD_PERSONAL_INFO,
+      payload: res.data
+    });
+    
+    dispatch(setAlert('You edit your personal info success.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });

@@ -2,6 +2,7 @@ import {
   GET_USER,
   USER_ERROR,
   FOLLOW_USER,
+  ADD_PERSONAL_INFO,
 } from '../types';
 
 const initialState = {
@@ -18,6 +19,11 @@ export default function (state = initialState, action) {
         ...state,
         user: payload,
         loading: false
+      }
+    case ADD_PERSONAL_INFO:
+      return {
+        ...state,
+        user: { ...state.user, personalInfo: payload }
       }
     case FOLLOW_USER:
       return {

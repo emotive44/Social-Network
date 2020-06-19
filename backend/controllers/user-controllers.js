@@ -78,14 +78,14 @@ const getMe = async (req, res, next) => {
 
 const addAndEditPersonalInfo = async (req, res, next) => {
   const userId = req.userId;
-  const {
-    bio,
-    job,
-    city,
-    bDay,
-    relShip,
-    university
-  } = req.body;
+  const { personInfo } = req.body;
+
+  const bio = personInfo && personInfo.bio;
+  const job = personInfo && personInfo.job;
+  const bDay = personInfo && personInfo.bDay;
+  const city = personInfo && personInfo.city;
+  const relShip = personInfo && personInfo.relShip;
+  const university = personInfo && personInfo.university;
 
   let user;
   try {
@@ -103,18 +103,12 @@ const addAndEditPersonalInfo = async (req, res, next) => {
   }
 
   let personalInfo = {};
-  if(bio) personalInfo.bio = bio;
-    else personalInfo.bio = user.personalInfo.bio || undefined;
-  if(job) personalInfo.job = job;
-    else personalInfo.job =  user.personalInfo.job || undefined;
-  if(city) personalInfo.city = city;
-    else personalInfo.city = user.personalInfo.city || undefined;
-  if(bDay) personalInfo.bDay = bDay;
-    else personalInfo.bDay = user.personalInfo.bDay || undefined;
-  if(relShip) personalInfo.relShip = relShip;
-    else personalInfo.relShip = user.personalInfo.relShip || undefined;
-  if(university) personalInfo.university = university;
-    else personalInfo.university =  user.personalInfo.university || undefined;
+  personalInfo.bio = bio;
+  personalInfo.job = job;
+  personalInfo.city = city;
+  personalInfo.bDay = bDay;
+  personalInfo.relShip = relShip;
+  personalInfo.university = university;
 
   user.personalInfo = { ...user.personalInfo, ...personalInfo };
   try {
@@ -125,7 +119,7 @@ const addAndEditPersonalInfo = async (req, res, next) => {
     );
   }
 
-  res.status(201).json(user);
+  res.status(201).json(user.personalInfo);
 }
 
 const followUnfollowUser = async (req, res, next) => {

@@ -44,7 +44,7 @@ const ProfileAside = ({ personalInfo, userId, meId, showModal }) => {
             <i className="fas fa-birthday-cake" />
             <span>Birthday</span>
             <p>
-              <Moment format='YYYY/MM/DD'>{personalInfo.bDay}</Moment>
+              <Moment format='DD/MM/YYYY'>{personalInfo.bDay}</Moment>
             </p>
           </div>
         )}
