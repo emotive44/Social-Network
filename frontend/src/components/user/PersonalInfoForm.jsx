@@ -3,9 +3,6 @@ import { useForm } from 'react-hook-form';
 import './PersonalInfoForm.scss';
 
 import  moment  from 'moment'
-
-import { addPersonalInfo } from '../../store/actions/user-action';
-import { connect } from 'react-redux';
  
 import Button from '../common/Button';
 import Input from '../common/Input';
@@ -39,6 +36,7 @@ const PersonalInfoForm = ({ info, addPersonalInfo }) => {
           label='Your biography'
           defaultValue={(info && info.bio && info.bio) || ''}
           ref={register({
+            required: 'ew',
             minLength: { value: 5 },
             maxLength: { value: 45 }
           })}
@@ -102,4 +100,4 @@ const PersonalInfoForm = ({ info, addPersonalInfo }) => {
   );
 }
 
-export default connect(null, { addPersonalInfo })(PersonalInfoForm);
+export default PersonalInfoForm;

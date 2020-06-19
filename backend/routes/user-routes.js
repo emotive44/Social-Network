@@ -17,7 +17,13 @@ router.delete('/', auth, userControllers.deleteUser);
 
 router.delete('/info', auth, userControllers.deletePersonalInfo);
 
-router.put('/info', auth, userControllers.addAndEditPersonalInfo);
+router.put('/info', 
+    auth, 
+    [
+      check('personInfo.bio', 'Bio should not be empty').not().isEmpty(),
+    ],
+  userControllers.addAndEditPersonalInfo
+);
 
 router.put('/:userId/follow', auth, userControllers.followUnfollowUser);
 

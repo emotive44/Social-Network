@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import Button from '../common/Button';
 
 
-const ProfileAside = ({ personalInfo, userId, meId, showModal }) => {
+const ProfileAside = ({ personalInfo, userId, meId, showModal, deletePersonalInfo }) => {
   return (
     <aside className="profile-aside">
       <div className="bio">
@@ -73,6 +73,7 @@ const ProfileAside = ({ personalInfo, userId, meId, showModal }) => {
             type='button'
             danger 
             style={{ marginRight: '1rem' }}
+            clickHandler={deletePersonalInfo}
           >
             <i className="fas fa-trash-alt" />
             Delete Your Information

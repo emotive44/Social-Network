@@ -5,7 +5,12 @@ import './UserProfile.scss';
 import useModal from '../hooks/useModal';
 
 import { connect } from 'react-redux';
-import { getUser, followUser } from '../../store/actions/user-action';
+import { 
+  getUser, 
+  followUser, 
+  addPersonalInfo,
+  deletePersonalInfo,
+} from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
 import { GET_POST_RESET } from '../../store/types'
 import store from '../../store/store';
@@ -28,6 +33,8 @@ const UserProfile = ({
   getUser, 
   getPosts,
   followUser, 
+  addPersonalInfo,
+  deletePersonalInfo,
 }) => {
   const [countOfPosts, setCountOfPosts] = useState(8);
   const { toggleModal, closeModal, showModal } = useModal();
@@ -60,7 +67,7 @@ const UserProfile = ({
 
       {toggleModal && (
         <Modal closeModal={closeModal} title='Edit Your Personal Information'>
-          <PersonalInfoForm info={user.personalInfo} />
+          <PersonalInfoForm info={user.personalInfo} addPersonalInfo={addPersonalInfo}/>
         </Modal>
       )}
 
@@ -73,6 +80,7 @@ const UserProfile = ({
         meId={meId} 
         userId={userId}
         showModal={showModal}
+        deletePersonalInfo={deletePersonalInfo}
         personalInfo={user.personalInfo}
       />
       <main>
@@ -99,4 +107,12 @@ const mapStateToProps = state => ({
   loading: state.user.loading,
 });
 
-export default connect(mapStateToProps, { getUser, followUser, getPosts })(UserProfile);
+const mapDispatchToProps = {
+  getUser,
+  getPosts,
+  followUser,
+  addPersonalInfo,
+  deletePersonalInfo,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

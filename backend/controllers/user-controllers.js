@@ -77,6 +77,14 @@ const getMe = async (req, res, next) => {
 }
 
 const addAndEditPersonalInfo = async (req, res, next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    const err = errors.array().map(e => e.msg).join('');
+    return next(
+      new HttpError(err, 422)
+    );
+  }
+
   const userId = req.userId;
   const { personInfo } = req.body;
 

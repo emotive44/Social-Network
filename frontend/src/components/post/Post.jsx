@@ -199,4 +199,12 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 }); 
 
-export default connect(mapStateToProps, { getPost, likeUnlikePost, updatePost, deletePost, getPostComments })(Post);
+const mapDispatchToProps = {
+  getPost,
+  updatePost,
+  deletePost,
+  likeUnlikePost,
+  getPostComments,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

@@ -3,6 +3,7 @@ import {
   USER_ERROR,
   FOLLOW_USER,
   ADD_PERSONAL_INFO,
+  DELETE_PERSONAL_INFO,
 } from '../types';
 
 const initialState = {
@@ -24,6 +25,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: { ...state.user, personalInfo: payload }
+      }
+    case DELETE_PERSONAL_INFO:
+      return {
+        ...state,
+        user: { ...state.user, personalInfo: {} }
       }
     case FOLLOW_USER:
       return {

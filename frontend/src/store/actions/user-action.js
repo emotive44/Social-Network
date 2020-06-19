@@ -6,6 +6,7 @@ import {
   USER_ERROR,
   FOLLOW_USER,
   ADD_PERSONAL_INFO,
+  DELETE_PERSONAL_INFO,
 } from '../types';
 
 
@@ -59,5 +60,17 @@ export const addPersonalInfo = (personInfo) => async dispatch => {
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
+  }
+}
+
+export const deletePersonalInfo = () => async dispatch => {
+  try {
+    await axios.delete(baseUrl + 'users/info');
+
+    dispatch({ type: DELETE_PERSONAL_INFO });
+    dispatch(setAlert('You delete your personal info seccess.', 'success'));
+  } catch (err) {
+    dispatch({ type: USER_ERROR });
+    dispatch(setAlert(err.response.data.message, 'danger'));
   }
 }

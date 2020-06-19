@@ -8,6 +8,7 @@ export const GET_USER = 'GET_USER';
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const USER_ERROR = 'USER_ERROR';
 export const ADD_PERSONAL_INFO = 'ADD_PERSONAL_INFO';
+export const DELETE_PERSONAL_INFO = 'DELETE_PERSONAL_INFO';
 
 export const GET_POST = 'GET_POST';
 export const GET_POSTS_BY_USER = 'GET_POSTS_BY_USER';
