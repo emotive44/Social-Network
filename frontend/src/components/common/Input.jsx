@@ -20,10 +20,11 @@ const Input = React.forwardRef((props, ref) =>  {
     <div className="input">   
       <div className="input-wrapper">
         <label 
-          className={isHover || props.value ? 'top' : null}>
+          className={isHover || props.value || props.defaultValue ? 'top' : null}>
           {props.label}
         </label>
         <input 
+            defaultValue={props.defaultValue && props.defaultValue}
             className={props.err ? 'error' : null}
             type={props.type} 
             name={props.name}

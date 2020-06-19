@@ -3,7 +3,7 @@
 .modal { 
   position: relative;
   position: fixed;
-  top: 30%;
+  top: 11%;
   left: 50%;
   width: 50%;
   min-width: 45rem;
@@ -11,7 +11,7 @@
   color: $white-color;
   border-radius: 0.4rem;
   background: $primary-color;
-  transform: translate(-50%, -30%);
+  transform: translateX(-50%);
 
   &-close { 
     top: 0;

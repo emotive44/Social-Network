@@ -63,7 +63,7 @@ const UserProfile = ({
           closeModal={closeModal}
           title='Edit Your Personal Information'
         >
-          <PersonalInfoForm />
+          <PersonalInfoForm info={user.personalInfo}/>
         </Modal>
       )}
 

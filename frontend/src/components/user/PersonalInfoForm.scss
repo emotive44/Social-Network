@@ -1,9 +1,26 @@
 @import '../../index.scss';
 
+.animate-correct { 
+  animation: AnimateError 0.3s forwards;
+}
+
+@keyframes AnimateError {
+  0%    { transform: translateX(-0.5rem); }
+  33%   { transform: translateX(0rem);    }
+  66%   { transform: translateX(0.5rem);  }
+  100%  { transform: translateX(0rem);    }
+}
+
 .personalInfo-form {
   article {
     display: flex;
     flex-wrap: wrap;
+  }
+  
+  .no-correct { 
+    input { 
+      border: 2px solid red;
+    }
   }
 
   div {
