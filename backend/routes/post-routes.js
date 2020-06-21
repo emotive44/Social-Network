@@ -25,6 +25,8 @@ router.post('/:postId/comments',
 
 router.get('/', postControllers.getAllPosts);
 
+router.get('/recent', postControllers.getRecentPosts);
+
 router.get('/by/:userId', postControllers.getPostsByUser);
 
 router.get('/:postId/comments', postControllers.getPostComments);

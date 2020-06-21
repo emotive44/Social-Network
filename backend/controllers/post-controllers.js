@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/httpError-model');
 const Post = require('../models/post-model');
 const User = require('../models/user-model');
+const { compareSync } = require('bcryptjs');
 
 
 const createPost = async (req, res, next) => {
@@ -185,6 +186,46 @@ const getAllPosts = async (req, res, next) => {
   }
 
   res.status(200).json({ posts, countPost });
+}
+
+const getRecentPosts = async (req, res, next) => {
+  const countOfPosts = +req.query.count || 3;
+
+  let existUser;
+  try {
+    existUser = await User.findById(req.userId)
+      .select('following')
+      .slice('following', countOfPosts)
+      .populate({
+        path: 'following',
+        select: 'posts',
+        populate: {
+          path: 'posts',
+          populate: {
+            path: 'creator',
+            select: 'name _id avatar'
+          }
+        }
+      });
+
+  } catch (err) {
+    return next(
+      new HttpError('Fetching recent posts failed, please try again.', 500)
+      );
+    }
+
+    if(existUser.following.length < 1) {
+      return next(
+        new HttpError('You does not follow anyone.', 404)
+      );
+    }
+
+  const recentPosts = existUser.following
+    .map(user => user.posts[0])
+    .filter(post => post !== undefined);
+
+
+  res.status(200).json(recentPosts);
 }
 
 const getPostsByUser = async (req, res, next) => {
@@ -453,4 +494,5 @@ module.exports = {
   createComment,
   deleteComment,
   getPostComments,
+  getRecentPosts,
 }
