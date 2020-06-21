@@ -6,6 +6,8 @@ import Button from '../common/Button';
 
 import { connect } from 'react-redux';
 
+import ParticleBackground from './ParticleBackground';
+
 
 const LandingPage = ({ isAuth }) => {
   return (
@@ -33,6 +35,7 @@ const LandingPage = ({ isAuth }) => {
           </Link>
         </div>
       )}
+      <ParticleBackground />
     </section>
   );
 }

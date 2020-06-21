@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/httpError-model');
 const Post = require('../models/post-model');
 const User = require('../models/user-model');
-const { compareSync } = require('bcryptjs');
 
 
 const createPost = async (req, res, next) => {
