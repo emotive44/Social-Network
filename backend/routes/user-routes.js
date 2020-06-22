@@ -13,6 +13,8 @@ router.get('/me', auth, userControllers.getMe);
 
 router.get('/:userId', userControllers.getUserById);
 
+router.get('/:userId/following', userControllers.getUserFollowing);
+
 router.delete('/', auth, userControllers.deleteUser);
 
 router.delete('/info', auth, userControllers.deletePersonalInfo);

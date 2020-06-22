@@ -4,12 +4,14 @@ import {
   USER_RESET,
   FOLLOW_USER,
   ADD_PERSONAL_INFO,
+  GET_USER_FOLLOWING,
   DELETE_PERSONAL_INFO,
 } from '../types';
 
 const initialState = {
-  loading: true,
   user: {},
+  loading: true,
+  following: [],
 }
 
 export default function (state = initialState, action) {
@@ -21,6 +23,11 @@ export default function (state = initialState, action) {
         ...state,
         user: payload,
         loading: false
+      }
+    case GET_USER_FOLLOWING:
+      return {
+        ...state,
+        following: payload
       }
     case ADD_PERSONAL_INFO:
       return {
@@ -40,7 +47,8 @@ export default function (state = initialState, action) {
     case USER_RESET:
       return {
         user: {},
-        loading: true
+        loading: true,
+        following: [],
       }
     case USER_ERROR:
       return {

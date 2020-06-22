@@ -76,6 +76,30 @@ const getMe = async (req, res, next) => {
   res.status(200).json({ userId: user._id, name: user.name});
 }
 
+const getUserFollowing = async (req, res, next) => {
+  let user;
+
+  try {
+    user = await User.findById(req.params.userId)
+      .populate({
+        path: 'following',
+        select: 'name avatar _id'
+      });
+    
+    res.status(200).json(user.following)
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Does not exist user with this id at data.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Fetching user following failed, please try again.', 500)
+    );
+  }
+}
+
 const addAndEditPersonalInfo = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -380,6 +404,7 @@ module.exports = {
   addAndEditPersonalInfo,
   deletePersonalInfo,
   followUnfollowUser,
+  getUserFollowing,
   getUserById,
   getAllUsers,
   deleteUser,

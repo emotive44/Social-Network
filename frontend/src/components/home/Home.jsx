@@ -8,13 +8,23 @@ import Post from '../post/Post';
 import { connect } from 'react-redux';
 import store from '../../store/store';
 import { POST_RESET } from '../../store/types'
+import { USER_RESET } from '../../store/types';
 import { getRecentPosts } from '../../store/actions/post-action';
+import { getUserFollowing } from '../../store/actions/user-action';
 
 
-const Home = ({ posts, getRecentPosts, match }) => {
+const Home = ({ 
+  meId, 
+  match, 
+  posts,
+  following,
+  getRecentPosts, 
+  getUserFollowing, 
+}) => {
   useEffect(() => {
     getRecentPosts();
-  }, [getRecentPosts]);
+    getUserFollowing(meId);
+  }, [getRecentPosts, getUserFollowing, meId]);
 
   return (
     <Fragment>
@@ -22,6 +32,7 @@ const Home = ({ posts, getRecentPosts, match }) => {
         message={(location) => {
           if(location.pathname !== match.url) {
             store.dispatch({ type: POST_RESET });
+            store.dispatch({ type: USER_RESET });
           }
         }}
       />
@@ -33,7 +44,7 @@ const Home = ({ posts, getRecentPosts, match }) => {
         </div>
         <aside className='home-aside'>
           <div className='home-aside-container'>
-            {[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map(x => <HomeUserItem />)}
+            {following.map(user => <HomeUserItem {...user}/>)}
           </div>
         </aside>
         <div className='home-aside-search'>
@@ -46,7 +57,14 @@ const Home = ({ posts, getRecentPosts, match }) => {
 }
 
 const mapStateToProps = state => ({
-  posts: state.post.posts
+  posts: state.post.posts,
+  meId: state.auth.userId,
+  following: state.user.following,
 });
 
-export default connect(mapStateToProps, { getRecentPosts })(Home);
+const mapDispatchToProps = {
+  getRecentPosts,
+  getUserFollowing,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
