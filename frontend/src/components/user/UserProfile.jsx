@@ -12,7 +12,7 @@ import {
   deletePersonalInfo,
 } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
-import { GET_POST_RESET } from '../../store/types'
+import { POST_RESET, USER_RESET } from '../../store/types'
 import store from '../../store/store';
 
 import PersonalInfoForm from './PersonalInfoForm';
@@ -60,7 +60,8 @@ const UserProfile = ({
       <Prompt 
         message={(location) => {
           if(location.pathname !== match.url) {
-            store.dispatch({ type: GET_POST_RESET });
+            store.dispatch({ type: POST_RESET });
+            store.dispatch({ type: USER_RESET });
           }
         }}
       />

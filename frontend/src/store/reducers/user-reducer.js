@@ -1,6 +1,7 @@
 import { 
   GET_USER,
   USER_ERROR,
+  USER_RESET,
   FOLLOW_USER,
   ADD_PERSONAL_INFO,
   DELETE_PERSONAL_INFO,
@@ -35,6 +36,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: { ...state.user, followers: payload }
+      }
+    case USER_RESET:
+      return {
+        user: {},
+        loading: true
       }
     case USER_ERROR:
       return {

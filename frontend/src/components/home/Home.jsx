@@ -6,7 +6,7 @@ import Post from '../post/Post';
 
 import { connect } from 'react-redux';
 import store from '../../store/store';
-import { GET_POST_RESET } from '../../store/types'
+import { POST_RESET } from '../../store/types'
 import { getRecentPosts } from '../../store/actions/post-action';
 
 
@@ -20,7 +20,7 @@ const Home = ({ posts, getRecentPosts, match }) => {
       <Prompt 
         message={(location) => {
           if(location.pathname !== match.url) {
-            store.dispatch({ type: GET_POST_RESET });
+            store.dispatch({ type: POST_RESET });
           }
         }}
       />

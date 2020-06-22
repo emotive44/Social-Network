@@ -11,7 +11,7 @@ import {
   likeUnlikePost, 
   getPostComments,
 } from '../../store/actions/post-action';
-import { GET_POST_RESET } from '../../store/types';
+import { POST_RESET } from '../../store/types';
 import store from '../../store/store';
 
 import { imageOrientation } from '../../utils/imageOrientation';
@@ -73,7 +73,7 @@ const Post = ({
           <Prompt 
             message={(location) => {
               if(location.pathname !== match.url) {
-                store.dispatch({ type: GET_POST_RESET });
+                store.dispatch({ type: POST_RESET });
               }
             }}
           />

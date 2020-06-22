@@ -2,9 +2,9 @@ import {
   GET_POST,
   LIKE_POST,
   POST_ERROR,
+  POST_RESET,
   UPDATE_POST,
   DELETE_POST,
-  GET_POST_RESET,
   CREATE_COMMENT,
   DELETE_COMMENT,
   GET_RECENT_POSTS,
@@ -97,9 +97,8 @@ export default function (state = initialState , action) {
           currComments: state.post.currComments.filter(comment => comment._id !== payload) 
         }
       }
-    case GET_POST_RESET:
+    case POST_RESET:
       return {
-        ...state,
         posts: [],
         post: null,
         loading: true
