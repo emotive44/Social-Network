@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { Prompt } from 'react-router-dom';
 import './Home.scss';
 
@@ -14,17 +14,22 @@ import { getUserFollowing } from '../../store/actions/user-action';
 
 
 const Home = ({ 
-  meId, 
   match, 
   posts,
   following,
   getRecentPosts, 
   getUserFollowing, 
 }) => {
+  const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     getRecentPosts();
-    getUserFollowing(meId);
-  }, [getRecentPosts, getUserFollowing, meId]);
+    getUserFollowing(localStorage.getItem('userId'), searchValue);
+  }, [getRecentPosts, getUserFollowing, searchValue]);
+
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value);
+  }
 
   return (
     <Fragment>
@@ -44,12 +49,21 @@ const Home = ({
         </div>
         <aside className='home-aside'>
           <div className='home-aside-container'>
-            {following.map(user => <HomeUserItem {...user}/>)}
+            {following.length > 1 ? 
+              following.map(user => <HomeUserItem {...user} key={user._id}/>) :
+              <p className='no-following'>No users found</p>
+            }
           </div>
         </aside>
         <div className='home-aside-search'>
           <i className='fas fa-search' />
-          <input type='search' className='search-input' placeholder='Search' defaultValue='dsadsdadadasd'/>
+          <input 
+            type='search'
+            value={searchValue} 
+            placeholder='Search' 
+            className='search-input' 
+            onChange={searchHandler}
+          />
         </div>
       </section>
     </Fragment>
@@ -58,7 +72,6 @@ const Home = ({
 
 const mapStateToProps = state => ({
   posts: state.post.posts,
-  meId: state.auth.userId,
   following: state.user.following,
 });
 

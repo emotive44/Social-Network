@@ -20,6 +20,12 @@
     top: 4rem; right: 0;
     background: $light-color;
 
+    .no-following { 
+      margin-top: 1rem;
+      text-align: center;
+      color: $danger-color;
+    }
+
     &::-webkit-scrollbar {
       width: 9px;
     }
@@ -85,6 +91,6 @@
 
 @media (min-width: 711px) and (max-width: 1240px) {
   .home-aside {
-    height: 87.4vh;
+    height: 87.5vh;
   }
 }

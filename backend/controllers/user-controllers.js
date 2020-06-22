@@ -78,12 +78,17 @@ const getMe = async (req, res, next) => {
 
 const getUserFollowing = async (req, res, next) => {
   let user;
+  const search = req.query.search.trim();
+  const regexp = new RegExp("^" + search);
 
   try {
     user = await User.findById(req.params.userId)
       .populate({
         path: 'following',
-        select: 'name avatar _id'
+        select: 'name avatar _id',
+        match: {
+          name: { $regex: regexp }
+        }
       });
     
     res.status(200).json(user.following)

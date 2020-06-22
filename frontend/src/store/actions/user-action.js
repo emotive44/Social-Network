@@ -27,9 +27,9 @@ export const getUser = (userId) => async dispatch => {
   }
 }
 
-export const getUserFollowing = (userId) => async dispatch => {
+export const getUserFollowing = (userId, search) => async dispatch => {
   try {
-    const res = await axios.get(baseUrl + `users/${userId}/following`);
+    const res = await axios.get(baseUrl + `users/${userId}/following?search=${search}`);
 
     dispatch({
       type: GET_USER_FOLLOWING,
