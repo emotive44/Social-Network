@@ -7,6 +7,7 @@ import {
   GET_POST_RESET,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  GET_RECENT_POSTS,
   GET_POST_COMMENTS,
   GET_POSTS_BY_USER,
 } from '../types';
@@ -45,6 +46,12 @@ export default function (state = initialState , action) {
       return {
         ...state,
         post: payload,
+        loading: false
+      }
+    case GET_RECENT_POSTS:
+      return {
+        ...state,
+        posts: payload,
         loading: false
       }
     case GET_POSTS_BY_USER: 

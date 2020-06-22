@@ -37,7 +37,7 @@ const App = () => {
         <NavBar />
         <Alert />
         <Switch>
-          <Route exact path='/' component={() => localStorage.token ? <Home /> : <LandingPage />} />
+          <Route exact path='/' component={localStorage.token ? Home : LandingPage} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
           <Route exact path='/users' component={Users} />

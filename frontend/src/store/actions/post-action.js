@@ -8,6 +8,7 @@ import {
   DELETE_POST,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  GET_RECENT_POSTS,
   GET_POST_COMMENTS,
   GET_POSTS_BY_USER,
 } from '../types';
@@ -36,6 +37,17 @@ export const getPosts = (userId, count) => async dispatch => {
     const res = await axios.get(baseUrl + `posts/by/${userId}?count=${count}`);
 
     dispatch({type: GET_POSTS_BY_USER, payload: res.data})
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: POST_ERROR });
+  }
+}
+
+export const getRecentPosts = (count) => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + `posts/recent?count=${count}`);
+
+    dispatch({type: GET_RECENT_POSTS, payload: res.data})
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: POST_ERROR });

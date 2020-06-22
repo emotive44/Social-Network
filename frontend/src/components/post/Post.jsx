@@ -80,10 +80,17 @@ const Post = ({
         )}
 
         <div className="post-header">
-          <Link to={`/users/${post && post.creator && post.creator._id}`}>
+          <Link to={`/users/${
+            postD ?
+              postD.creator && postD.creator._id :
+              post && post.creator && post.creator._id}`
+          }>
           <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt="" />
           </Link>
-          {post && post.creator && <p>{post.creator.name.toUpperCase()}</p>}
+          {postD ? 
+            postD.creator && <p>{postD.creator.name.toUpperCase()}</p> :
+            post && post.creator && <p>{post.creator.name.toUpperCase()}</p>
+          }
         </div>
         <div className={`post-contents img-${single ? 
           post && post.image && imageOrientation(post.image) : 
@@ -142,15 +149,13 @@ const Post = ({
             type='button'
             light animation
             clickHandler={likePost}
-            style={{ flex: '1 1 33%', marginRight: '1px'}}
-            >
+          >
             <i className="fas fa-thumbs-up" /> Like
           </Button>
           {!single && (
             <Button
               type='button'
               info animation
-              style={{ flex: '1 1 33%', marginRight: '1px'}}
             >
               <Link to={`/posts/${postD._id}`}><i className="fas fa-external-link-alt" /> View Post</Link>
             </Button>
@@ -163,7 +168,7 @@ const Post = ({
                 getPostComments((match && match.params && match.params.postId));
               } : () => {}
             }
-            style={{ flex: '1 1 33%', marginRight: '1px'}}
+            style={single ? {pointerEvents: 'stroke'} : {pointerEvents: 'none'}}
           >
             <i className="fas fa-comment-dots" /> Comments ({
               single ? post && post.comments && post.comments : postD.comments.length
@@ -176,7 +181,6 @@ const Post = ({
                 type='button'
                 danger animation
                 clickHandler={deleteCurrentPost}
-                style={{ flex: '1 1 33%', marginRight: '1px'}}
               >
                 <i className="fas fa-trash-alt" /> Delete Post
               </Button>

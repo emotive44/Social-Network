@@ -252,14 +252,13 @@ const getPostsByUser = async (req, res, next) => {
     );
   }
 
-  // if(user.posts.length < 1) {
-  //   return next(
-  //     new HttpError('User does not have any posts.', 404)
-  //   );
-  // }
+  if(user.posts.length < 1) {
+    return next(
+      new HttpError('User does not have any posts.', 404)
+    );
+  }
   
   res.status(200).json(user.posts);
-  // res.status(200).json(user.posts.slice(0,countOfPosts));
 }
 
 const getPostById = async (req, res, next) => {

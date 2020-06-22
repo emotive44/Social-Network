@@ -1,0 +1,25 @@
+.home { 
+  display: flex;
+  justify-content: space-between;
+
+  &-container {
+    width: 55%;
+    margin-top: 5rem;
+    min-width: 35rem;
+  }
+}
+
+@media (max-width: 710px) {
+  .home {
+    flex-direction: column;
+
+    &-aside {
+      display: none;
+    }
+
+    &-container {
+      width: 100%;
+      margin-top: 7rem;
+    }
+  }
+}

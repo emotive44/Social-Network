@@ -11,6 +11,7 @@ export const ADD_PERSONAL_INFO = 'ADD_PERSONAL_INFO';
 export const DELETE_PERSONAL_INFO = 'DELETE_PERSONAL_INFO';
 
 export const GET_POST = 'GET_POST';
+export const GET_RECENT_POSTS = 'GET_RECENT_POSTS';
 export const GET_POSTS_BY_USER = 'GET_POSTS_BY_USER';
 export const GET_POST_RESET = 'GET_POST_RESET';
 export const LIKE_POST = 'LIKE_POST';
