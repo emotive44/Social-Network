@@ -27,5 +27,21 @@ html {
     ul {
       list-style-type: none;
     }
+
+    .more-items, 
+    .no-more-items {
+      width: 50%;
+      display: block;
+      margin: 0 auto;
+      cursor: pointer;
+      color: darkblue;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .no-more-items { 
+      cursor: initial;
+      color: $danger-color;
+    }
   }
 }

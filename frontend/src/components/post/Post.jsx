@@ -65,9 +65,12 @@ const Post = ({
     }
   }
 
+  if(single && loading) {
+    return <Spinner style={{width: '200px'}}/>
+  }
+
   return (
     <Fragment>
-      {single && loading && <Spinner />}
       <article className={`post ${single && 'single-post'}`}>
         {single && (
           <Prompt 

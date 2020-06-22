@@ -188,7 +188,7 @@ const getAllPosts = async (req, res, next) => {
 }
 
 const getRecentPosts = async (req, res, next) => {
-  const countOfPosts = +req.query.count || 3;
+  const countOfPosts = +req.query.count || 1;
 
   let existUser;
   try {

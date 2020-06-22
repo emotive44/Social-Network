@@ -28,20 +28,4 @@
 main {
   grid-area: main;
   border: 1px solid $primary-color;
-
-  .no-more-posts,
-  .more-posts { 
-    width: 40%;
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    color: darkblue;
-    text-align: center;
-  }
-
-  .no-more-posts { 
-    cursor: initial;
-    color: $danger-color;
-  }
 }

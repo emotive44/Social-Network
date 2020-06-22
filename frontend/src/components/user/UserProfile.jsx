@@ -92,9 +92,9 @@ const UserProfile = ({
 
         {countOfPosts - 4 > posts.length ? 
           posts.length < 1 ? 
-            <span className='no-more-posts'>User does not have posts yet.</span> : 
-            <span className='no-more-posts'>Does not have more posts.</span> : 
-          <span onClick={showPosts} className='more-posts'>show more posts</span>
+            <span className='no-more-items'>User does not have posts yet.</span> : 
+            <span className='no-more-items'>Does not have more posts.</span> : 
+          <span onClick={showPosts} className='more-items'>show more posts</span>
         }
       </main>
     </section>

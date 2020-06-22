@@ -61,13 +61,13 @@ const CommentsList = ({ comments, createComment, postId, currComments, getPostCo
       {allComments}
 
       {countOfComments - 3 > comments ? (
-          comments > 1 && <span className='no-more-comments'>Does not have more comments</span>
+          comments > 1 && <span className='no-more-items'>Does not have more comments</span>
         ) : (
-          <span onClick={showComments} className='more-comments'>show more comments</span>
+          <span onClick={showComments} className='more-items'>show more comments</span>
         )
       }
 
-      {comments < 1 && <p className='no-comments'>
+      {comments < 1 && <p className='no-more-items'>
         Not comments yet. Write first comment here.
       </p>}
     </div>

@@ -3,6 +3,7 @@ import { Prompt } from 'react-router-dom';
 import './Home.scss';
 
 import HomeUserItem from './HomeUserItem';
+import Spinner from '../common/Spinner';
 import Post from '../post/Post';
 
 import { connect } from 'react-redux';
@@ -16,21 +17,37 @@ import { getUserFollowing } from '../../store/actions/user-action';
 const Home = ({ 
   match, 
   posts,
+  loading,
   following,
   getRecentPosts, 
   getUserFollowing, 
 }) => {
   const [searchValue, setSearchValue] = useState('');
+  const [countOfPosts, setCountOfPosts] = useState(2);
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     getRecentPosts();
-    getUserFollowing(localStorage.getItem('userId'), searchValue);
+    getUserFollowing(userId, searchValue);
   }, [getRecentPosts, getUserFollowing, searchValue]);
+
+  const showPosts = () => {
+    if(countOfPosts - 1 > posts.length) { 
+      return;
+    }
+
+    setCountOfPosts(countOfPosts + 1);
+    getRecentPosts(countOfPosts);
+  }
 
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   }
-
+  
+  if(loading) {
+    return <Spinner style={{left: '35%', width: '200px'}}/>
+  }
+  
   return (
     <Fragment>
       <Prompt 
@@ -46,6 +63,12 @@ const Home = ({
           {posts.map(post => {
             return <Post postD={post} key={post._id}/>
           })}
+
+          
+          {countOfPosts - 1 > posts.length ? 
+            <span className='no-more-items'>Does not have more posts.</span> : 
+            <span onClick={showPosts} className='more-items'>Show more posts</span>
+          }
         </div>
         <aside className='home-aside'>
           <div className='home-aside-container'>
@@ -72,6 +95,7 @@ const Home = ({
 
 const mapStateToProps = state => ({
   posts: state.post.posts,
+  loading: state.post.loading,
   following: state.user.following,
 });
 

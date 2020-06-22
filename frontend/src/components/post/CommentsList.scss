@@ -50,21 +50,6 @@
     margin: 0.5em 0 0 0.5em;
     color: red;
   }
-
-  .no-more-comments,
-  .more-comments { 
-    width: 40%;
-    display: block;
-    margin: 0 auto;
-    color: darkblue;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  .no-more-comments { 
-    color: $danger-color;
-    cursor: initial;
-  }
 }
 
 .single-post .post-comments {
