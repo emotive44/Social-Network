@@ -1,0 +1,18 @@
+.home-aside-user {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0 0 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  img{
+    width: 30px;
+    border-radius: 50%;
+  }
+
+  .firstName { 
+    margin: 0 0.3rem 0 0.5rem;
+  }
+}

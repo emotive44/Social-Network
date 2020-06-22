@@ -94,7 +94,7 @@ const Post = ({
         </div>
         <div className={`post-contents img-${single ? 
           post && post.image && imageOrientation(post.image) : 
-          imageOrientation(postD.image)}`
+          postD && postD.image && imageOrientation(postD.image)}`
         }>
           {post && post.creator && post.creator._id === userId && (
             <Button
