@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.scss';
 
-import Button from '../common/Button';
-
 import { connect } from 'react-redux';
 
+import Button from '../common/Button';
 import ParticleBackground from './ParticleBackground';
 
 
@@ -18,7 +17,6 @@ const LandingPage = ({ isAuth }) => {
             <Button 
               type='button' 
               primary animation
-              style={{display: 'inline-block', fontSize: '1.6rem', padding: '1.5rem'}}
             >
               Login
             </Button>
@@ -28,7 +26,7 @@ const LandingPage = ({ isAuth }) => {
             <Button 
               type='button' 
               info animation
-              style={{display: 'inline-block', marginLeft: '2.2rem', fontSize: '1.6rem', padding: '1.5rem'}}
+              style={{ marginLeft: '2.2rem'}}
             >
               Register
             </Button>
