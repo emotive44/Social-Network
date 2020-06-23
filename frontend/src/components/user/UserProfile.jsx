@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Prompt } from 'react-router-dom';
 import './UserProfile.scss';
 
@@ -17,6 +17,7 @@ import store from '../../store/store';
 
 import PersonalInfoForm from './PersonalInfoForm';
 import ProfileHeader from './ProfileHeader';
+import UsersList from './UsersList';
 import ProfileAside from './ProfileAside';
 import Spinner from '../common/Spinner';
 import Modal from '../common/Modal';
@@ -37,6 +38,8 @@ const UserProfile = ({
   deletePersonalInfo,
 }) => {
   const [countOfPosts, setCountOfPosts] = useState(8);
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
   const { toggleModal, closeModal, showModal } = useModal();
   const userId = match.params.userId;
 
@@ -53,6 +56,14 @@ const UserProfile = ({
     getUser(userId);
     getPosts(userId);
   }, [getUser, getPosts, userId]);
+
+  const toggleFollowers = (toggle) => {
+    setShowFollowers(toggle);
+  }
+
+  const toggleFollowing = (toggle) => {
+    setShowFollowing(toggle);
+  }
 
   return (
     <section className='user-profile'>
@@ -76,27 +87,35 @@ const UserProfile = ({
         user={user}
         meId={meId}
         followUser={followUser}
+        toggleFollowers={toggleFollowers}
+        toggleFollowing={toggleFollowing}
       />
-      <ProfileAside 
-        meId={meId} 
-        userId={userId}
-        showModal={showModal}
-        deletePersonalInfo={deletePersonalInfo}
-        personalInfo={user.personalInfo}
-      />
-      <main>
-        {posts.map(post => {
-          return <Post postD={post} key={post._id}/>
-        })}
+      {!showFollowers &&  !showFollowing &&(
+        <Fragment>
+          <ProfileAside 
+            meId={meId} 
+            userId={userId}
+            showModal={showModal}
+            deletePersonalInfo={deletePersonalInfo}
+            personalInfo={user.personalInfo}
+          />
+          <main>
+            {posts.map(post => {
+              return <Post postD={post} key={post._id}/>
+            })}
 
+            {countOfPosts - 4 > posts.length ? 
+              posts.length < 1 ? 
+                <span className='no-more-items'>User does not have posts yet.</span> : 
+                <span className='no-more-items'>Does not have more posts.</span> : 
+              <span onClick={showPosts} className='more-items'>show more posts</span>
+            }
+          </main>
+        </Fragment> 
+      )}
 
-        {countOfPosts - 4 > posts.length ? 
-          posts.length < 1 ? 
-            <span className='no-more-items'>User does not have posts yet.</span> : 
-            <span className='no-more-items'>Does not have more posts.</span> : 
-          <span onClick={showPosts} className='more-items'>show more posts</span>
-        }
-      </main>
+      {showFollowers && !showFollowing && <UsersList users='followers' />}
+      {showFollowing && !showFollowers && <UsersList users='following' />}
     </section>
   );
 }

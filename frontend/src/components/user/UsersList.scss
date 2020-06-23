@@ -1,0 +1,28 @@
+@import '../../index.scss';
+
+.users {
+  &-section { 
+    display: grid;
+    grid-column: span 2;
+    border: 1px solid $primary-color;
+  }
+
+  &-container { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    &::after {
+      content: '';
+      flex: 0 0 40%;
+      display: block;
+      margin: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .users-container::after {
+    flex: 0 0 42%;
+  }
+}

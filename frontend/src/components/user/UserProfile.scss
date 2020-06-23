@@ -2,10 +2,10 @@
 
 .user-profile { 
   width: 80%;
-  min-width: 45rem;
   margin: auto;
-  margin-top: 7rem;
   display: grid;
+  min-width: 86rem;
+  margin-top: 7rem;
   grid-template-columns: 1fr 2fr;
   grid-template-areas: 
     'header header'
@@ -17,6 +17,7 @@
 
 @media (max-width: 700px) {
   .user-profile {
+    min-width: 45rem;
     margin-top: 9rem;
     grid-template-areas: 
     'header header'

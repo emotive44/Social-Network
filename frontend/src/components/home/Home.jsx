@@ -29,7 +29,7 @@ const Home = ({
   useEffect(() => {
     getRecentPosts();
     getUserFollowing(userId, searchValue);
-  }, [getRecentPosts, getUserFollowing, searchValue]);
+  }, [getRecentPosts, getUserFollowing, searchValue, userId]);
 
   const showPosts = () => {
     if(countOfPosts - 1 > posts.length) { 

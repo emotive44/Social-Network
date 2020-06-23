@@ -1,0 +1,28 @@
+.user-article { 
+  display: flex;
+  flex: 0 0 40%;
+  margin: 0.5rem;
+  align-items: center;
+  background: silver;
+  border-radius: 0.3rem;
+  justify-content: space-between;
+
+  a { 
+    height: 120px;
+  }
+
+  .user-name { 
+    min-width: 15rem;
+  }
+
+  img { 
+    width: 120px;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .user-article {
+    flex: 1;
+  }
+}

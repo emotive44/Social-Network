@@ -4,7 +4,13 @@ import './ProfileHeader.scss';
 import Button from '../common/Button';
 
 
-const ProfileHeader = ({ user, meId, followUser }) => {
+const ProfileHeader = ({ 
+  user, 
+  meId, 
+  followUser,
+  toggleFollowers,  
+  toggleFollowing
+}) => {
   const followUnfollowUser = () => followUser(user._id);
 
   return (
@@ -37,9 +43,15 @@ const ProfileHeader = ({ user, meId, followUser }) => {
       </div>
       <div className='profile-nav'>
         <ul>
-          <li>Information</li>
-          <li>{user.followers && user.followers.length} Followers</li>
-          <li>{user.following && user.following.length} Following</li>
+          <li onClick={() => {toggleFollowers(false); toggleFollowing(false)}}>
+            Information
+          </li>
+          <li onClick={() => {toggleFollowers(true); toggleFollowing(false)}}>
+            {user.followers && user.followers.length} Followers
+          </li>
+          <li onClick={() => {toggleFollowing(true); toggleFollowers(false)}}>
+            {user.following && user.following.length} Following
+          </li>
         </ul>
       </div>
     </div>
