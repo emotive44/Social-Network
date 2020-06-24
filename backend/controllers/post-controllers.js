@@ -36,7 +36,7 @@ const createPost = async (req, res, next) => {
 
   const newPost = new Post({
     text,
-    image: req.file.path,
+    image: req.file && req.file.path,
     creator: req.userId
   });
 
@@ -478,9 +478,11 @@ const deletePost = async (req, res, next) => {
     );
   }
 
-  fs.unlink(post.image, (err) => {
-    console.log(err)
-  });
+  if(post.image) {
+    fs.unlink(post.image, (err) => {
+      console.log(err)
+    });
+  }
   
   res.status(200).json(post._id);
 }

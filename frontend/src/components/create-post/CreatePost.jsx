@@ -9,21 +9,20 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../store/actions/alert-action';
 
 import FormWrapper from '../common/FormWrapper';
+import ImageUpload from '../common/ImageUpload';
 import Button from '../common/Button';
-import Input from '../common/Input';
 
 
 const CreatePost = ({ setAlert, userId }) => {
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
 
-  const createPost = async (text, image) => {
+  const createPost = async (body) => {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     };
-    const body = JSON.stringify({ text, image });
   
     try {
       await axios.post('http://localhost:5000/api/v1/posts', body, config);
@@ -36,7 +35,12 @@ const CreatePost = ({ setAlert, userId }) => {
   
   const submit = (data) => {
     const { text, image } = data;
-    createPost(text, image)
+    const formData = new FormData();
+
+    formData.append('text', text);
+    formData.append('image', image[0]);
+
+    createPost(formData);
   }
 
   return (
@@ -53,13 +57,15 @@ const CreatePost = ({ setAlert, userId }) => {
         })}
       />
       {errors.text && <p className='post-err'>{errors.text.message}</p>}
-      <Input 
-        label='Upload your image'
-        name='image'
-        type='text' 
-        ref={register}
-      />
-      <Button type='submit' light animation>Create Post</Button>
+
+      <ImageUpload ref={register} name='image'/>
+      <Button 
+        type='submit' 
+        light animation 
+        style={{marginBottom: '-1rem'}}
+      >
+        Create Post
+      </Button>
     </FormWrapper>
   );
 }

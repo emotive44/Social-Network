@@ -1,11 +1,11 @@
 @import '../../index.scss';
 
 .form {
-  max-width: 70rem;
+  max-width: 75rem;
   min-width: 45rem;
   border: 1px solid black;
   margin: 0 auto;
-  margin-top: 15rem;
+  margin-top: 9rem;
   margin-bottom: 1rem;
   position: relative;
   border-radius: 0.3rem;
@@ -36,6 +36,6 @@
 
 @media (max-width: 700px) {
   .form {
-    margin-top: 24rem;
+    margin-top: 10rem;
   }
 }
