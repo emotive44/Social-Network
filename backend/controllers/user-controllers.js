@@ -248,7 +248,6 @@ const register = async (req, res, next) => {
     name,
     email,
     password,
-    // avatar
   } = req.body;
 
   let existUser;
@@ -278,7 +277,6 @@ const register = async (req, res, next) => {
   const newUser = new User({
     name,
     email,
-    avatar: 'uploads/images/defaultUserImg.jpg',
     password: hashedPassword
   });
 

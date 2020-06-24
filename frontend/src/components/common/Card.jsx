@@ -10,7 +10,10 @@ import Button from './Button';
 const Card = ({ avatar, name, email, _id, text, image, creator }) => {
   return (
     <article className={`card ${!avatar && !image && 'no-image'} ${image && imageOrientation(image)}`}>
-      {avatar && <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt=""/>}
+      {<img 
+        className={`${!avatar && 'no-avatar'}`}
+        src={avatar ? `http://localhost:5000/${avatar}` : '/avatar.jpg'} alt=""
+      />}
       {image && <img src={`http://localhost:5000/${image}`} alt=""/>}
 
       {name && email ? (<Fragment>
