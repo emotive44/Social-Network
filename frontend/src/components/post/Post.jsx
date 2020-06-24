@@ -132,9 +132,9 @@ const Post = ({
               </Button> 
             </form>
           )}
-
-          {single && post && post.image && <img src={post.image} alt=""/>}
-          {!single && postD && <img src={postD.image} alt=""/>}
+          
+          {single && post && post.image && <img src={`http://localhost:5000/${post.image}`} alt=""/>}
+          {!single && postD && <img src={`http://localhost:5000/${postD.image}`} alt=""/>}
 
           <div className='post-contents_footer'>
             <span>

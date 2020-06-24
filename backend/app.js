@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -11,6 +13,10 @@ const app = express();
 
 
 app.use(bodyParser.json());
+
+app.use('/images/posts', express.static(path.join('images', 'posts')));
+app.use('/images/users', express.static(path.join('images', 'users')));
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,6 +37,12 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  if(req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
+
   res.status(err.statusCode || 500).json({ message: err.message });
 });
 

@@ -156,3 +156,19 @@
     margin-bottom: -1.5rem;
   }
 }
+
+.img-square { 
+  img {
+    width: 70%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .post-contents_footer {
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: -1.5rem;
+  }
+}

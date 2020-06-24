@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const postControllers = require('../controllers/post-controllers');
+const { uploadPostImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
 
 const router = express.Router();
@@ -10,6 +11,7 @@ const router = express.Router();
 router.use(auth);
 
 router.post('/', 
+  uploadPostImage,
   [
     check('text', 'Can not create post without content.').not().isEmpty()
   ], 

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
@@ -16,7 +17,7 @@ const createPost = async (req, res, next) => {
     );
   }
 
-  const { text, image } = req.body;
+  const { text } = req.body;
 
   let existUser;
   try {
@@ -35,7 +36,7 @@ const createPost = async (req, res, next) => {
 
   const newPost = new Post({
     text,
-    image: image ? image : undefined,
+    image: req.file.path,
     creator: req.userId
   });
 
@@ -476,6 +477,10 @@ const deletePost = async (req, res, next) => {
       new HttpError('Deleting post failed, please try again.', 500)
     );
   }
+
+  fs.unlink(post.image, (err) => {
+    console.log(err)
+  });
   
   res.status(200).json(post._id);
 }

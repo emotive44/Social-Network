@@ -7,7 +7,9 @@ export const imageOrientation = (src) => {
   
   if(width > height) { 
     return "landscape"; 
-  } else {
+  } else if(width < height){
     return "portrait";
+  } else {
+    return "square"
   }
 }
