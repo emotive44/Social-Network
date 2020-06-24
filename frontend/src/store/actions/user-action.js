@@ -5,6 +5,7 @@ import {
   GET_USER,
   USER_ERROR,
   FOLLOW_USER,
+  FOLLOW_USERS,
   ADD_PERSONAL_INFO,
   GET_USER_FOLLOWING,
   DELETE_PERSONAL_INFO,
@@ -41,13 +42,22 @@ export const getUserFollowing = (userId, search) => async dispatch => {
   }
 }
 
-export const followUser = (userId) => async dispatch => {
+export const followUser = (userId, flag) => async dispatch => {
   try {
     const res = await axios.put(baseUrl + `users/${userId}/follow`);
+    
+    if(flag) {
+      dispatch({
+        type: FOLLOW_USERS,
+        payload: res.data
+      });
+
+      return;
+    }
 
     dispatch({
       type: FOLLOW_USER,
-      payload: res.data
+      payload: res.data.followers
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));

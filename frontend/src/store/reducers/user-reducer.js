@@ -3,6 +3,7 @@ import {
   USER_ERROR,
   USER_RESET,
   FOLLOW_USER,
+  FOLLOW_USERS,
   ADD_PERSONAL_INFO,
   GET_USER_FOLLOWING,
   DELETE_PERSONAL_INFO,
@@ -43,6 +44,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: { ...state.user, followers: payload }
+      }
+    case FOLLOW_USERS:
+      return {
+        ...state,
+        user: localStorage.userId === state.user._id ? {
+            ...state.user,
+            following: state.user.following.filter(userId => userId !== payload.followedUserId)
+          } : state.user,
+        following: localStorage.userId === state.user._id ?
+          state.following.filter(user => user._id !== payload.followedUserId) :
+          state.following.map(user => {
+            if(user._id === payload.followedUserId) {
+              return {
+                ...user,
+                followers: payload.followers
+              }
+            } else return user;
+          })
       }
     case USER_RESET:
       return {

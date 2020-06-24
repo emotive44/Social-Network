@@ -7,6 +7,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const GET_USER = 'GET_USER';
 export const GET_USER_FOLLOWING = 'GET_USER_FOLLOWING';
 export const FOLLOW_USER = 'FOLLOW_USER';
+export const FOLLOW_USERS = 'FOLLOW_USERS';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_RESET = 'USER_RESET';
 export const ADD_PERSONAL_INFO = 'ADD_PERSONAL_INFO';

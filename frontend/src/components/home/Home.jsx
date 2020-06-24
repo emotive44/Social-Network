@@ -72,7 +72,7 @@ const Home = ({
         </div>
         <aside className='home-aside'>
           <div className='home-aside-container'>
-            {following.length > 1 ? 
+            {following.length >= 1 ? 
               following.map(user => <HomeUserItem {...user} key={user._id}/>) :
               <p className='no-following'>No users found</p>
             }

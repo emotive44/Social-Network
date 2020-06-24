@@ -85,12 +85,12 @@ const getUserFollowing = async (req, res, next) => {
     user = await User.findById(req.params.userId)
       .populate({
         path: 'following',
-        select: 'name avatar _id',
+        select: 'name avatar _id followers',
         match: {
           name: { $regex: regexp }
         }
       });
-    
+
     res.status(200).json(user.following)
   } catch (err) {
     if(!user) {
@@ -208,7 +208,7 @@ const followUnfollowUser = async (req, res, next) => {
   
   const followers = followedUser.followers.map(follower => follower._id);
 
-  res.status(201).json(followers);
+  res.status(201).json({ followers, followedUserId: followedUser._id });
 }
 
 const register = async (req, res, next) => {

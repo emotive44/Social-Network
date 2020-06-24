@@ -30,13 +30,12 @@ html {
 
     .more-items, 
     .no-more-items {
-      width: 50%;
+      width: 100%;
       display: block;
-      margin: 0 auto;
+      margin: 1rem auto;
       cursor: pointer;
       color: darkblue;
       text-align: center;
-      margin-bottom: 1rem;
     }
 
     .no-more-items { 
