@@ -11,6 +11,16 @@
     height: 120px;
   }
 
+  .user-name-me { 
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    p, span {
+      flex: 1 1 50%;
+    }
+  }
+
   .user-name { 
     min-width: 15rem;
   }

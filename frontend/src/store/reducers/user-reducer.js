@@ -6,6 +6,7 @@ import {
   FOLLOW_USERS,
   ADD_PERSONAL_INFO,
   GET_USER_FOLLOWING,
+  GET_USER_FOLLOWERS,
   DELETE_PERSONAL_INFO,
 } from '../types';
 
@@ -13,6 +14,7 @@ const initialState = {
   user: {},
   loading: true,
   following: [],
+  followers: [],
 }
 
 export default function (state = initialState, action) {
@@ -29,6 +31,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         following: payload
+      }
+    case GET_USER_FOLLOWERS:
+      return {
+        ...state,
+        followers: payload
       }
     case ADD_PERSONAL_INFO:
       return {
@@ -61,13 +68,22 @@ export default function (state = initialState, action) {
                 followers: payload.followers
               }
             } else return user;
-          })
+          }),
+        followers: state.followers.map(user => {
+          if(user._id === payload.followedUserId) {
+            return {
+              ...user,
+              followers: payload.followers
+            }
+          } else return user;
+        })
       }
     case USER_RESET:
       return {
         user: {},
         loading: true,
         following: [],
+        followers: [],
       }
     case USER_ERROR:
       return {

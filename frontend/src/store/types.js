@@ -6,6 +6,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const GET_USER = 'GET_USER';
 export const GET_USER_FOLLOWING = 'GET_USER_FOLLOWING';
+export const GET_USER_FOLLOWERS = 'GET_USER_FOLLOWERS';
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const FOLLOW_USERS = 'FOLLOW_USERS';
 export const USER_ERROR = 'USER_ERROR';

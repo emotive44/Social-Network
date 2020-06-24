@@ -4,7 +4,7 @@ import './UsersList.scss';
 import UserItem from './UserItem';
 
 
-const UsersList = ({ users, toggleFollowers, toggleFollowing }) => {
+const UsersList = ({ users, toggleFollowers, toggleFollowing, followers }) => {
   return (
     <section className='users-section'>
       <div className='users-container'>
@@ -17,7 +17,9 @@ const UsersList = ({ users, toggleFollowers, toggleFollowing }) => {
               toggleFollowing={toggleFollowing}
             />)
           ) :
-          <p className='no-more-items'>User does not follow anyone</p>
+          <p className='no-more-items'>
+            User does not {followers ? 'have followers yet' : 'follow anyone'}
+          </p>
         }
       </div>
     </section>

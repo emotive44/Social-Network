@@ -15,6 +15,8 @@ router.get('/:userId', userControllers.getUserById);
 
 router.get('/:userId/following', userControllers.getUserFollowing);
 
+router.get('/:userId/followers', auth, userControllers.getUserFollowers);
+
 router.delete('/', auth, userControllers.deleteUser);
 
 router.delete('/info', auth, userControllers.deletePersonalInfo);

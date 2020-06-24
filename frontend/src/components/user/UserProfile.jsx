@@ -10,6 +10,7 @@ import {
   followUser, 
   addPersonalInfo,
   getUserFollowing,
+  getUserFollowers,
   deletePersonalInfo,
 } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
@@ -35,9 +36,11 @@ const UserProfile = ({
   getUser, 
   getPosts,
   following,
+  followers,
   followUser, 
   addPersonalInfo,
   getUserFollowing,
+  getUserFollowers,
   deletePersonalInfo,
 }) => {
   const [countOfPosts, setCountOfPosts] = useState(8);
@@ -61,6 +64,7 @@ const UserProfile = ({
   }, [getUser, getPosts, userId]);
 
   const toggleFollowers = (toggle) => {
+    getUserFollowers(userId);
     setShowFollowers(toggle);
   }
 
@@ -118,7 +122,14 @@ const UserProfile = ({
         </Fragment> 
       )}
 
-      {showFollowers && !showFollowing && <UsersList users='followers' />}
+      {showFollowers && !showFollowing && 
+        <UsersList 
+          followers
+          users={followers}
+          toggleFollowers={toggleFollowers}
+          toggleFollowing={toggleFollowing} 
+        />
+      }
       {showFollowing && !showFollowers && 
         <UsersList 
           users={following} 
@@ -133,6 +144,7 @@ const UserProfile = ({
 const mapStateToProps = state => ({
   user: state.user.user,
   following: state.user.following,
+  followers: state.user.followers,
   meId: state.auth.userId,
   posts: state.post.posts,
   loading: state.user.loading,
@@ -144,6 +156,7 @@ const mapDispatchToProps = {
   followUser,
   addPersonalInfo,
   getUserFollowing,
+  getUserFollowers,
   deletePersonalInfo,
 }
 

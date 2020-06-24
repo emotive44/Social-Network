@@ -105,6 +105,29 @@ const getUserFollowing = async (req, res, next) => {
   }
 }
 
+const getUserFollowers = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.params.userId)
+      .populate({
+        path: 'followers',
+        select: 'name avatar _id followers',
+      });
+
+    res.status(200).json(user.followers)
+  } catch (err) {
+    if(!user) {
+      return next(
+        new HttpError('Does not exist user with this id at data.', 404)
+      );
+    }
+
+    return next(
+      new HttpError('Fetching user followers failed, please try again.', 500)
+    );
+  }
+}
+
 const addAndEditPersonalInfo = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -410,6 +433,7 @@ module.exports = {
   deletePersonalInfo,
   followUnfollowUser,
   getUserFollowing,
+  getUserFollowers,
   getUserById,
   getAllUsers,
   deleteUser,

@@ -8,6 +8,7 @@ import {
   FOLLOW_USERS,
   ADD_PERSONAL_INFO,
   GET_USER_FOLLOWING,
+  GET_USER_FOLLOWERS,
   DELETE_PERSONAL_INFO,
 } from '../types';
 
@@ -34,6 +35,20 @@ export const getUserFollowing = (userId, search) => async dispatch => {
 
     dispatch({
       type: GET_USER_FOLLOWING,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: USER_ERROR });
+  }
+}
+
+export const getUserFollowers = (userId) => async dispatch => {
+  try {
+    const res = await axios.get(baseUrl + `users/${userId}/followers`);
+
+    dispatch({
+      type: GET_USER_FOLLOWERS,
       payload: res.data
     });
   } catch (err) {
