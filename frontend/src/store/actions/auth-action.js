@@ -6,8 +6,6 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
-  USER_RESET,
-  POST_RESET,
 } from '../types';
 
 import { setAlert } from './alert-action';

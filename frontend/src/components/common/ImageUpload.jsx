@@ -13,10 +13,11 @@ const ImageUpload = React.forwardRef((props, ref) => {
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      setpreviewUrl(fileReader.result)
+      setpreviewUrl(fileReader.result);
+      props.setImage(fileReader.result);
     }
     fileReader.readAsDataURL(file);
-  }, [file]);
+  }, [file, props]);
 
   const pickedHandler = e => {
     if(e.target.files && e.target.files.length === 1) {
@@ -35,7 +36,12 @@ const ImageUpload = React.forwardRef((props, ref) => {
         onChange={pickedHandler}
         style={{display: 'none'}}
       />
-      <label htmlFor='upload' className='image-preview' >
+      <label 
+        htmlFor='upload' 
+        style={props.style}
+        className='image-preview'
+      >
+        {props.children}
         {previewUrl && <img src={previewUrl} alt='' />}
         {!previewUrl && <span>Upload Image</span>}
       </label>

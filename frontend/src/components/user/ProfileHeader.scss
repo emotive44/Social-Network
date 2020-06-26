@@ -7,6 +7,7 @@
 
   &-image {
     background: silver;
+    padding-top: 1rem;
     
     p {
       color: white;
@@ -15,14 +16,41 @@
       text-align: center;
       margin-bottom: 1rem;
     }
+
+    .avatar-upload {
+      top: 20rem;
+      opacity: 0.8;
+      right: 42.5%;
+      border: none;
+      cursor: pointer;
+      padding: 0.8rem;
+      position: absolute;
+      border-radius: 50%;
+      background: $white-color;
+
+      &:hover {
+        opacity: 1;
+      }
+      
+      i {
+        font-size: 2.5rem;
+        color: $primary-color;
+      }
+    }
   }
 
-  &-image img { 
-    width: 200px;
+  &-image .avatar-image { 
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid white;
+    background-size: cover;
+    position: relative;
+    border-radius: 50%;
     display: block;
     margin: 0 auto;
-    padding: 1rem 0;
-    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 1rem;
   }
 
   &-image a,

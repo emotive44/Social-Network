@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import './ProfileHeader.scss';
 
+import useModal from '../hooks/useModal';
+
 import Button from '../common/Button';
+import ImageUpload from '../common/ImageUpload';
+import Modal from '../common/Modal';
 
 
 const ProfileHeader = ({ 
@@ -13,12 +18,42 @@ const ProfileHeader = ({
   toggleFollowing,
   deleteUserProfile
 }) => {
+  const { toggleModal, showModal, closeModal } = useModal();
+  const [newAvatarUrl, setNewAvatarUrl] = useState(null);
+  const { register, handleSubmit } = useForm();
   const followUnfollowUser = () => followUser(user._id);
+
+  const submit = (data) => {
+    const formData = new FormData();
+    formData.append('avatar', data.image[0]);
+  }
 
   return (
     <div className='profile-header'>
+      {toggleModal && (
+        <Modal closeModal={closeModal} title='Upload Your Profile Image'>
+          <form onSubmit={handleSubmit(submit)} >
+            <ImageUpload 
+              name='avatar' 
+              ref={register} 
+              setImage={setNewAvatarUrl}
+              style={{border: '1px solid white'}}
+            />
+            <Button type='submit' light animation>
+              Send
+            </Button>
+          </form>
+        </Modal>
+      )}
       <div className='profile-image'>
-        <img src='https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg' alt='' />
+        <div 
+          className='avatar-image'
+          style={{backgroundImage: `url(${newAvatarUrl ? newAvatarUrl : '/avatar.jpg'})`}
+          }
+        />
+        <span className='avatar-upload' onClick={showModal}> 
+          <i className="fas fa-camera" />
+        </span>
         <p>{user.name && user.name.toUpperCase()}</p>
         <p>{user.email}</p>
         {user._id !== meId && (
