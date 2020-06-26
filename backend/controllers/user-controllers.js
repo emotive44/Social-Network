@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -74,6 +75,41 @@ const getMe = async (req, res, next) => {
   }
   
   res.status(200).json({ userId: user._id, name: user.name});
+}
+
+const addAvatar = async (req, res, next) => {
+  let existUser;
+  try {
+    existUser = await User.findById(req.userId);
+  } catch (err) {
+    if(!existUser) {
+      return next(
+        new HttpError('Does not exist user with this id at data.', 404)
+      );
+    }
+    
+    return next(
+      new HttpError('Upload user avatar failed, please try again.', 500)
+    );
+  }
+  
+  if(existUser.avatar) {
+    fs.unlink(existUser.avatar, (err) => {
+      console.log(err);
+    });
+  }
+
+  existUser.avatar = req.file.path;
+
+  try {
+    await existUser.save();
+  } catch (err) {
+    return next(
+      new HttpError('Upload user avatar failed, please try again.', 500)
+    );
+  }
+
+  res.status(201).json(existUser);
 }
 
 const getUserFollowing = async (req, res, next) => {
@@ -445,6 +481,7 @@ module.exports = {
   getUserById,
   getAllUsers,
   deleteUser,
+  addAvatar,
   register,
   login,
   getMe

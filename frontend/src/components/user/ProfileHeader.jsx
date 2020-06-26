@@ -50,10 +50,11 @@ const ProfileHeader = ({
           className='avatar-image'
           style={{backgroundImage: `url(${newAvatarUrl ? newAvatarUrl : '/avatar.jpg'})`}
           }
-        />
-        <span className='avatar-upload' onClick={showModal}> 
-          <i className="fas fa-camera" />
-        </span>
+        >
+          <span className='avatar-upload' onClick={showModal}> 
+            <i className="fas fa-camera" />
+          </span>
+        </div>
         <p>{user.name && user.name.toUpperCase()}</p>
         <p>{user.email}</p>
         {user._id !== meId && (

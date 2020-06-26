@@ -1,5 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
+const { uploadUserImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
  
 const router = express.Router();
@@ -20,6 +21,8 @@ router.get('/:userId/followers', auth, userControllers.getUserFollowers);
 router.delete('/', auth, userControllers.deleteUser);
 
 router.delete('/info', auth, userControllers.deletePersonalInfo);
+
+router.put('/avatar', auth, uploadUserImage, userControllers.addAvatar);
 
 router.put('/info', 
     auth, 
