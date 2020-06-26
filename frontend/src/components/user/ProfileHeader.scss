@@ -25,7 +25,9 @@
     border-radius: 50%;
   }
 
+  &-image a,
   &-image > div {
+    display: block;
     padding-bottom: 0.5rem;
   }
 

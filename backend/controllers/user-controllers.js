@@ -387,6 +387,16 @@ const deleteUser = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await existUser.remove({ session: sess });
+    await User.updateMany(
+      {}, 
+      { $pull: { followers: userId, following: userId } },
+      { session: sess }
+    );
+    await Post.updateMany(
+      {}, 
+      { $pull: { likes: userId, comments: { creator: userId} } },
+      { session: sess },
+    );
     await Post.deleteMany({ creator: userId });
     await sess.commitTransaction();
   } catch (err) {
@@ -395,7 +405,7 @@ const deleteUser = async (req, res, next) => {
     );
   }
 
-  res.status(200).json('Delted profile');
+  res.status(200).json('Deleted profile');
 }
 
 const deletePersonalInfo = async (req, res, next) => {

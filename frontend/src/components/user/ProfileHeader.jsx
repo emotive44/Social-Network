@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ProfileHeader.scss';
 
 import Button from '../common/Button';
@@ -9,7 +10,8 @@ const ProfileHeader = ({
   meId, 
   followUser,
   toggleFollowers,  
-  toggleFollowing
+  toggleFollowing,
+  deleteUserProfile
 }) => {
   const followUnfollowUser = () => followUser(user._id);
 
@@ -39,6 +41,18 @@ const ProfileHeader = ({
               </Button>
             )}
           </div>
+        )}
+        {user._id === meId && (
+          <Link to='/'>
+            <Button 
+              type='button' 
+              danger animation
+              style={{marginBottom: '1rem'}}
+              clickHandler={deleteUserProfile}
+            >
+              Delete Your Profile
+            </Button>
+          </Link>
         )}
       </div>
       <div className='profile-nav'>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { setAlert } from '../actions/alert-action';
+import { logout } from './auth-action';
 import { 
   GET_USER,
   USER_ERROR,
@@ -109,6 +110,16 @@ export const deletePersonalInfo = () => async dispatch => {
 
     dispatch({ type: DELETE_PERSONAL_INFO });
     dispatch(setAlert('You delete your personal info seccess.', 'success'));
+  } catch (err) {
+    dispatch({ type: USER_ERROR });
+    dispatch(setAlert(err.response.data.message, 'danger'));
+  }
+}
+
+export const deleteUserProfile = () => async dispatch => {
+  try {
+    await axios.delete(baseUrl + 'users/');
+    dispatch(logout(true));
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(setAlert(err.response.data.message, 'danger'));

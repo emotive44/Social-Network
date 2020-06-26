@@ -11,6 +11,7 @@ import {
   addPersonalInfo,
   getUserFollowing,
   getUserFollowers,
+  deleteUserProfile,
   deletePersonalInfo,
 } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
@@ -41,6 +42,7 @@ const UserProfile = ({
   addPersonalInfo,
   getUserFollowing,
   getUserFollowers,
+  deleteUserProfile,
   deletePersonalInfo,
 }) => {
   const [countOfPosts, setCountOfPosts] = useState(8);
@@ -97,6 +99,7 @@ const UserProfile = ({
         followUser={followUser}
         toggleFollowers={toggleFollowers}
         toggleFollowing={toggleFollowing}
+        deleteUserProfile={deleteUserProfile}
       />
       {!showFollowers &&  !showFollowing &&(
         <Fragment>
@@ -157,6 +160,7 @@ const mapDispatchToProps = {
   addPersonalInfo,
   getUserFollowing,
   getUserFollowers,
+  deleteUserProfile,
   deletePersonalInfo,
 }
 

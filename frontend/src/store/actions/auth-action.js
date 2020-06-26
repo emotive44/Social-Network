@@ -6,6 +6,8 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
+  USER_RESET,
+  POST_RESET,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -61,9 +63,13 @@ export const login = (email, password) => async dispatch => {
   }
 }
 
-export const logout = () => async dispatch => {
-  dispatch(setAlert('You are logout successfully.', 'success'));
+export const logout = (deleteUser) => async dispatch => {
   dispatch({ type: LOGOUT });
+  if(deleteUser) {
+    dispatch(setAlert('You delete your profile successfully.', 'success'));
+  } else {
+    dispatch(setAlert('You are logout successfully.', 'success'));
+  }
 }
 
 export const loadUser = () => async dispatch => {

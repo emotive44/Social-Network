@@ -32,7 +32,7 @@ const NavBar = ({ isAuth, userName, logout }) => {
         {!isAuth && <li><NavLink to='/register' onClick={closeMenu}>Register</NavLink></li>}
         {!isAuth && <li><NavLink to='/login' onClick={closeMenu}>Login</NavLink></li>}
         {isAuth && <li>
-          <Link to='/' onClick={logout}>Logout</Link>
+          <Link to='/' onClick={() => logout(false)}>Logout</Link>
         </li>}
       </ul>
 
