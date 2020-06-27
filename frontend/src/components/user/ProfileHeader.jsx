@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './ProfileHeader.scss';
 
 import useModal from '../hooks/useModal';
@@ -13,6 +14,7 @@ import Modal from '../common/Modal';
 const ProfileHeader = ({ 
   user, 
   meId, 
+  setAlert,
   followUser,
   toggleFollowers,  
   toggleFollowing,
@@ -22,10 +24,27 @@ const ProfileHeader = ({
   const [newAvatarUrl, setNewAvatarUrl] = useState(null);
   const { register, handleSubmit } = useForm();
   const followUnfollowUser = () => followUser(user._id);
+  const avatarUrl = user && user.avatar && user.avatar.split('images\\users').join('');
+
+  const uploadAvatar = async (body) => {
+    const url = 'http://localhost:5000/api/v1/users/avatar';
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      await axios.put(url, body, config);
+      setAlert('Upload your avatar successfully.', 'success');
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
 
   const submit = (data) => {
     const formData = new FormData();
-    formData.append('avatar', data.image[0]);
+    formData.append('avatar', data && data.avatar && data.avatar[0]);
+    uploadAvatar(formData);
   }
 
   return (
@@ -48,7 +67,11 @@ const ProfileHeader = ({
       <div className='profile-image'>
         <div 
           className='avatar-image'
-          style={{backgroundImage: `url(${newAvatarUrl ? newAvatarUrl : '/avatar.jpg'})`}
+          style={{backgroundImage: `url(${
+            newAvatarUrl ? 
+              newAvatarUrl : 
+              user.avatar ? `http://localhost:5000/images/users/${avatarUrl}` : '/avatar.jpg'
+            })`}
           }
         >
           <span className='avatar-upload' onClick={showModal}> 

@@ -99,7 +99,7 @@ const addAvatar = async (req, res, next) => {
     });
   }
 
-  existUser.avatar = req.file.path;
+  existUser.avatar = req.file && req.file.path;
 
   try {
     await existUser.save();

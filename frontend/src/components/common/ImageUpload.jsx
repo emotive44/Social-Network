@@ -14,7 +14,7 @@ const ImageUpload = React.forwardRef((props, ref) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setpreviewUrl(fileReader.result);
-      props.setImage(fileReader.result);
+      props.setImage && props.setImage(fileReader.result);
     }
     fileReader.readAsDataURL(file);
   }, [file, props]);

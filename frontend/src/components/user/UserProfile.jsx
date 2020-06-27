@@ -15,6 +15,7 @@ import {
   deletePersonalInfo,
 } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
+import { setAlert } from '../../store/actions/alert-action';
 import { POST_RESET, USER_RESET } from '../../store/types'
 import store from '../../store/store';
 
@@ -36,6 +37,7 @@ const UserProfile = ({
   loading, 
   getUser, 
   getPosts,
+  setAlert,
   following,
   followers,
   followUser, 
@@ -96,6 +98,7 @@ const UserProfile = ({
       <ProfileHeader  
         user={user}
         meId={meId}
+        setAlert={setAlert}
         followUser={followUser}
         toggleFollowers={toggleFollowers}
         toggleFollowing={toggleFollowing}
@@ -156,6 +159,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getUser,
   getPosts,
+  setAlert,
   followUser,
   addPersonalInfo,
   getUserFollowing,

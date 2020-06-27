@@ -9,7 +9,13 @@ import Button from './Button';
 
 const Card = ({ avatar, name, email, _id, text, image, creator }) => {
   return (
-    <article className={`card ${!avatar && !image && 'no-image'} ${image && imageOrientation(image)}`}>
+    <article 
+      className={`card 
+        ${!avatar && !image && 'no-image'} 
+        ${image && imageOrientation(image)}
+        ${avatar && imageOrientation(avatar)}
+      `}
+    >
       {!email ? 
         image ? <img src={`http://localhost:5000/${image}`} alt=""/> : null :
         <img 

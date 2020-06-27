@@ -32,7 +32,7 @@ const multerStorageUser = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const extension = file.mimetype.split('/')[1];
-    cb(null, `user-${req.userId}-${Date.now()}.${extension}`);
+    cb(null, `/user-${req.userId}-${Date.now()}.${extension}`);
   }
 });
 
