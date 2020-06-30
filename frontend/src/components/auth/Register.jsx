@@ -30,10 +30,11 @@ const Register = ({ isAuth, registerUser }) => {
       <Input 
         type='text'
         name='name'
-        label='Your Name'
+        label='Full Name'
         ref={register({
           required: 'Name is required.',
-          minLength: { value: 3, message: 'Name must be at least 3 characters long.'}
+          minLength: { value: 3, message: 'Name must be at least 3 characters long.'},
+          validate: value => value.split(' ').length > 1 ? undefined : 'Please write your full name.'
         })}
         err={errors.name && errors.name.message}
       />

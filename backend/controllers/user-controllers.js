@@ -446,6 +446,12 @@ const deleteUser = async (req, res, next) => {
     );
   }
 
+  if(existUser.avatar) {
+    fs.unlink(existUser.avatar, (err) => {
+      console.log(err)
+    });
+  }
+
   res.status(200).json('Deleted profile');
 }
 

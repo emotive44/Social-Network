@@ -38,7 +38,11 @@ const NavBar = ({ isAuth, userName, avatar, logout }) => {
       </ul>
 
       {isAuth && <p className='user'>
-        <span>Hello {userName}</span>
+        <span>
+          Hello
+          <small>,</small>{'    '}
+          {userName.split(' ')[0]}
+        </span>
         <Link 
           to={`/users/${isAuth}`} 
           className='user-image' 

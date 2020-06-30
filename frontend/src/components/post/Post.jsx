@@ -155,7 +155,7 @@ const Post = ({
               {single ? post && post.likes && post.likes.length : postD.likes.length} likes
             </span>
             <span className="posted-on">
-              Posted on <Moment format='YYYY/MM/DD'>{single ? post && post.date : postD.date}</Moment>
+              Posted on <Moment format='DD/MM/YYYY'>{single ? post && post.date : postD.date}</Moment>
             </span>
           </div>
         </div>

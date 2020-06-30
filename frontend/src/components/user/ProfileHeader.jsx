@@ -107,7 +107,7 @@ const ProfileHeader = ({
           </div>
         )}
         {user._id === meId && (
-          <Link to='/'>
+          <Link to='/users'>
             <Button 
               type='button' 
               danger animation

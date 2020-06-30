@@ -68,6 +68,10 @@ nav {
     margin: 0.5rem;
     align-items: center;
 
+    small {
+      font-size: 2rem;
+    }
+
     &-image {
       width: 30px;
       min-width: 30px;
