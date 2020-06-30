@@ -13,6 +13,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   loading: true,
   userId: null,
+  avatar: null,
   name: null,
 };
 
@@ -40,10 +41,10 @@ export default function (state = initialState, action) {
     case LOGOUT:
       localStorage.removeItem('token');
       return {
-        ...state,
         name: null,
         token: null,
         userId: null,
+        avatar: null,
         loading: false
       };
     default:

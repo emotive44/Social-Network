@@ -11,10 +11,15 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
   const deleteCurrComment = () => {
     deleteComment(postId, comment._id)
   }
-  
+
   return (
     <div className="post-comment">
-      <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt="" />
+      <img 
+        src={`${
+        comment.creator.avatar ? `http://localhost:5000/${comment.creator.avatar}` : '/avatar.jpg'
+        }`} 
+        alt='' 
+      />
       <div className="comment">
         <p>
           <span>{comment.creator.name}</span>

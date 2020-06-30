@@ -61,7 +61,7 @@ const getUserById = async (req, res, next) => {
 const getMe = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.userId).select('name _id');
+    user = await User.findById(req.userId).select('name _id avatar');
   } catch (err) {
     if(!user) {
       return next(
@@ -74,7 +74,7 @@ const getMe = async (req, res, next) => {
     );
   }
   
-  res.status(200).json({ userId: user._id, name: user.name});
+  res.status(200).json({ userId: user._id, name: user.name, avatar: user.avatar});
 }
 
 const addAvatar = async (req, res, next) => {
@@ -399,7 +399,12 @@ const login = async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ userId: existUser.id, name: existUser.name, token });
+  res.status(200).json({ 
+    token,
+    userId: existUser.id, 
+    name: existUser.name, 
+    avatar: existUser.avatar
+  });
 }
 
 const deleteUser = async (req, res, next) => {

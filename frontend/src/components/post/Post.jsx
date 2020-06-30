@@ -88,7 +88,20 @@ const Post = ({
               postD.creator && postD.creator._id :
               post && post.creator && post.creator._id}`
           }>
-          <img src="https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg" alt="" />
+          {single ?
+            post && post.creator && (
+              <img 
+                src={post.creator.avatar ? `http://localhost:5000/${post.creator.avatar}` : '/avatar.jpg'} 
+                alt=''
+              />
+            ) :
+            postD && postD.creator && (
+              <img 
+                src={postD.creator.avatar ? `http://localhost:5000/${postD.creator.avatar}` : '/avatar.jpg'} 
+                alt=''
+              />
+            ) 
+          }
           </Link>
           {postD ? 
             postD.creator && <p>{postD.creator.name.toUpperCase()}</p> :

@@ -135,7 +135,7 @@ const getPostComments = async (req, res, next) => {
         path: 'comments',
         populate: {
           path: 'creator',
-          select: 'name',
+          select: 'name avatar',
         }
       });
   } catch (err) {

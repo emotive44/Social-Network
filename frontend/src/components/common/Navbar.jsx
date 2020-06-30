@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth-action';
 
 
-const NavBar = ({ isAuth, userName, logout }) => {
+const NavBar = ({ isAuth, userName, avatar, logout }) => {
   const [toggle, setToggle] = useState(false);
+  const avatarUrl = avatar && avatar.split('images\\users').join('');
 
   const toggleBar = () => {
     setToggle(!toggle);
@@ -38,7 +39,13 @@ const NavBar = ({ isAuth, userName, logout }) => {
 
       {isAuth && <p className='user'>
         <span>Hello {userName}</span>
-        <Link to={`/users/${isAuth}`} className='user-image' />
+        <Link 
+          to={`/users/${isAuth}`} 
+          className='user-image' 
+          style={{
+            backgroundImage: `url(${avatar ? `http://localhost:5000/images/users/${avatarUrl}` : '/avatar.jpg'})`
+          }}
+        />
       </p>}
     </nav>
   );
@@ -46,7 +53,8 @@ const NavBar = ({ isAuth, userName, logout }) => {
 
 const mapStateToProps = state => ({
   isAuth: state.auth.userId,
-  userName: state.auth.name
+  userName: state.auth.name,
+  avatar: state.auth.avatar,
 });
 
 export default connect(mapStateToProps, { logout })(NavBar);

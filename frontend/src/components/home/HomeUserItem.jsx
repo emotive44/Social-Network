@@ -7,7 +7,7 @@ const HomeUserItem = ({ avatar, _id, name }) => {
   return  (
     <div className='home-aside-user'>
       <Link to={`/users/${_id}`}>
-        <img src='https://m2bob-forum.net/wcf/images/avatars/3e/2720-3e546be0b0701e0cb670fa2f4fcb053d4f7e1ba5.jpg' alt=''/>
+        <img src={avatar ? `http://localhost:5000/${avatar}` : '/avatar.jpg'} alt=''/>
       </Link>
       <p className='follower-name'>{name}</p>
     </div>

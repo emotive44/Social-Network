@@ -15,6 +15,7 @@ const ProfileHeader = ({
   user, 
   meId, 
   setAlert,
+  loadUser,
   followUser,
   toggleFollowers,  
   toggleFollowing,
@@ -45,6 +46,10 @@ const ProfileHeader = ({
     const formData = new FormData();
     formData.append('avatar', data && data.avatar && data.avatar[0]);
     uploadAvatar(formData);
+    setTimeout(() => {
+      closeModal();
+      loadUser();
+    }, 300);
   }
 
   return (

@@ -16,6 +16,7 @@ import {
 } from '../../store/actions/user-action';
 import { getPosts } from '../../store/actions/post-action';
 import { setAlert } from '../../store/actions/alert-action';
+import { loadUser } from '../../store/actions/auth-action';
 import { POST_RESET, USER_RESET } from '../../store/types'
 import store from '../../store/store';
 
@@ -38,6 +39,7 @@ const UserProfile = ({
   getUser, 
   getPosts,
   setAlert,
+  loadUser,
   following,
   followers,
   followUser, 
@@ -99,6 +101,7 @@ const UserProfile = ({
         user={user}
         meId={meId}
         setAlert={setAlert}
+        loadUser={loadUser}
         followUser={followUser}
         toggleFollowers={toggleFollowers}
         toggleFollowing={toggleFollowing}
@@ -160,6 +163,7 @@ const mapDispatchToProps = {
   getUser,
   getPosts,
   setAlert,
+  loadUser,
   followUser,
   addPersonalInfo,
   getUserFollowing,
