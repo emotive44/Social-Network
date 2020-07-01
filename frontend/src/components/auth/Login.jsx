@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import './Login.scss';
 
 import emailValidate from '../../utils/emailValidate';
 
@@ -58,7 +59,12 @@ const Login = ({ isAuth, login }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-      <Button type='submit' light animation>Login</Button>
+      <div className='login-wrapper-btns'>
+        <Button type='submit' light animation>Login</Button>
+        <span>
+          <Link to='/forgot-password'>Forgot your password?</Link>
+        </span>
+      </div>
     </FormWrapper>
   );
 }

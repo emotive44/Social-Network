@@ -2,10 +2,15 @@ import React from 'react';
 import './Spinner.scss';
 
 
-const Spinner = ({ style }) => {
+const Spinner = ({ style, styleBtn }) => {
   return (
     <div className='spinner'>
-      <img src="/spinner.gif" alt="" style={style}/>
+      <img 
+        className={styleBtn && 'button-spinner'}
+        src="/spinner.gif" 
+        style={style}
+        alt="" 
+        />
     </div>
   );
 }
