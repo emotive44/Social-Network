@@ -445,7 +445,7 @@ const forgotPassword = async (req, res ,next) => {
     );
   }
 
-  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/reset-password/${resetToken}`;
+  const resetURL = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
   const message = `Forgot your password? 
   Submit a PATCH request with your new password to: ${resetURL}.\n
   If you do not forgot your password, please ignore this email.`;

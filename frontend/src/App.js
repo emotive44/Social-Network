@@ -10,6 +10,7 @@ import setAuthToken from './utils/setAuthToken';
 import NavBar from './components/common/Navbar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import ResetPassword from './components/auth/ResetPassword';
 import ForgotPassword from './components/auth/ForgotPassword';
 import CreatePost from './components/create-post/CreatePost';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -41,6 +42,7 @@ const App = () => {
           <Route exact path='/' render={
             (props) => localStorage.token ? <Home {...props}/> : <LandingPage {...props}/>
           }/>
+          <Route path='/reset-password/:token' component={ResetPassword} />
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
