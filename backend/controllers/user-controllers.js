@@ -1,4 +1,5 @@
 const fs = require('fs');
+const crypto = require('crypto');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -467,6 +468,70 @@ const forgotPassword = async (req, res ,next) => {
   res.status(200).json('Token send to email.');
 }
 
+const resetPassword = async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+  
+  let existUser;
+  try {
+    existUser = await User.findOne({ 
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() }
+    });
+  } catch (err) {
+    return next(
+      new HttpError('Something went wrong, please try again.', 500)
+    );
+  }
+
+  if(!existUser) {
+    return next(
+      new HttpError('Token is invalid, or has expired.', 400)
+    );
+  }
+
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(req.body.password, 10);
+  } catch (err) {
+    return next(
+      new HttpError('Signing up failed, please try again.', 500)
+    );
+  }
+
+  existUser.password = hashedPassword;
+  existUser.passwordResetToken = undefined;
+  existUser.passwordResetExpires = undefined;
+
+  try {
+    await existUser.save();
+  } catch (err) {
+    return next(
+      new HttpError('Reset password failed, please try again.', 500)
+    );
+  }
+
+  let token;
+  try {
+    token = await jwt.sign(
+      { 
+      userId: existUser.id,
+      email: existUser.email
+      },
+      'supersecret',
+      { expiresIn: '1h' }
+    );
+  } catch (err) {
+    return next(
+      new HttpError('Login failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json('Reset password successfully.');
+}
+
 const deleteUser = async (req, res, next) => {
   const userId = req.userId;
   let existUser;
@@ -550,6 +615,7 @@ module.exports = {
   getUserFollowing,
   getUserFollowers,
   forgotPassword,
+  resetPassword,
   getUserById,
   getAllUsers,
   deleteUser,

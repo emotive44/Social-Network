@@ -58,5 +58,12 @@ router.post('/forgot-password',
   userControllers.forgotPassword
 );
 
+router.patch('/reset-password/:token',
+  [
+    check('password', 'Password should be more then 6 symbols.').isLength({ min: 6 })
+  ],
+  userControllers.resetPassword
+);
+
 
 module.exports = router;
