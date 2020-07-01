@@ -51,5 +51,12 @@ router.post('/login',
   userControllers.login
 );
 
+router.post('/forgot-password',
+  [
+    check('email', 'Invalid email.').normalizeEmail().isEmail()
+  ],
+  userControllers.forgotPassword
+);
+
 
 module.exports = router;

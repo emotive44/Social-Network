@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
+const sendEmail = require('../utils/sendEmail');
+
 const HttpError = require('../models/httpError-model');
 const User = require('../models/user-model');
 const Post = require('../models/post-model');
@@ -407,6 +409,64 @@ const login = async (req, res, next) => {
   });
 }
 
+const forgotPassword = async (req, res ,next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    const err = errors.array().map(e => e.msg).join(' ');
+
+    return next(
+      new HttpError(err, 422)
+    );
+  }
+
+  let existUser;
+  try {
+    existUser = await User.findOne({ email: req.body.email });
+  } catch (err) {
+    return next(
+      new HttpError('Something went wrong, please try again.', 500)
+    );
+  }
+
+  if(!existUser) {
+    return next(
+      new HttpError('There is no user with this email at data.', 404)
+    );
+  }
+
+  const resetToken = existUser.createPasswordResetToken();
+
+  try {
+    await existUser.save();
+  } catch (err) {
+    return next(
+      new HttpError('Something went wrong, please try again.', 500)
+    );
+  }
+
+  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/reset-password/${resetToken}`;
+  const message = `Forgot your password? 
+  Submit a PATCH request with your new password to: ${resetURL}.\n
+  If you do not forgot your password, please ignore this email.`;
+
+  try {
+    await sendEmail({
+      email: existUser.email,
+      subject: 'Your reset password token is valid only for 10 minutes.',
+      message
+    });
+  } catch (err) {
+    existUser.passwordResetToken = undefined;
+    existUser.passwordResetExpires = undefined;
+    await existUser.save();
+    return next(
+      new HttpError('Sending a email failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json('Token send to email.');
+}
+
 const deleteUser = async (req, res, next) => {
   const userId = req.userId;
   let existUser;
@@ -489,6 +549,7 @@ module.exports = {
   followUnfollowUser,
   getUserFollowing,
   getUserFollowers,
+  forgotPassword,
   getUserById,
   getAllUsers,
   deleteUser,
