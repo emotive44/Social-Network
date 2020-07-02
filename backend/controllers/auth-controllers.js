@@ -1,6 +1,4 @@
 const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 const sendEmail = require('../utils/sendEmail');
@@ -38,7 +36,7 @@ const login = async (req, res, next) => {
 
   let isValidPass = false;
   try {
-    isValidPass = await bcrypt.compare(password, existUser.password);
+    isValidPass = await existUser.comparePassword(password);
   } catch (err) {
     return next(
       new HttpError('Login failed, please try again.', 500)
@@ -53,14 +51,7 @@ const login = async (req, res, next) => {
 
   let token;
   try {
-    token = await jwt.sign(
-      { 
-      userId: existUser.id,
-      email: existUser.email
-      },
-      'supersecret',
-      { expiresIn: '1h' }
-    );
+    token = await existUser.createToken(existUser.email, existUser.id);
   } catch (err) {
     return next(
       new HttpError('Login failed, please try again.', 500)
@@ -106,19 +97,10 @@ const register = async (req, res, next) => {
     );
   }
 
-  let hashedPassword;
-  try {
-    hashedPassword = await bcrypt.hash(password, 10);
-  } catch (err) {
-    return next(
-      new HttpError('Signing up failed, please try again.', 500)
-    );
-  }
-
   const newUser = new User({
     name,
     email,
-    password: hashedPassword
+    password
   });
 
   try {
@@ -129,14 +111,7 @@ const register = async (req, res, next) => {
 
   let token;
   try {
-    token = jwt.sign(
-      {
-      userId: newUser.id,
-      email: newUser.email
-      },
-      'supersecret',
-      { expiresIn: '1h' }
-    );
+    token = await newUser.createToken(newUser.email, newUser.id)
   } catch (err) {
     return next(
       new HttpError('Signing up failed, please try again.', 500)
@@ -228,16 +203,7 @@ const resetPassword = async (req, res, next) => {
     );
   }
 
-  let hashedPassword;
-  try {
-    hashedPassword = await bcrypt.hash(req.body.password, 10);
-  } catch (err) {
-    return next(
-      new HttpError('Signing up failed, please try again.', 500)
-    );
-  }
-
-  existUser.password = hashedPassword;
+  existUser.password = req.body.password;
   existUser.passwordResetToken = undefined;
   existUser.passwordResetExpires = undefined;
 
@@ -251,14 +217,7 @@ const resetPassword = async (req, res, next) => {
 
   let token;
   try {
-    token = await jwt.sign(
-      { 
-      userId: existUser.id,
-      email: existUser.email
-      },
-      'supersecret',
-      { expiresIn: '1h' }
-    );
+    token = await existUser.createToken(existUser.email, existUser.id);
   } catch (err) {
     return next(
       new HttpError('Login failed, please try again.', 500)
