@@ -6,6 +6,7 @@ const auth = require('../middleware/chek-auth');
 const router = express.Router();
 
 const userControllers = require('../controllers/user-controllers');
+const authControllers = require('../controllers/auth-controllers');
 
 
 router.get('/', userControllers.getAllUsers);
@@ -40,7 +41,7 @@ router.post('/register',
     check('email', 'Invalid email.').normalizeEmail().isEmail(),
     check('password', 'Password should be more then 6 symbols.').isLength({ min: 6 })
   ],
-  userControllers.register
+  authControllers.register
 );
 
 router.post('/login', 
@@ -48,21 +49,21 @@ router.post('/login',
     check('email', 'Invalid email.').normalizeEmail().isEmail(),
     check('password', 'Password should be more then 6 symbols.').isLength({ min: 6 })
   ], 
-  userControllers.login
+  authControllers.login
 );
 
 router.post('/forgot-password',
   [
     check('email', 'Invalid email.').normalizeEmail().isEmail()
   ],
-  userControllers.forgotPassword
+  authControllers.forgotPassword
 );
 
 router.patch('/reset-password/:token',
   [
     check('password', 'Password should be more then 6 symbols.').isLength({ min: 6 })
   ],
-  userControllers.resetPassword
+  authControllers.resetPassword
 );
 
 
