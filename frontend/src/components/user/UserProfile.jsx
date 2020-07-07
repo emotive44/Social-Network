@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Prompt } from 'react-router-dom';
 import './UserProfile.scss';
 
 import useModal from '../hooks/useModal';
@@ -67,6 +66,11 @@ const UserProfile = ({
   useEffect(() => {
     getUser(userId);
     getPosts(userId);
+
+    return () => {
+      store.dispatch({ type: POST_RESET });
+      store.dispatch({ type: USER_RESET });
+    }
   }, [getUser, getPosts, userId]);
 
   const toggleFollowers = (toggle) => {
@@ -82,14 +86,6 @@ const UserProfile = ({
   return (
     <section className='user-profile'>
       {loading && <Spinner style={{ width: '13rem' }} />}
-      <Prompt 
-        message={(location) => {
-          if(location.pathname !== match.url) {
-            store.dispatch({ type: POST_RESET });
-            store.dispatch({ type: USER_RESET });
-          }
-        }}
-      />
 
       {toggleModal && (
         <Modal closeModal={closeModal} title='Edit Your Personal Information'>

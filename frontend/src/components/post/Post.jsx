@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Prompt, useHistory, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import './Post.scss';
 
@@ -43,6 +43,12 @@ const Post = ({
   
   useEffect(() => {
     getPost((match && match.params && match.params.postId) || postD._id );
+
+    return () => {
+      if(single) {
+        store.dispatch({ type: POST_RESET });
+      }
+    }
   }, [getPost, match, postD]);
 
   const submit = (data) => {
@@ -72,16 +78,6 @@ const Post = ({
   return (
     <Fragment>
       <article className={`post ${single && 'single-post'}`}>
-        {single && (
-          <Prompt 
-            message={(location) => {
-              if(location.pathname !== match.url) {
-                store.dispatch({ type: POST_RESET });
-              }
-            }}
-          />
-        )}
-
         <div className="post-header">
           <Link to={`/users/${
             postD ?

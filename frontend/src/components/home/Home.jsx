@@ -1,5 +1,4 @@
 import React, { useEffect, Fragment, useState } from 'react';
-import { Prompt } from 'react-router-dom';
 import './Home.scss';
 
 import HomeUserItem from './HomeUserItem';
@@ -15,7 +14,6 @@ import { getUserFollowing } from '../../store/actions/user-action';
 
 
 const Home = ({ 
-  match, 
   posts,
   loading,
   following,
@@ -29,6 +27,11 @@ const Home = ({
   useEffect(() => {
     getRecentPosts();
     getUserFollowing(userId, searchValue);
+
+    return () => {
+      store.dispatch({ type: POST_RESET });
+      store.dispatch({ type: USER_RESET });
+    }
   }, [getRecentPosts, getUserFollowing, searchValue, userId]);
 
   const showPosts = () => {
@@ -50,14 +53,6 @@ const Home = ({
   
   return (
     <Fragment>
-      <Prompt 
-        message={(location) => {
-          if(location.pathname !== match.url) {
-            store.dispatch({ type: POST_RESET });
-            store.dispatch({ type: USER_RESET });
-          }
-        }}
-      />
       <section className='home'>
         <div className='home-container'>
           {posts.map(post => {
