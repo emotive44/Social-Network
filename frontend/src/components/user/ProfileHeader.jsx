@@ -6,9 +6,7 @@ import './ProfileHeader.scss';
 
 import useModal from '../hooks/useModal';
 
-import Button from '../common/Button';
-import ImageUpload from '../common/ImageUpload';
-import Modal from '../common/Modal';
+import { Modal, Button, ImageUpload } from '../common';
 
 
 const ProfileHeader = ({ 

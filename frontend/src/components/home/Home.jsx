@@ -7,8 +7,7 @@ import Post from '../post/Post';
 
 import { connect } from 'react-redux';
 import store from '../../store/store';
-import { POST_RESET } from '../../store/types'
-import { USER_RESET } from '../../store/types';
+import { POST_RESET, USER_RESET } from '../../store/types'
 import { getRecentPosts } from '../../store/actions/post-action';
 import { getUserFollowing } from '../../store/actions/user-action';
 

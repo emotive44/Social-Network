@@ -6,9 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setAlert } from '../../store/actions/alert-action';
 
-import FormWrapper from '../common/FormWrapper';
-import Button from '../common/Button';
-import Input from '../common/Input';
+import { Input, Button, FormWrapper } from '../common';
 
 
 const ResetPassword = ({ setAlert, match }) => {

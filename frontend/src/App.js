@@ -7,21 +7,16 @@ import { loadUser } from './store/actions/auth-action';
 
 import setAuthToken from './utils/setAuthToken';
 
-import NavBar from './components/common/Navbar';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import ResetPassword from './components/auth/ResetPassword';
-import ForgotPassword from './components/auth/ForgotPassword';
 import CreatePost from './components/create-post/CreatePost';
-import ProtectedRoute from './components/common/ProtectedRoute';
 import Users from './components/users/Users';
 import Posts from './components/posts/Posts';
 import LandingPage from './components/landing-page/LandingPage';
 import NotFoundPage from './components/not-found-page/NotFoundPage';
 import Post from './components/post/Post';
-import Alert from './components/common/Alert';
 import UserProfile from './components/user/UserProfile';
 import Home from './components/home/Home';
+import { NavBar, Alert, ProtectedRoute } from './components/common';
+import { Login, Register, ResetPassword, ForgotPassword } from './components/auth';
 
 
 if(localStorage.token) { 

@@ -6,11 +6,9 @@ import emailValidate from '../../utils/emailValidate';
 
 import { connect } from 'react-redux';
 
-import { registerUser } from '../../store/actions/auth-action';
+import { Input, Button, FormWrapper } from '../common';
 
-import FormWrapper from '../common/FormWrapper';
-import Input from '../common/Input';
-import Button from '../common/Button';
+import { registerUser } from '../../store/actions/auth-action';
 
 
 const Register = ({ isAuth, registerUser }) => {

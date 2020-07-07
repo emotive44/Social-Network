@@ -8,10 +8,7 @@ import { setAlert } from '../../store/actions/alert-action';
 
 import emailValidate from '../../utils/emailValidate';
 
-import FormWrapper from '../common/FormWrapper';
-import Spinner from '../common/Spinner';
-import Button from '../common/Button';
-import Input from '../common/Input';
+import { Input, Button, Spinner, FormWrapper } from '../common';
 
 
 const ForgotPassword = ({ setAlert }) => {

@@ -9,9 +9,7 @@ import { connect } from 'react-redux';
 
 import { login } from '../../store/actions/auth-action';
 
-import FormWrapper from '../common/FormWrapper';
-import Input from '../common/Input';
-import Button from '../common/Button';
+import { Input, Button, FormWrapper } from '../common';
 
 
 const Login = ({ isAuth, login }) => {

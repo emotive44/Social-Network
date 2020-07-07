@@ -4,8 +4,7 @@ import './PersonalInfoForm.scss';
 
 import  moment  from 'moment'
  
-import Button from '../common/Button';
-import Input from '../common/Input';
+import { Input, Button } from '../common';
 
 
 const PersonalInfoForm = ({ info, addPersonalInfo }) => {

@@ -3,10 +3,7 @@ import './Users.scss';
 
 import usePagination from '../hooks/usePagination';
 
-import Spinner from '../common/Spinner';
-import Pagination from '../common/Pagination';
-import CardsContainer from '../common/CardsContainer';
-import Button from '../common/Button';
+import { Button, Spinner, Pagination, CardsContainer } from '../common';
 
 
 const Users = () => {

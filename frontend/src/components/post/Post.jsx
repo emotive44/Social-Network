@@ -19,8 +19,7 @@ import { imageOrientation } from '../../utils/imageOrientation';
 import Moment from 'react-moment';
 
 import CommentsList from './CommentsList';
-import Button from '../common/Button';
-import Spinner from '../common/Spinner';
+import { Button, Spinner } from '../common';
 
 
 const Post = ({ 

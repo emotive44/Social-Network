@@ -2,9 +2,7 @@ import React from 'react';
 
 import usePagination from '../hooks/usePagination';
 
-import Spinner from '../common/Spinner';
-import Pagination from '../common/Pagination';
-import CardsContainer from '../common/CardsContainer';
+import { Spinner, Pagination, CardsContainer } from '../common';
 
 
 const Posts = () => {

@@ -8,9 +8,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setAlert } from '../../store/actions/alert-action';
 
-import FormWrapper from '../common/FormWrapper';
-import ImageUpload from '../common/ImageUpload';
-import Button from '../common/Button';
+import { Button, ImageUpload, FormWrapper } from '../common';
 
 
 const CreatePost = ({ setAlert, userId }) => {

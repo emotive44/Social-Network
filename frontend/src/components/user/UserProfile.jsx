@@ -23,10 +23,8 @@ import PersonalInfoForm from './PersonalInfoForm';
 import ProfileHeader from './ProfileHeader';
 import UsersList from './UsersList';
 import ProfileAside from './ProfileAside';
-import Spinner from '../common/Spinner';
-import Modal from '../common/Modal';
+import { Modal, Spinner } from '../common';
 import Post from '../post/Post';
-
 
 
 const UserProfile = ({ 
