@@ -48,7 +48,7 @@ const Post = ({
         store.dispatch({ type: POST_RESET });
       }
     }
-  }, [getPost, match, postD]);
+  }, [getPost, match, postD, single]);
 
   const submit = (data) => {
     updatePost((match && match.params && match.params.postId) || postD._id, data.text);

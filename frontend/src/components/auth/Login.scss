@@ -1,5 +1,11 @@
 @import '../../index.scss';
 
+.social-login {
+  display: flex;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
 .login-wrapper-btns { 
   display: flex;
   margin: 1rem 0;

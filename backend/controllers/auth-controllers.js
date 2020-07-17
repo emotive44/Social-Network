@@ -66,6 +66,44 @@ const login = async (req, res, next) => {
   });
 }
 
+const socialLogin = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findOne({ email: req.body.email });
+  } catch (err) {
+    return next(
+      new HttpError('Social Login failed, please try again.', 500)
+    );
+  }
+
+  if(!user) { 
+    user = new User(req.body);
+    
+    try {
+      await user.save();
+    } catch (err) {
+      return new HttpError('Social Login failed, please try again.', 500);
+    }
+  }
+
+
+  let token;
+  try {
+    token = await user.createToken(user.email, user.id)
+  } catch (err) {
+    return next(
+      new HttpError('Signing up failed, please try again.', 500)
+    );
+  }
+
+  res.status(201).json({ 
+    token,
+    userId: user.id, 
+    name: user.name, 
+    avatar: user.avatar,
+  });
+}
+
 const register = async (req, res, next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -230,6 +268,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   login,
   register,
+  socialLogin,
   resetPassword,
   forgotPassword,
 }

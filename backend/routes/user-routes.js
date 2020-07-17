@@ -52,6 +52,8 @@ router.post('/login',
   authControllers.login
 );
 
+router.post('/social-login', authControllers.socialLogin);
+
 router.post('/forgot-password',
   [
     check('email', 'Invalid email.').normalizeEmail().isEmail()

@@ -9,7 +9,13 @@ import { logout } from '../../store/actions/auth-action';
 
 const NavBar = ({ isAuth, userName, avatar, logout }) => {
   const [toggle, setToggle] = useState(false);
-  const avatarUrl = avatar && avatar.split('images\\users').join('');
+  
+  let avatarUrl;
+  if(avatar && avatar.startsWith('http')) {
+    avatarUrl = avatar;
+  } else {
+    avatarUrl = avatar && avatar.split('images\\users').join('');
+  }
 
   const toggleBar = () => {
     setToggle(!toggle);
@@ -47,7 +53,10 @@ const NavBar = ({ isAuth, userName, avatar, logout }) => {
           to={`/users/${isAuth}`} 
           className='user-image' 
           style={{
-            backgroundImage: `url(${avatar ? `http://localhost:5000/images/users/${avatarUrl}` : '/avatar.jpg'})`
+            backgroundImage: `url(${
+              avatar ? 
+                avatarUrl.startsWith('http') ? avatarUrl :`http://localhost:5000/images/users/${avatarUrl}` : 
+                '/avatar.jpg'})`
           }}
         />
       </p>}

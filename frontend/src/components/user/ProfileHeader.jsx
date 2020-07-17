@@ -73,13 +73,17 @@ const ProfileHeader = ({
           style={{backgroundImage: `url(${
             newAvatarUrl ? 
               newAvatarUrl : 
-              user.avatar ? `http://localhost:5000/images/users/${avatarUrl}` : '/avatar.jpg'
+              user.avatar ? 
+                avatarUrl.startsWith('http') ? avatarUrl : `http://localhost:5000/images/users/${avatarUrl}` : 
+                '/avatar.jpg'
             })`}
           }
         >
-          <span className='avatar-upload' onClick={showModal}> 
-            <i className="fas fa-camera" />
-          </span>
+          {user._id === meId && (
+            <span className='avatar-upload' onClick={showModal}> 
+              <i className="fas fa-camera" />
+            </span>
+          )}
         </div>
         <p>{user.name && user.name.toUpperCase()}</p>
         <p>{user.email}</p>

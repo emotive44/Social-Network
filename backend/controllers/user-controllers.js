@@ -307,7 +307,7 @@ const deleteUser = async (req, res, next) => {
     );
   }
 
-  if(existUser.avatar) {
+  if(!existUser.avatar.startsWith('http')) {
     fs.unlink(existUser.avatar, (err) => {
       console.log(err)
     });

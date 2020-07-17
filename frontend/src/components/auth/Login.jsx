@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import { login } from '../../store/actions/auth-action';
 
+import LoginWithGoogle from './LoginWithGoogle';
 import { Input, Button, FormWrapper } from '../common';
 
 
@@ -57,6 +58,11 @@ const Login = ({ isAuth, login }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
+
+      <div className='social-login'>
+        <LoginWithGoogle />
+      </div>
+
       <div className='login-wrapper-btns'>
         <Button type='submit' light animation>Login</Button>
         <span>

@@ -6,6 +6,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
+  SOCIALLOGIN_SUCCESS,
 } from '../types';
 
 import { setAlert } from './alert-action';
@@ -54,6 +55,29 @@ export const login = (email, password) => async dispatch => {
       payload: res.data
     });
 
+    dispatch(setAlert('You are logged in successfully.', 'success'));
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, 'danger'));
+    dispatch({ type: AUTH_ERROR });
+  }
+}
+
+export const googleLogin = (user) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify(user);
+
+  try {
+    const res = await axios.post(baseUrl + 'users/social-login', body, config);
+
+    dispatch({ 
+      type: SOCIALLOGIN_SUCCESS,
+      payload: res.data
+    });
     dispatch(setAlert('You are logged in successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));

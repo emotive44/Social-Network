@@ -20,7 +20,10 @@ const Card = ({ avatar, name, email, _id, text, image, creator }) => {
         image ? <img src={`http://localhost:5000/${image}`} alt=""/> : null :
         <img 
           className={`${!avatar && 'no-avatar'}`}
-          src={avatar ? `http://localhost:5000/${avatar}` : '/avatar.jpg'} alt=""
+          src={avatar ? 
+            avatar.startsWith('http') ? avatar : `http://localhost:5000/${avatar}` :
+            '/avatar.jpg'} 
+          alt=''
         />
       }
 

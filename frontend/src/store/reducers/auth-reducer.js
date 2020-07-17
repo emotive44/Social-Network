@@ -4,6 +4,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
+  SOCIALLOGIN_SUCCESS,
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false
       }
+    case SOCIALLOGIN_SUCCESS:
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
