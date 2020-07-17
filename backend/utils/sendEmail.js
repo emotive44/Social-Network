@@ -6,16 +6,15 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = 'FindMe <marko@abv.bg>';
+    this.from = 'FindMe <marko_streleshki_96@abv.bg>';
   }
 
   newTransport() {
     return nodemailer.createTransport({
-      host: 'smtp.mailtrap.io',
-      port: 25,
-      auth: {
-        user: '069843ef68956e',
-        pass: 'e1c5285c51b677'
+      service: 'SendGrid',
+      auth: { 
+        user: 'apikey',
+        pass: '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'
       }
     });
   }
@@ -37,7 +36,7 @@ module.exports = class Email {
 
   async sendWelcome() {
     const template = `
-    <h1>Hello, ${this.firstName}.</h1>
+    <h1>Hello, ${this.firstName}!</h1>
     <p>Welcome to FindMe Group!</p>
     <a href=${this.url} target='_blank'>Go to login</a>
     <p>If you need any help or problems, please don't hesitate to contact me!</p>
@@ -48,7 +47,7 @@ module.exports = class Email {
 
   async sendResetPassword() {
     const template = `
-    <h1>Hi, ${this.firstName}.</h1>
+    <h1>Hi, ${this.firstName}!</h1>
     <p>Forgot your password? Submit a PATCH request with your new password to: ${this.url}</p>
     <a href=${this.url} target='_blank'>Reset Your Password</a>
     <p>If you didn't forget your password, please ignore this email!</p>
