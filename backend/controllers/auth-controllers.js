@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const { validationResult } = require('express-validator');
 
-const sendEmail = require('../utils/sendEmail');
+const Email = require('../utils/sendEmail');
 
 const User = require('../models/user-model');
 const HttpError = require('../models/httpError-model');
@@ -118,6 +118,13 @@ const register = async (req, res, next) => {
     );
   }
 
+  try {
+    const url = 'http://localhost:3000/login';
+    await new Email(newUser, url).sendWelcome()
+  } catch (err) {
+    console.error(err);
+  }
+
   res.status(201).json({ userId: newUser.id, name: newUser.name, token });
 } 
 
@@ -157,16 +164,9 @@ const forgotPassword = async (req, res ,next) => {
   }
 
   const resetURL = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
-  const message = `Forgot your password? 
-  Submit a PATCH request with your new password to: ${resetURL}.\n
-  If you do not forgot your password, please ignore this email.`;
 
   try {
-    await sendEmail({
-      email: existUser.email,
-      subject: 'Your reset password token is valid only for 10 minutes.',
-      message
-    });
+    await new Email(existUser, resetURL).sendResetPassword();
   } catch (err) {
     existUser.passwordResetToken = undefined;
     existUser.passwordResetExpires = undefined;
