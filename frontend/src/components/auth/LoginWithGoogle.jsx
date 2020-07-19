@@ -2,10 +2,10 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 
 import { connect } from 'react-redux';
-import { googleLogin } from '../../store/actions/auth-action';
+import { socialLogin } from '../../store/actions/auth-action';
 
 
-const LoginWithGoogle = ({ googleLogin }) => {
+const LoginWithGoogle = ({ socialLogin }) => {
   const responseGoogle = response => {
     const { googleId, name, email, imageUrl } = response.profileObj;
     const user = {
@@ -15,13 +15,12 @@ const LoginWithGoogle = ({ googleLogin }) => {
       password: googleId
     }
 
-    googleLogin(user);
+    socialLogin(user);
   }
-
 
   return (
     <GoogleLogin
-      clientId='909923509075-brlokkvcohqbf26sqm5166ahidi66bkq.apps.googleusercontent.com'
+      clientId='909923509075-7otdb7e55tablj3qi3f3n1i84qcmjqis.apps.googleusercontent.com'
       buttonText='Login with Google'
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
@@ -29,4 +28,4 @@ const LoginWithGoogle = ({ googleLogin }) => {
   );
 }
 
-export default connect(null, { googleLogin })(LoginWithGoogle);
+export default connect(null, { socialLogin })(LoginWithGoogle);

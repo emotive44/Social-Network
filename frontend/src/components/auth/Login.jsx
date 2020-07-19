@@ -10,12 +10,13 @@ import { connect } from 'react-redux';
 import { login } from '../../store/actions/auth-action';
 
 import LoginWithGoogle from './LoginWithGoogle';
+import LoginWithFacebook from './LoginWithFacebook';
 import { Input, Button, FormWrapper } from '../common';
 
 
 const Login = ({ isAuth, login }) => {
   const {register, handleSubmit, errors, watch} = useForm();
- 
+  
   const submit = (data) => {
     const { email, password } = data;
 
@@ -61,6 +62,7 @@ const Login = ({ isAuth, login }) => {
 
       <div className='social-login'>
         <LoginWithGoogle />
+        <span><LoginWithFacebook /></span>
       </div>
 
       <div className='login-wrapper-btns'>

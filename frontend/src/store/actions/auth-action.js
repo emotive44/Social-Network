@@ -62,7 +62,7 @@ export const login = (email, password) => async dispatch => {
   }
 }
 
-export const googleLogin = (user) => async dispatch => {
+export const socialLogin = (user) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'

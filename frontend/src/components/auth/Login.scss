@@ -4,6 +4,17 @@
   display: flex;
   margin-top: 2rem;
   justify-content: center;
+
+  span {
+    margin-left: 0.5rem;
+    border-radius: 0.5rem;
+    
+    button {
+      border-radius: 0.4rem !important;
+      box-shadow: 0px 3px 5px 0px rgba(135,135,255,1);
+    }
+  }
+
 }
 
 .login-wrapper-btns { 
