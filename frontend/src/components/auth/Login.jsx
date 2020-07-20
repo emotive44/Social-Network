@@ -4,12 +4,14 @@ import { Redirect, Link } from 'react-router-dom';
 import './Login.scss';
 
 import emailValidate from '../../utils/emailValidate';
-import customRecaptcha from '../../utils/customRecaptcha';
+// import customRecaptcha from '../../utils/customRecaptcha';
 
 import { connect } from 'react-redux';
-
 import { login } from '../../store/actions/auth-action';
 
+import useRecaptcha from '../hooks/useRecaptcha';
+
+import Recaptcha from './Recaptcha';
 import LoginWithGoogle from './LoginWithGoogle';
 import LoginWithFacebook from './LoginWithFacebook';
 import { Input, Button, FormWrapper } from '../common';
@@ -17,11 +19,14 @@ import { Input, Button, FormWrapper } from '../common';
 
 const Login = ({ isAuth, login }) => {
   const {register, handleSubmit, errors, watch} = useForm();
+  const { verify, verifyMsg, setVerify, setVerifyMsg } = useRecaptcha();
 
   const submit = (data) => {
     const { email, password } = data;
 
-    login(email, password);
+    if(verify) {
+      login(email, password);
+    }
   }
 
   if(isAuth) {
@@ -60,7 +65,8 @@ const Login = ({ isAuth, login }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-      <Input 
+      {/* Custom reCAPTCHA */}
+      {/* <Input 
         label='What day is today?'
         name='recaptcha'
         type='text'
@@ -69,14 +75,26 @@ const Login = ({ isAuth, login }) => {
           validate: value => customRecaptcha(value) ? undefined : 'Please write a correct answer!'
         })}
         err={errors.recaptcha && errors.recaptcha.message}
-      />
+      /> */}
       <div className='social-login'>
         <LoginWithGoogle />
         <span><LoginWithFacebook /></span>
       </div>
 
+      <Recaptcha 
+        setVerify={setVerify} 
+        verify={verify}
+        verifyMsg={verifyMsg}
+      />
+
       <div className='login-wrapper-btns'>
-        <Button type='submit' light animation>Login</Button>
+        <Button 
+          type='submit' 
+          light animation 
+          clickHandler={() => setVerifyMsg(true)}
+        >
+          Login
+        </Button>
         <span>
           <Link to='/forgot-password'>Forgot your password?</Link>
         </span>

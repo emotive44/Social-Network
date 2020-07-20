@@ -5,18 +5,24 @@ import { Redirect } from 'react-router-dom';
 import emailValidate from '../../utils/emailValidate';
 
 import { connect } from 'react-redux';
-
-import { Input, Button, FormWrapper } from '../common';
-
 import { registerUser } from '../../store/actions/auth-action';
+
+import useRecaptcha from '../hooks/useRecaptcha';
+
+import Recaptcha from './Recaptcha';
+import { Input, Button, FormWrapper } from '../common';
 
 
 const Register = ({ isAuth, registerUser }) => {
   const {register, handleSubmit, errors, watch} = useForm();
+  const { verify, verifyMsg, setVerify, setVerifyMsg } = useRecaptcha();
  
   const submit = (data) => {
     const { name, email, password } = data;
-    registerUser(name, email, password);
+
+    if(verify) {
+      registerUser(name, email, password);
+    }
   }
 
   if(isAuth) {
@@ -66,7 +72,20 @@ const Register = ({ isAuth, registerUser }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-      <Button type='submit' light animation>Register</Button>
+      
+      <Recaptcha 
+        setVerify={setVerify} 
+        verify={verify}
+        verifyMsg={verifyMsg}
+      />
+
+      <Button 
+        type='submit' 
+        light animation
+        clickHandler={() => setVerifyMsg(true)}
+      >
+        Register
+      </Button>
     </FormWrapper>
   );
 }
