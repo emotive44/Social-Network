@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import './Login.scss';
 
 import emailValidate from '../../utils/emailValidate';
+import customRecaptcha from '../../utils/customRecaptcha';
 
 import { connect } from 'react-redux';
 
@@ -16,7 +17,7 @@ import { Input, Button, FormWrapper } from '../common';
 
 const Login = ({ isAuth, login }) => {
   const {register, handleSubmit, errors, watch} = useForm();
-  
+
   const submit = (data) => {
     const { email, password } = data;
 
@@ -59,7 +60,16 @@ const Login = ({ isAuth, login }) => {
         })}
         err={errors.rePassword && errors.rePassword.message}
       />
-
+      <Input 
+        label='What day is today?'
+        name='recaptcha'
+        type='text'
+        ref={register({
+          required: 'Answer is required!',
+          validate: value => customRecaptcha(value) ? undefined : 'Please write a correct answer!'
+        })}
+        err={errors.recaptcha && errors.recaptcha.message}
+      />
       <div className='social-login'>
         <LoginWithGoogle />
         <span><LoginWithFacebook /></span>
