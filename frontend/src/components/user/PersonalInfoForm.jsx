@@ -7,7 +7,7 @@ import  moment  from 'moment'
 import { Input, Button } from '../common';
 
 
-const PersonalInfoForm = ({ info, addPersonalInfo }) => {
+const PersonalInfoForm = ({ info, addPersonalInfo, userId }) => {
   const { register, handleSubmit, errors } = useForm();
   let date = moment(info && info.bDay && info.bDay).format('YYYY/MM/DD').split('/').join('-');
 
@@ -20,7 +20,7 @@ const PersonalInfoForm = ({ info, addPersonalInfo }) => {
       return;
     }
 
-    addPersonalInfo(data);
+    addPersonalInfo(data, localStorage.role === 'admin' && userId);
   }
 
   return (

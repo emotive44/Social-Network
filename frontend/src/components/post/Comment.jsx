@@ -8,6 +8,8 @@ import { deleteComment } from '../../store/actions/post-action';
 
 
 const Comment = ({ comment, isAuth, deleteComment, postId }) => {
+  const isAdmin = localStorage.role === 'admin' ? true : false;
+
   const deleteCurrComment = () => {
     deleteComment(postId, comment._id)
   }
@@ -25,7 +27,7 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
           <span>{comment.creator.name}</span>
           {comment.text}
         </p>
-        {comment.creator._id === isAuth && (
+        {(comment.creator._id === isAuth || isAdmin) && (
           <Fragment>
             <small className="delete-comment" onClick={deleteCurrComment}>
               Delete Comment

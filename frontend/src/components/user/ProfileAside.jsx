@@ -7,6 +7,8 @@ import Button from '../common/Button';
 
 
 const ProfileAside = ({ personalInfo, userId, meId, showModal, deletePersonalInfo }) => {
+  const isAdmin = localStorage.role === 'admin' ? true : false;
+
   return (
     <aside className="profile-aside">
       <div className="bio">
@@ -57,7 +59,7 @@ const ProfileAside = ({ personalInfo, userId, meId, showModal, deletePersonalInf
       </section>
 
       <div className="profile-buttons">
-        {userId === meId && (
+        {(userId === meId || isAdmin) && (
           <Button 
             light 
             type='button' 
@@ -65,18 +67,18 @@ const ProfileAside = ({ personalInfo, userId, meId, showModal, deletePersonalInf
             style={{ flex: '1 0 55%', marginRight: '1rem' }}
           >
             <i className="fas fa-user-edit" />   
-            Edit Your Personal Information
+            {isAdmin ? 'Edit User Information' : 'Edit Your Personal Information'}
           </Button>
         )}
-        {(userId === meId) && personalInfo && (Object.keys(personalInfo).length > 1) && (
+        {(userId === meId || isAdmin) && personalInfo && (Object.keys(personalInfo).length > 1) && (
           <Button
             type='button'
             danger 
             style={{ marginRight: '1rem' }}
-            clickHandler={deletePersonalInfo}
+            clickHandler={() => deletePersonalInfo(localStorage.role === 'admin' && userId)}
           >
             <i className="fas fa-trash-alt" />
-            Delete Your Information
+            {isAdmin ? 'Delete User Information' : 'Delete Your Information'}
           </Button>
         )}
       </div>

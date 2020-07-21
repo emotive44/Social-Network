@@ -81,7 +81,7 @@ export const followUser = (userId, flag) => async dispatch => {
   }
 }
 
-export const addPersonalInfo = (personInfo) => async dispatch => {
+export const addPersonalInfo = (personInfo, userId) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -89,7 +89,7 @@ export const addPersonalInfo = (personInfo) => async dispatch => {
       }
     };
   
-    const body = JSON.stringify({ personInfo });
+    const body = JSON.stringify({ personInfo, userId });
     const res = await axios.put(baseUrl + 'users/info', body, config);
 
     dispatch({
@@ -104,9 +104,9 @@ export const addPersonalInfo = (personInfo) => async dispatch => {
   }
 }
 
-export const deletePersonalInfo = () => async dispatch => {
+export const deletePersonalInfo = (userId) => async dispatch => {
   try {
-    await axios.delete(baseUrl + 'users/info');
+    await axios.delete(baseUrl + 'users/info', { data: { userId } });
 
     dispatch({ type: DELETE_PERSONAL_INFO });
     dispatch(setAlert('You delete your personal info seccess.', 'success'));

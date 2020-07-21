@@ -39,6 +39,7 @@ const Post = ({
   const [edit, setEdit] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
+  const isAdmin = localStorage.role === 'admin' ? true : false;
   
   useEffect(() => {
     getPost((match && match.params && match.params.postId) || postD._id );
@@ -107,7 +108,7 @@ const Post = ({
           post && post.image && imageOrientation(post.image) : 
           postD && postD.image && imageOrientation(postD.image)}`
         }>
-          {post && post.creator && post.creator._id === userId && (
+          {post && post.creator && (post.creator._id === userId || isAdmin) && (
             <Button
               type='button'
               primary animation
@@ -186,8 +187,17 @@ const Post = ({
             })
           </Button>
 
-          {single ? post && post.creator && post.creator._id === userId : 
-            postD.creator._id === userId && (
+          {single ? 
+            post && post.creator && (post.creator._id === userId || isAdmin) && (
+              <Button
+                type='button'
+                danger animation
+                clickHandler={deleteCurrentPost}
+              >
+                <i className="fas fa-trash-alt" /> Delete Post
+              </Button>
+            ) : 
+            (postD.creator._id === userId || isAdmin) && (
               <Button
                 type='button'
                 danger animation

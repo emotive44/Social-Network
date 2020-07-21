@@ -24,6 +24,7 @@ const ProfileHeader = ({
   const { register, handleSubmit } = useForm();
   const followUnfollowUser = () => followUser(user._id);
   const avatarUrl = user && user.avatar && user.avatar.split('images\\users').join('');
+  const isAdmin = localStorage.role === 'admin' ? true : false;
 
   const uploadAvatar = async (body) => {
     const url = 'http://localhost:5000/api/v1/users/avatar';
@@ -87,7 +88,7 @@ const ProfileHeader = ({
         </div>
         <p>{user.name && user.name.toUpperCase()}</p>
         <p>{user.email}</p>
-        {user._id !== meId && (
+        {user._id !== meId && !isAdmin && (
           <div>
             {user.followers && user.followers.includes(meId) ? (
               <Button 
@@ -108,7 +109,7 @@ const ProfileHeader = ({
             )}
           </div>
         )}
-        {user._id === meId && (
+        {(user._id === meId || isAdmin) && (
           <Link to='/users'>
             <Button 
               type='button' 
@@ -116,7 +117,7 @@ const ProfileHeader = ({
               style={{marginBottom: '1rem'}}
               clickHandler={deleteUserProfile}
             >
-              Delete Your Profile
+            {isAdmin ? 'Delete User Profile' : 'Delete Your Profile'}
             </Button>
           </Link>
         )}

@@ -171,7 +171,7 @@ const addAndEditPersonalInfo = async (req, res, next) => {
     );
   }
 
-  const userId = req.userId;
+  const userId = req.body.userId || req.userId;
   const { personInfo } = req.body;
 
   const bio = personInfo && personInfo.bio;
@@ -319,7 +319,7 @@ const deleteUser = async (req, res, next) => {
 const deletePersonalInfo = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.userId);
+    user = await User.findById(req.body.userId || req.userId);
   } catch (err) {
     if(!user) {
       return next(
