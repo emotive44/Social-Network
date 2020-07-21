@@ -269,7 +269,7 @@ const followUnfollowUser = async (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
-  const userId = req.userId;
+  const userId = req.body.userId || req.userId;
   let existUser;
   try {
     existUser = await User.findById(userId);

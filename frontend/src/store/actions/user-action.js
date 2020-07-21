@@ -116,10 +116,11 @@ export const deletePersonalInfo = (userId) => async dispatch => {
   }
 }
 
-export const deleteUserProfile = () => async dispatch => {
+export const deleteUserProfile = (history, userId) => async dispatch => {
   try {
-    await axios.delete(baseUrl + 'users/');
-    dispatch(logout(true));
+    await axios.delete(baseUrl + 'users/', { data: { userId } });
+
+    userId ? history.push('/users') : dispatch(logout(true));
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(setAlert(err.response.data.message, 'danger'));

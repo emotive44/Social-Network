@@ -88,7 +88,7 @@ export const updatePost = (postId, text) => async dispatch => {
     }
   };
 
-  const body = JSON.stringify({ text });
+  const body = JSON.stringify({ text, userId: localStorage.userId });
 
   try {
     const res = await axios.put(baseUrl + `posts/${postId}`, body, config);
@@ -104,7 +104,10 @@ export const updatePost = (postId, text) => async dispatch => {
 
 export const deletePost = (postId) => async dispatch => {
   try {
-    const res = await axios.delete(baseUrl + `posts/${postId}`);
+    const res = await axios.delete(
+      baseUrl + `posts/${postId}`,
+      { data: { userId: localStorage.userId } }
+    );
 
     dispatch({ 
       type: DELETE_POST,
@@ -141,7 +144,10 @@ export const createComment = (postId, text) => async dispatch => {
 
 export const deleteComment = (postId, commentId) => async dispatch => {
   try {
-    await axios.delete(baseUrl + `posts/${postId}/comments/${commentId}`);
+    await axios.delete(
+      baseUrl + `posts/${postId}/comments/${commentId}`,
+      { data: { userId: localStorage.userId } }
+    );
     
     dispatch({ type: DELETE_COMMENT, payload: commentId });
     dispatch(setAlert('Delete comment successfully.', 'success'));

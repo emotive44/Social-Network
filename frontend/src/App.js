@@ -36,7 +36,7 @@ const App = () => {
         <Alert />
         <Switch>
           <Route exact path='/' render={(props) => localStorage.token ? 
-            localStorage.role === 'user' ? <Home {...props}/> : <Dashboard {...props} /> : 
+            localStorage.role !== 'admin' ? <Home {...props}/> : <Dashboard {...props} /> : 
             <LandingPage {...props}/>
           }/>
           <Route path='/reset-password/:token' component={ResetPassword} />

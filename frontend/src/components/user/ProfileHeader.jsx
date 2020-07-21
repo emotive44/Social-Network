@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './ProfileHeader.scss';
 
@@ -21,6 +21,7 @@ const ProfileHeader = ({
 }) => {
   const { toggleModal, showModal, closeModal } = useModal();
   const [newAvatarUrl, setNewAvatarUrl] = useState(null);
+  const history = useHistory();
   const { register, handleSubmit } = useForm();
   const followUnfollowUser = () => followUser(user._id);
   const avatarUrl = user && user.avatar && user.avatar.split('images\\users').join('');
@@ -115,7 +116,7 @@ const ProfileHeader = ({
               type='button' 
               danger animation
               style={{marginBottom: '1rem'}}
-              clickHandler={deleteUserProfile}
+              clickHandler={() => deleteUserProfile(history, localStorage.role === 'admin' && user._id)}
             >
             {isAdmin ? 'Delete User Profile' : 'Delete Your Profile'}
             </Button>
