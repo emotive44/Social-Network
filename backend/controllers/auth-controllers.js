@@ -60,6 +60,7 @@ const login = async (req, res, next) => {
 
   res.status(200).json({ 
     token,
+    role: existUser.role,
     userId: existUser.id, 
     name: existUser.name, 
     avatar: existUser.avatar
@@ -163,7 +164,12 @@ const register = async (req, res, next) => {
     console.error(err);
   }
 
-  res.status(201).json({ userId: newUser.id, name: newUser.name, token });
+  res.status(201).json({ 
+    token,
+    role: newUser.role,
+    userId: newUser.id, 
+    name: newUser.name, 
+  });
 } 
 
 const forgotPassword = async (req, res ,next) => {

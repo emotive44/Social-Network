@@ -55,7 +55,7 @@
     line-height: 20px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 5;
     overflow: hidden;
   }
 }
@@ -103,5 +103,10 @@ img.no-avatar {
     width: 90%;
     margin: auto;
     order: 4;
+  }
+
+  img.avatar { 
+    order: 3;
+    width: 152px;
   }
 }

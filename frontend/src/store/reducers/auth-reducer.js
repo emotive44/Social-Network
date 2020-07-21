@@ -16,6 +16,7 @@ const initialState = {
   userId: null,
   avatar: null,
   name: null,
+  role: null,
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +32,7 @@ export default function (state = initialState, action) {
     case SOCIALLOGIN_SUCCESS:
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+      localStorage.setItem('role', payload.role);
       localStorage.setItem('token', payload.token);
       localStorage.setItem('userId', payload.userId);
       setAuthToken(payload.token);
@@ -41,8 +43,10 @@ export default function (state = initialState, action) {
       };
     case AUTH_ERROR:
     case LOGOUT:
+      localStorage.removeItem('role');
       localStorage.removeItem('token');
       return {
+        role: null,
         name: null,
         token: null,
         userId: null,

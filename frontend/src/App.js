@@ -17,6 +17,7 @@ import UserProfile from './components/user/UserProfile';
 import Home from './components/home/Home';
 import { NavBar, Alert, ProtectedRoute } from './components/common';
 import { Login, Register, ResetPassword, ForgotPassword } from './components/auth';
+import Dashboard from './components/dashboard/Dashboard';
 
 
 if(localStorage.token) { 
@@ -27,15 +28,16 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
-  
+
   return (
     <Provider store={store}>
       <Router>
         <NavBar />
         <Alert />
         <Switch>
-          <Route exact path='/' render={
-            (props) => localStorage.token ? <Home {...props}/> : <LandingPage {...props}/>
+          <Route exact path='/' render={(props) => localStorage.token ? 
+            localStorage.role === 'user' ? <Home {...props}/> : <Dashboard {...props} /> : 
+            <LandingPage {...props}/>
           }/>
           <Route path='/reset-password/:token' component={ResetPassword} />
           <Route path='/forgot-password' component={ForgotPassword} />
