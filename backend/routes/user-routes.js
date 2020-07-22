@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const { uploadUserImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
+const admin = require('../middleware/chek-admin');
  
 const router = express.Router();
 
@@ -19,14 +20,15 @@ router.get('/:userId/following', userControllers.getUserFollowing);
 
 router.get('/:userId/followers', auth, userControllers.getUserFollowers);
 
-router.delete('/', auth, userControllers.deleteUser);
+router.delete('/', auth, admin, userControllers.deleteUser);
 
-router.delete('/info', auth, userControllers.deletePersonalInfo);
+router.delete('/info', auth, admin, userControllers.deletePersonalInfo);
 
 router.put('/avatar', auth, uploadUserImage, userControllers.addAvatar);
 
 router.put('/info', 
     auth, 
+    admin,
     [
       check('personInfo.bio', 'Bio should not be empty').not().isEmpty(),
     ],

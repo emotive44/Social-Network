@@ -351,15 +351,6 @@ const updatePost = async (req, res, next) => {
     );
   }
 
-  let currentUser;
-  try {
-    currentUser = await User.findById(req.body.userId)
-  } catch (err) {
-    return next(
-      new HttpError('Does not exist user with this id.', 404)
-    );
-  }
-
   let post;
   try {
     post = await Post.findById(req.params.postId);
@@ -372,12 +363,6 @@ const updatePost = async (req, res, next) => {
 
     return next(
       new HttpError('Update post failed, please try again.', 500)
-    );
-  }
-
-  if(currentUser.role !== 'admin' && post.creator.toString() !== req.userId) {
-    return next(
-      new HttpError('You are not allowed to edit this post.', 401)
     );
   }
 
@@ -412,15 +397,6 @@ const deleteComment = async (req, res, next) => {
     );
   }
 
-  let currentUser;
-  try {
-    currentUser = await User.findById(req.body.userId)
-  } catch (err) {
-    return next(
-      new HttpError('Does not exist user with this id.', 404)
-    );
-  }
-
   let existUser;
   try {
     existUser = await Post.findById(req.userId);
@@ -440,12 +416,6 @@ const deleteComment = async (req, res, next) => {
   if(!comment) {
     return next(
       new HttpError('Delete comment failed, comment was not found', 404)
-    );
-  }
-  
-  if(currentUser.role !== 'admin' && comment.creator.toString() !== req.userId) {
-    return next(
-      new HttpError('Delete comment failed, you are not authorized.', 403)
     );
   }
 
@@ -474,21 +444,6 @@ const deletePost = async (req, res, next) => {
   if(!post) {
     return next(
       new HttpError('Post does not exist.', 404)
-    );
-  }
-
-  let currentUser;
-  try {
-    currentUser = await User.findById(req.body.userId)
-  } catch (err) {
-    return next(
-      new HttpError('Does not exist user with this id.', 404)
-    );
-  }
-
-  if(currentUser.role !== 'admin' && post.creator.id !== req.userId) {
-    return next(
-      new HttpError('You are not allowed to delete this post.', 401)
     );
   }
 

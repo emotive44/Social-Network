@@ -97,7 +97,9 @@ export const addPersonalInfo = (personInfo, userId) => async dispatch => {
       payload: res.data
     });
     
-    dispatch(setAlert('You edit your personal info success.', 'success'));
+    dispatch(
+      setAlert(`You edit ${userId ? 'user' : 'your'} personal info success.`, 'success')
+    );
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
@@ -109,7 +111,9 @@ export const deletePersonalInfo = (userId) => async dispatch => {
     await axios.delete(baseUrl + 'users/info', { data: { userId } });
 
     dispatch({ type: DELETE_PERSONAL_INFO });
-    dispatch(setAlert('You delete your personal info seccess.', 'success'));
+    dispatch(
+      setAlert(`You delete ${userId ? 'user' : 'your'} personal info seccess.`, 'success')
+    );
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(setAlert(err.response.data.message, 'danger'));

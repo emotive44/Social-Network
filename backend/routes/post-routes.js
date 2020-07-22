@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const postControllers = require('../controllers/post-controllers');
 const { uploadPostImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
+const admin = require('../middleware/chek-admin');
 
 const router = express.Router();
 
@@ -38,15 +39,16 @@ router.get('/:postId', postControllers.getPostById);
 router.put('/:postId/like', postControllers.likeUnlikePost);
 
 router.put('/:postId',
+  admin,
   [
     check('text', 'Can not update post without content.').not().isEmpty()
   ],
   postControllers.updatePost
 );
 
-router.delete('/:postId/comments/:commentId', postControllers.deleteComment);
+router.delete('/:postId/comments/:commentId', admin, postControllers.deleteComment);
 
-router.delete('/:postId', postControllers.deletePost);
+router.delete('/:postId', admin, postControllers.deletePost);
 
 
 module.exports = router;
