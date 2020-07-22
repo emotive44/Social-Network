@@ -76,20 +76,7 @@ const getMe = async (req, res, next) => {
 }
 
 const addAvatar = async (req, res, next) => {
-  let existUser;
-  try {
-    existUser = await User.findById(req.userId);
-  } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Does not exist user with this id at data.', 404)
-      );
-    }
-    
-    return next(
-      new HttpError('Upload user avatar failed, please try again.', 500)
-    );
-  }
+  const existUser = req.existUser;
   
   if(existUser.avatar) {
     fs.unlink(existUser.avatar, (err) => {
@@ -217,6 +204,8 @@ const addAndEditPersonalInfo = async (req, res, next) => {
 }
 
 const followUnfollowUser = async (req, res, next) => {
+  const existUser = req.existUser;
+
   let followedUser;
   try {
     followedUser = await User.findById(req.params.userId);
@@ -227,15 +216,6 @@ const followUnfollowUser = async (req, res, next) => {
       );
     }
 
-    return next(
-      new HttpError('Following user failed.', 500)
-    );
-  }
-
-  let existUser;
-  try {
-    existUser = await User.findById(req.userId);
-  } catch (err) {
     return next(
       new HttpError('Following user failed.', 500)
     );

@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 const { uploadUserImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
 const admin = require('../middleware/chek-admin');
+const existUser = require('../middleware/check-existUser');
  
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.delete('/', auth, admin, userControllers.deleteUser);
 
 router.delete('/info', auth, admin, userControllers.deletePersonalInfo);
 
-router.put('/avatar', auth, uploadUserImage, userControllers.addAvatar);
+router.put('/avatar', auth, existUser, uploadUserImage, userControllers.addAvatar);
 
 router.put('/info', 
     auth, 
@@ -35,7 +36,7 @@ router.put('/info',
   userControllers.addAndEditPersonalInfo
 );
 
-router.put('/:userId/follow', auth, userControllers.followUnfollowUser);
+router.put('/:userId/follow', auth, existUser, userControllers.followUnfollowUser);
 
 router.post('/register', 
   [

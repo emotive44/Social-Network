@@ -18,21 +18,7 @@ const createPost = async (req, res, next) => {
   }
 
   const { text } = req.body;
-
-  let existUser;
-  try {
-    existUser = await User.findById(req.userId);
-  } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Could not found user with this id.', 404)
-      );
-    }
-
-    return next(
-      new HttpError('Create post failed, please try again.', 500)
-    );
-  }
+  const existUser = req.existUser;
 
   const newPost = new Post({
     text,
@@ -57,6 +43,7 @@ const createPost = async (req, res, next) => {
 }
 
 const createComment = async (req, res, next) => {
+  const existUser = req.existUser;
   const errors = validationResult(req);
   if(!errors.isEmpty()) { 
     const err = errors.array().map(e => e.msg).join(' ');
@@ -73,21 +60,6 @@ const createComment = async (req, res, next) => {
     if(!post) {
       return next(
         new HttpError('Add comment failed, post was not found', 404)
-      );
-    }
-
-    return next(
-      new HttpError('Add comment failed, please try again.', 500)
-    );
-  }
-
-  let existUser;
-  try {
-    existUser = await User.findById(req.userId);
-  } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Add comment failed, user was not found', 404)
       );
     }
 
@@ -294,6 +266,8 @@ const getPostById = async (req, res, next) => {
 }
 
 const likeUnlikePost = async (req, res, next) => {
+  const existUser = req.existUser;
+
   let post;
   try {
     post = await Post.findById(req.params.postId);
@@ -301,21 +275,6 @@ const likeUnlikePost = async (req, res, next) => {
     if(!post) {
       return next(
         new HttpError('Like post failed, post was not found.', 404)
-      );
-    }
-
-    return next(
-      new HttpError('Like post failed, please try again.', 500)
-    );
-  }
-
-  let existUser;
-  try {
-    existUser = await User.findById(req.userId);
-  } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Like post failed, user was not found.', 404)
       );
     }
 
@@ -389,21 +348,6 @@ const deleteComment = async (req, res, next) => {
     if(!post) {
       return next(
         new HttpError('Delete comment failed, post was not found', 404)
-      );
-    }
-
-    return next(
-      new HttpError('Delete comment failed, please trq again.', 500)
-    );
-  }
-
-  let existUser;
-  try {
-    existUser = await Post.findById(req.userId);
-  } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Delete comment failed, user was not found', 404)
       );
     }
 

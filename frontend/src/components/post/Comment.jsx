@@ -9,6 +9,14 @@ import { deleteComment } from '../../store/actions/post-action';
 
 const Comment = ({ comment, isAuth, deleteComment, postId }) => {
   const isAdmin = localStorage.role === 'admin' ? true : false;
+  const avatar = comment.creator.avatar;
+
+  let avatarUrl;
+  if(avatar && avatar.startsWith('http')) {
+    avatarUrl = avatar;
+  } else {
+    avatarUrl = avatar && avatar.split('images\\users').join('');
+  }
 
   const deleteCurrComment = () => {
     deleteComment(postId, comment._id)
@@ -18,7 +26,9 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
     <div className="post-comment">
       <img 
         src={`${
-        comment.creator.avatar ? `http://localhost:5000/${comment.creator.avatar}` : '/avatar.jpg'
+          avatar ? 
+            avatarUrl.startsWith('http') ? avatarUrl : `http://localhost:5000/${comment.creator.avatar}` : 
+            '/avatar.jpg'
         }`} 
         alt='' 
       />

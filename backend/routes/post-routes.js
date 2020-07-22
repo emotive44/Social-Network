@@ -5,11 +5,13 @@ const postControllers = require('../controllers/post-controllers');
 const { uploadPostImage } = require('../middleware/image-upload');
 const auth = require('../middleware/chek-auth');
 const admin = require('../middleware/chek-admin');
+const existUser = require('../middleware/check-existUser');
 
 const router = express.Router();
 
 
 router.use(auth);
+router.use(existUser);
 
 router.post('/', 
   uploadPostImage,
