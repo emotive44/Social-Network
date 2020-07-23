@@ -1,0 +1,44 @@
+.container-dashboard {
+  width: 47%;
+  display: flex;
+  min-width: 37rem;
+  margin-bottom: 4rem;
+  border: 1px solid whitesmoke;
+  box-shadow: 3px 7px 5px 0px rgba(212,210,212,1);
+
+  &:nth-child(odd) {
+    margin-right: 2rem;
+  }
+
+  ul {
+    width: 26rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid whitesmoke;
+  }
+
+  .total-count {
+    width: 90%;
+    margin: 2rem auto;
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .tittle {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 900;
+    align-self: center;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 850px) {
+  .container-dashboard {
+    width: 80%;
+  }
+}

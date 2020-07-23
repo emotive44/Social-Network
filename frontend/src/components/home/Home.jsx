@@ -22,16 +22,19 @@ const Home = ({
   const [searchValue, setSearchValue] = useState('');
   const [countOfPosts, setCountOfPosts] = useState(2);
   const userId = localStorage.getItem('userId');
-
+  
   useEffect(() => {
     getRecentPosts();
-    getUserFollowing(userId, searchValue);
 
     return () => {
       store.dispatch({ type: POST_RESET });
       store.dispatch({ type: USER_RESET });
     }
-  }, [getRecentPosts, getUserFollowing, searchValue, userId]);
+  }, [getRecentPosts]);
+
+  useEffect(() => {
+    getUserFollowing(userId, searchValue);
+  }, [getUserFollowing, userId, searchValue]);
 
   const showPosts = () => {
     if(countOfPosts - 1 > posts.length) { 

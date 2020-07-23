@@ -1,9 +1,16 @@
 import React from 'react';
+import DashboardSection from './DashboardSection';
+import './Dashboard.scss';
 
 
 const Dashboard = () => {
   return (
-    <div>Welcome to ADmin dashboard!</div>
+    <section className='dashboard'>
+      <DashboardSection />
+      <DashboardSection />
+      <DashboardSection />
+      <DashboardSection />
+    </section>
   );
 }
 
