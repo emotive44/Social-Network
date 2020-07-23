@@ -11,12 +11,23 @@ const baseUrl = 'http://localhost:5000/api/v1/';
 
 const Dashboard = ({ setAlert }) => {
   const [usersCount, setUsersCount] = useState(0);
+  const [postsCount, setPostsCount] = useState(0);
 
   const getUsersCount = async (from) => {
     try {
       const res = await axios.get(baseUrl + `admin/users?${from && `days=${from}`}`);
       
       setUsersCount(res.data.usersCount);
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
+
+  const getPostsCount = async (from) => {
+    try {
+      const res = await axios.get(baseUrl + `admin/posts?${from && `days=${from}`}`);
+      
+      setPostsCount(res.data.postsCount);
     } catch (err) {
       setAlert(err.response.data.message, 'danger');
     }
@@ -31,6 +42,8 @@ const Dashboard = ({ setAlert }) => {
       />
       <DashboardSection 
         title='Posts'
+        postsCount={postsCount}
+        getPostsCount={getPostsCount}
       />
     </section>
   );

@@ -12,5 +12,7 @@ router.use(admin);
 
 router.get('/users', adminControllers.totalUsers);
 
+router.get('/posts', adminControllers.totalPosts);
+
 
 module.exports = router;
