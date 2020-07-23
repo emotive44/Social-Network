@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user-routes');
 const postRoutes = require('./routes/post-routes');
+const adminRoutes = require('./routes/admin-routes');
 const HttpError = require('./models/httpError-model');
 
 const port = 5000;
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/users/', userRoutes);
 app.use('/api/v1/posts/', postRoutes);
+app.use('/api/v1/admin/', adminRoutes);
 
 
 app.use((req, res, next) => {
@@ -63,4 +65,4 @@ mongoose
   })
   .catch(err => {
     console.log(err);
-  })
+  });
