@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
 import DashboardSection from './DashboardSection';
 import './Dashboard.scss';
 
@@ -14,10 +15,12 @@ const Dashboard = ({ setAlert }) => {
   const [postsCount, setPostsCount] = useState(0);
   const [fetchingUsersData, setFetchingUsersData] = useState([]);
   const [fetchingPostsData, setFetchingPostsData] = useState([]);
+  const [usersPerMonth, setUsersPerMonth] = useState([]);
 
   useEffect(() => {
     getPostsImage();
     getUsersAvatar();
+    getUsersPerMonth();
   },[]);
 
   const usersData =  {
@@ -45,6 +48,27 @@ const Dashboard = ({ setAlert }) => {
     labels: [
         'Posts with image',
         'Posts without image'
+    ]
+  }
+
+  const linedata = {
+    datasets: [{
+      label: 'Count Of Register Users',
+      data: usersPerMonth,
+    }],
+    labels: [
+      'January',
+      'February',
+      'Martch',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'Octomber',
+      'November',
+      'December',
     ]
   }
 
@@ -88,12 +112,43 @@ const Dashboard = ({ setAlert }) => {
     }
   }
 
+  const getUsersPerMonth = async () => {
+    try {
+      const res = await axios.get(baseUrl + 'admin/register-users');
+      
+      setUsersPerMonth(res.data)
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
+
   return (
     <section className='dashboard'>
       <DashboardSection title='Users' usersCount={usersCount} getDataCount={getUsersCount} />
       <DashboardSection title='Posts' postsCount={postsCount} getDataCount={getPostsCount} />
       <DashboardSection diagram title='Users' data={usersData} />
       <DashboardSection diagram pie title='Posts'data={postsData} />
+
+    <section className='diagram'>
+      <Line 
+        data={linedata}
+        width={150}
+        height={40}
+        options={{
+          title: {
+            display: 'block',
+            text: 'Resgister Users Diagram',
+            fontSize: 24
+          },
+          legend: {
+            labels: {
+              fontSize: 14
+            }
+          },
+          // responsive: true
+        }}
+      /> 
+    </section>
     </section>
   );
 }

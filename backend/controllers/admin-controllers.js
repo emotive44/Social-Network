@@ -77,9 +77,47 @@ const postsImage = async (req, res, next) => {
   res.status(200).json([postsWithImage, postsWithoutImage]);
 }
 
+const registerUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.aggregate([
+      { $project : { created : { $month : '$created' } } } ,
+      { $group : { _id : '$created' , number : { $sum : 1 } } },
+      { $sort : { '_id' : 1 } }
+    ])
+  } catch (err) {
+    return next(
+      new HttpError('Fetching register users per month failed, please try again.', 500)
+    );
+  }
+  
+  let registerUserPerMonth = [];
+  let i = 1;
+  users.map(x => {
+    if(x._id > 1 && i === 1) {
+      do {
+        i++;
+        registerUserPerMonth.push(0)
+      } while (x._id > i);
+    } 
+    registerUserPerMonth.push(x.number);
+  });
+
+  if(registerUserPerMonth.length < 12) {
+    i = registerUserPerMonth.length;
+    do {
+      i++;
+      registerUserPerMonth.push(0);
+    } while (i < 12);
+  }
+
+  res.status(200).json(registerUserPerMonth);
+}
+
 module.exports = {
   totalPosts,
   postsImage,
   totalUsers,
   usersAvatar,
+  registerUsers,
 }

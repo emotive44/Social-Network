@@ -5,6 +5,7 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/httpError-model');
 const User = require('../models/user-model');
 const Post = require('../models/post-model');
+const { where } = require('../models/user-model');
 
 
 const getAllUsers = async (req, res, next) => {
@@ -17,8 +18,8 @@ const getAllUsers = async (req, res, next) => {
 
   let users;
   try {
-    await User.count(query ? { name: regexp } : {}).then(count => countPost = count);
-    users = await User.find(query ? { name: regexp } : {})
+    await User.count(query ? { name: regexp } : { role: 'user' }).then(count => countPost = count);
+    users = await User.find(query ? { name: regexp, role: 'user' } : { role: 'user' })
       .skip((currentPage - 1) * perPage)
       .limit(perPage) 
       .select('name _id email avatar');

@@ -1,10 +1,19 @@
+@import '../../index.scss';
+
 .dashboard {
-  width: 87%;
+  width: 79%;
   display: flex;
   flex-wrap: wrap;
   min-width: 45rem;
   margin: 10rem auto;
   text-align: center;
+
+  .diagram {
+    width: 81%;
+    margin: 1rem auto;
+    border: 1px solid $white-color;
+    box-shadow: 3px 7px 5px 0px rgba(212,210,212,1);
+  }
 }
 
 

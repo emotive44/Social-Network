@@ -41,7 +41,31 @@ const DashboardSection = ({
   return (
     <section className='container-dashboard' style={diagram ? {position: 'relative'} : {}}>
       {diagram ?
-        pie ? <Pie data={data} width={120} height={40}/> : <Doughnut data={data} width={120} height={40} /> : 
+        pie ? 
+          <Pie 
+            data={data} 
+            width={120} 
+            height={40}
+            options={{
+              legend: {
+                labels: {
+                  fontSize: 14
+                }
+              }
+            }}
+          /> : 
+          <Doughnut
+            data={data} 
+            width={120} 
+            height={40} 
+            options={{
+              legend: {
+                labels: {
+                  fontSize: 14
+                }
+              }
+            }}
+          /> : 
         <div>
           <ul>
             <li onClick={getDaily}>Daily</li>
