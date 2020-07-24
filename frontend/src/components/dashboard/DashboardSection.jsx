@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Doughnut, Pie } from 'react-chartjs-2';
 import './DashboardSection.scss';
 
 
 const DashboardSection = ({ 
+  pie,
+  data,
   title, 
+  diagram,
   usersCount, 
   postsCount,
   getUsersCount,
@@ -41,20 +45,28 @@ const DashboardSection = ({
   }
 
   return (
-    <section className='container-dashboard'>
-      <div>
-        <ul>
-          <li onClick={getDaily}>Daily</li>
-          <li onClick={getWeekly}>Weekly</li>
-          <li onClick={getMonthly}>Monthly</li>
-          <li onClick={getTotal}>Total</li>
-        </ul>
-        <div className='total-count'>
-          <h3>{usersCount >= 0 ? usersCount : postsCount}</h3>
-          <p>{period} {title === 'Users' ? 'Register' : 'Created'} {title}</p>
+    <section className='container-dashboard' style={diagram ? {position: 'relative'} : {}}>
+      {diagram ?
+        pie ? <Pie data={data} width={120} height={40}/> : <Doughnut data={data} width={120} height={40} /> : 
+        <div>
+          <ul>
+            <li onClick={getDaily}>Daily</li>
+            <li onClick={getWeekly}>Weekly</li>
+            <li onClick={getMonthly}>Monthly</li>
+            <li onClick={getTotal}>Total</li>
+          </ul>
+          <div className='total-count'>
+            <h3>{usersCount >= 0 ? usersCount : postsCount}</h3>
+            <p>{period} {title === 'Users' ? 'Register' : 'Created'} {title}</p>
+          </div>
         </div>
-      </div>
-      <p className='title'>{title.toUpperCase()}</p>
+      }
+      <p 
+        className='title'
+        style={diagram ? {position: 'absolute', right: '-14rem'} : {}}
+      >
+        {title.toUpperCase()}
+      </p>
     </section>
   );
 }

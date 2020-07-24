@@ -13,6 +13,36 @@ const Dashboard = ({ setAlert }) => {
   const [usersCount, setUsersCount] = useState(0);
   const [postsCount, setPostsCount] = useState(0);
 
+  const usersData =  {
+    datasets: [{
+        data: [10, 30],
+        backgroundColor: [
+          '#5499C7',
+          '#D4E6F1',
+        ]
+    }],
+
+    labels: [
+        'Users with own avatar',
+        'Users with default avatar'
+    ]
+  }
+
+  const postsData = {
+    datasets: [{
+        data: [1, 7],
+        backgroundColor: [
+          '#EC7063',
+          '#F5B7B1',
+        ]
+    }],
+
+    labels: [
+        'Posts with image',
+        'Posts without image'
+    ]
+  }
+
   const getUsersCount = async (from) => {
     try {
       const res = await axios.get(baseUrl + `admin/users?${from && `days=${from}`}`);
@@ -35,16 +65,10 @@ const Dashboard = ({ setAlert }) => {
 
   return (
     <section className='dashboard'>
-      <DashboardSection 
-        title='Users'
-        usersCount={usersCount}
-        getUsersCount={getUsersCount}
-      />
-      <DashboardSection 
-        title='Posts'
-        postsCount={postsCount}
-        getPostsCount={getPostsCount}
-      />
+      <DashboardSection title='Users' usersCount={usersCount} getUsersCount={getUsersCount} />
+      <DashboardSection title='Posts' postsCount={postsCount} getPostsCount={getPostsCount} />
+      <DashboardSection diagram title='Users' data={usersData} />
+      <DashboardSection diagram pie title='Posts'data={postsData} />
     </section>
   );
 }

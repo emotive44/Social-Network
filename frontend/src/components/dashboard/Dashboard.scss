@@ -1,13 +1,14 @@
 .dashboard {
-  width: 90%;
+  width: 87%;
   display: flex;
   flex-wrap: wrap;
-  min-width: 46rem;
+  min-width: 45rem;
   margin: 10rem auto;
+  text-align: center;
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 970px) {
   .dashboard {
     justify-content: center;
   }

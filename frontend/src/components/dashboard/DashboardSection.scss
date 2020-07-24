@@ -3,7 +3,6 @@
 .container-dashboard {
   width: 47%;
   display: flex;
-  min-width: 37rem;
   margin-bottom: 4rem;
   border: 1px solid $white-color;
   box-shadow: 3px 7px 5px 0px rgba(212,210,212,1);
@@ -43,8 +42,12 @@
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 970px) {
   .container-dashboard {
     width: 80%;
+
+    &:nth-child(odd) {
+      margin-right: 0;
+    }
   }
 }
