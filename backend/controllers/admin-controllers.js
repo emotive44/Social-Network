@@ -43,7 +43,43 @@ const totalPosts = async (req, res, next) => {
   res.status(200).json({ postsCount: countOfPosts });
 }
 
+const usersAvatar = async (req, res, next) => {
+  let usersWithOwnAvatar;
+  let usersWithDefaultAvatar;
+  try {
+    const allUsers = await User.count({});
+    usersWithDefaultAvatar = await User.count({ avatar: undefined });
+
+    usersWithOwnAvatar = allUsers - usersWithDefaultAvatar;
+  } catch (err) {
+    return next(
+      new HttpError('Fetching users avatar count failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json([usersWithOwnAvatar, usersWithDefaultAvatar]);
+}
+
+const postsImage = async (req, res, next) => {
+  let postsWithImage;
+  let postsWithoutImage;
+  try {
+    const allPosts = await Post.count({});
+    postsWithoutImage = await Post.count({ image: undefined });
+
+    postsWithImage = allPosts - postsWithoutImage;
+  } catch (err) {
+    return next(
+      new HttpError('Fetching users avatar count failed, please try again.', 500)
+    );
+  }
+
+  res.status(200).json([postsWithImage, postsWithoutImage]);
+}
+
 module.exports = {
-  totalUsers,
   totalPosts,
+  postsImage,
+  totalUsers,
+  usersAvatar,
 }

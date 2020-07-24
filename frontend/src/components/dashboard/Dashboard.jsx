@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardSection from './DashboardSection';
 import './Dashboard.scss';
 
@@ -12,16 +12,22 @@ const baseUrl = 'http://localhost:5000/api/v1/';
 const Dashboard = ({ setAlert }) => {
   const [usersCount, setUsersCount] = useState(0);
   const [postsCount, setPostsCount] = useState(0);
+  const [fetchingUsersData, setFetchingUsersData] = useState([]);
+  const [fetchingPostsData, setFetchingPostsData] = useState([]);
+
+  useEffect(() => {
+    getPostsImage();
+    getUsersAvatar();
+  },[]);
 
   const usersData =  {
     datasets: [{
-        data: [10, 30],
+        data: fetchingUsersData,
         backgroundColor: [
           '#5499C7',
           '#D4E6F1',
         ]
     }],
-
     labels: [
         'Users with own avatar',
         'Users with default avatar'
@@ -30,13 +36,12 @@ const Dashboard = ({ setAlert }) => {
 
   const postsData = {
     datasets: [{
-        data: [1, 7],
+        data: fetchingPostsData,
         backgroundColor: [
           '#EC7063',
           '#F5B7B1',
         ]
     }],
-
     labels: [
         'Posts with image',
         'Posts without image'
@@ -63,10 +68,30 @@ const Dashboard = ({ setAlert }) => {
     }
   }
 
+  const getUsersAvatar = async () => {
+    try {
+      const res = await axios.get(baseUrl + 'admin/users-avatar');
+      
+      setFetchingUsersData(res.data);
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
+
+  const getPostsImage = async () => {
+    try {
+      const res = await axios.get(baseUrl + 'admin/posts-image');
+      
+      setFetchingPostsData(res.data);
+    } catch (err) {
+      setAlert(err.response.data.message, 'danger');
+    }
+  }
+
   return (
     <section className='dashboard'>
-      <DashboardSection title='Users' usersCount={usersCount} getUsersCount={getUsersCount} />
-      <DashboardSection title='Posts' postsCount={postsCount} getPostsCount={getPostsCount} />
+      <DashboardSection title='Users' usersCount={usersCount} getDataCount={getUsersCount} />
+      <DashboardSection title='Posts' postsCount={postsCount} getDataCount={getPostsCount} />
       <DashboardSection diagram title='Users' data={usersData} />
       <DashboardSection diagram pie title='Posts'data={postsData} />
     </section>

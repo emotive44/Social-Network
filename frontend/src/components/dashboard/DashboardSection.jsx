@@ -10,37 +10,31 @@ const DashboardSection = ({
   diagram,
   usersCount, 
   postsCount,
-  getUsersCount,
-  getPostsCount,
+  getDataCount
 }) => {
   const [period, setPeriod] = useState('Total');
 
   useEffect(() => {
-    getUsersCount && getUsersCount();
-    getPostsCount && getPostsCount();
+    getDataCount && getDataCount();
   },[]);
 
   const getDaily = () => {
-    getUsersCount && getUsersCount(1);
-    getPostsCount && getPostsCount(1);
+    getDataCount(1);
     setPeriod('Daily');
   }
 
   const getWeekly = () => {
-    getUsersCount && getUsersCount(7);
-    getPostsCount && getPostsCount(7);
+    getDataCount(7);
     setPeriod('Weekly');
   }
 
   const getMonthly = () => {
-    getUsersCount && getUsersCount(30);
-    getPostsCount && getPostsCount(30);
+    getDataCount(30);
     setPeriod('Monthly');
   }
 
   const getTotal = () => {
-    getUsersCount && getUsersCount();
-    getPostsCount && getPostsCount();
+    getDataCount();
     setPeriod('Total');
   }
 
