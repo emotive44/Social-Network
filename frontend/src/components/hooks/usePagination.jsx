@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import Card from '../common/Card';
 
-
 const usePagination = (collection, search) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,53 +15,64 @@ const usePagination = (collection, search) => {
       try {
         setLoading(true);
         setErr(null);
-        
-        const res = await axios.get(`http://localhost:5000/api/v1/${collection}?page=${page}&user=${search}`);
+
+        const res = await axios.get(
+          `http://localhost:5000/api/v1/${collection}?page=${page}&user=${search}`
+        );
 
         setCountArticles(res.data.countPost);
         setData(res.data[collection]);
         setLoading(false);
-
-      } catch(err) {
+      } catch (err) {
         setErr(err.response.data.message);
         setCountArticles(1);
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, [page, collection, search]);
 
   let fetchedData;
-  if(err) {
-    fetchedData = <div style={{gridColumn: 'span 3', color: 'tomato'}}>{err}</div>;
+  if (err) {
+    fetchedData = (
+      <div style={{ gridColumn: 'span 3', color: 'tomato' }}>{err}</div>
+    );
   } else {
-    fetchedData = data.map(x => {
-      return <Card {...x} key={x._id}/>
+    fetchedData = data.map((x) => {
+      return <Card {...x} key={x._id} />;
     });
   }
 
   const prevPage = () => {
-    if(page >= 2) {
-      setPage(prev => prev - 1);
-    } 
-  }
+    if (page >= 2) {
+      setPage((prev) => prev - 1);
+    }
+  };
 
   const nextPage = () => {
-    if(page < Math.ceil(countArticles / 3)) {
-      setPage(prev => prev + 1);
+    if (page < Math.ceil(countArticles / 3)) {
+      setPage((prev) => prev + 1);
     }
-  }
+  };
 
   const choosedPage = (x) => {
     setPage(x);
-  }
+  };
 
-  let countOfPages = [];
-  for(let i = 1; i <= Math.ceil(countArticles / 3); i++ ) {
+  const countOfPages = [];
+  for (let i = 1; i <= Math.ceil(countArticles / 3); i++) {
     countOfPages.push(i);
   }
 
-  return { page, loading, fetchedData, countOfPages, prevPage, nextPage, choosedPage}
-}
+  return {
+    page,
+    loading,
+    fetchedData,
+    countOfPages,
+    prevPage,
+    nextPage,
+    choosedPage,
+  };
+};
 
 export default usePagination;

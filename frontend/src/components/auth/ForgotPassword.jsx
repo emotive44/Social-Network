@@ -10,16 +10,15 @@ import emailValidate from '../../utils/emailValidate';
 
 import { Input, Button, Spinner, FormWrapper } from '../common';
 
-
 const ForgotPassword = ({ setAlert }) => {
-  const {register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const [spinner, setSpinner] = useState(false);
 
   const forgotPassword = async (email) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
     const body = JSON.stringify({ email });
     const baseUrl = 'http://localhost:5000/api/v1/';
@@ -33,38 +32,35 @@ const ForgotPassword = ({ setAlert }) => {
       setSpinner(false);
       setAlert(err.response.data.message, 'danger');
     }
-  }
+  };
 
   const submit = (data) => {
     forgotPassword(data.email);
-  }
+  };
 
   return (
-    <FormWrapper submitHandler={handleSubmit(submit)} title='Forgot Password'>
-      <h3 className='forgot-password-header'>
-        Please enter the email address with which you are registered,
-        so that we can send you the password reset link.
+    <FormWrapper submitHandler={handleSubmit(submit)} title="Forgot Password">
+      <h3 className="forgot-password-header">
+        Please enter the email address with which you are registered, so that we
+        can send you the password reset link.
       </h3>
-      <Input 
-        label='Email'
-        name='email'
-        type='email' 
+      <Input
+        label="Email"
+        name="email"
+        type="email"
         ref={register({
           required: 'Email is required.',
-          validate: value => emailValidate(value) ?  undefined : 'Email address is not valid.'
+          validate: (value) =>
+            emailValidate(value) ? undefined : 'Email address is not valid.',
         })}
         err={errors.email && errors.email.message}
       />
-      <Button 
-        type='submit'
-        light animation
-        style={{marginTop: '3rem'}}
-      >
+      <Button type="submit" light animation style={{ marginTop: '3rem' }}>
         Send Password Reset Link
         {spinner && <Spinner styleBtn />}
       </Button>
     </FormWrapper>
   );
-}
+};
 
 export default connect(null, { setAlert })(ForgotPassword);

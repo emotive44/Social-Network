@@ -12,103 +12,104 @@ import {
   GET_POSTS_BY_USER,
 } from '../types';
 
-
 const initialState = {
   loading: true,
   post: null,
   posts: [],
 };
 
-export default function (state = initialState , action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case UPDATE_POST:
       return {
         ...state,
         loading: false,
         post: { ...state.post, text: payload.text },
-        posts: state.posts.map(post => {
-          if(post._id === payload.postId) {
+        posts: state.posts.map((post) => {
+          if (post._id === payload.postId) {
             post.text = payload.text;
             return post;
           } else return post;
-        })
-      }
+        }),
+      };
     case DELETE_POST:
-      return { 
+      return {
         ...state,
         post: null,
         loading: false,
-        posts: state.posts.filter(post => post._id !== payload)
-      }
+        posts: state.posts.filter((post) => post._id !== payload),
+      };
     case GET_POST:
       return {
         ...state,
         post: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case GET_RECENT_POSTS:
       return {
         ...state,
         posts: payload,
-        loading: false
-      }
-    case GET_POSTS_BY_USER: 
+        loading: false,
+      };
+    case GET_POSTS_BY_USER:
       return {
         ...state,
         posts: payload,
-      }
+      };
     case GET_POST_COMMENTS:
       return {
         ...state,
         loading: false,
-        post: { ...state.post, currComments: [...payload] }
-      }
+        post: { ...state.post, currComments: [...payload] },
+      };
     case LIKE_POST:
       return {
         ...state,
         loading: false,
         post: { ...state.post, likes: payload.likes },
-        posts: state.posts.map(post => {
-          if(post._id === payload.postId){
-            post.likes = payload.likes
+        posts: state.posts.map((post) => {
+          if (post._id === payload.postId) {
+            post.likes = payload.likes;
             return post;
-          } else return post
-        })
-      }
+          } else return post;
+        }),
+      };
     case CREATE_COMMENT:
       return {
         ...state,
         loading: false,
-        post: { 
-          ...state.post, 
+        post: {
+          ...state.post,
           comments: state.post.comments + 1,
-          currComments: [payload, ...state.post.currComments]
-        }
-      }
+          currComments: [payload, ...state.post.currComments],
+        },
+      };
     case DELETE_COMMENT:
       return {
         ...state,
         loading: false,
-        post: { 
-          ...state.post, 
+        post: {
+          ...state.post,
           comments: state.post.comments - 1,
-          currComments: state.post.currComments.filter(comment => comment._id !== payload) 
-        }
-      }
+          currComments: state.post.currComments.filter(
+            (comment) => comment._id !== payload
+          ),
+        },
+      };
     case POST_RESET:
       return {
         posts: [],
         post: null,
-        loading: true
-      }
+        loading: true,
+      };
     case POST_ERROR:
       return {
         ...state,
         loading: false,
-      }
-    default: 
+      };
+    default:
       return state;
   }
 }

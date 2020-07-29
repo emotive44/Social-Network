@@ -1,7 +1,6 @@
 import React from 'react';
 import './Button.scss';
 
-
 const Button = ({
   type,
   info,
@@ -11,10 +10,10 @@ const Button = ({
   primary,
   children,
   animation,
-  clickHandler
+  clickHandler,
 }) => {
   return (
-    <button 
+    <button
       type={type}
       className={`btn 
         ${primary && `btn-primary ${animation && 'btn-primary-animation'}`} 
@@ -28,6 +27,6 @@ const Button = ({
       {children}
     </button>
   );
-}
+};
 
 export default Button;

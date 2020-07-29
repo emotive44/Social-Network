@@ -1,18 +1,17 @@
 import React from 'react';
 import './Spinner.scss';
 
-
 const Spinner = ({ style, styleBtn }) => {
   return (
-    <div className='spinner'>
-      <img 
+    <div className="spinner">
+      <img
         className={styleBtn && 'button-spinner'}
-        src="/spinner.gif" 
+        src="/spinner.gif"
         style={style}
-        alt="" 
-        />
+        alt=""
+      />
     </div>
   );
-}
+};
 
 export default Spinner;

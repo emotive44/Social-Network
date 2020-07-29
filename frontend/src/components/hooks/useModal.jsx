@@ -7,8 +7,7 @@ const useModal = () => {
 
   const closeModal = () => setToggleModal(false);
 
-
-  return { toggleModal, showModal, closeModal }
-}
+  return { toggleModal, showModal, closeModal };
+};
 
 export default useModal;

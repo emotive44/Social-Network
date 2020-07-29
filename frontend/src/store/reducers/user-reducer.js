@@ -1,4 +1,4 @@
-import { 
+import {
   GET_USER,
   USER_ERROR,
   USER_RESET,
@@ -15,82 +15,90 @@ const initialState = {
   loading: true,
   following: [],
   followers: [],
-}
+};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case GET_USER:
       return {
         ...state,
         user: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case GET_USER_FOLLOWING:
       return {
         ...state,
-        following: payload
-      }
+        following: payload,
+      };
     case GET_USER_FOLLOWERS:
       return {
         ...state,
-        followers: payload
-      }
+        followers: payload,
+      };
     case ADD_PERSONAL_INFO:
       return {
         ...state,
-        user: { ...state.user, personalInfo: payload }
-      }
+        user: { ...state.user, personalInfo: payload },
+      };
     case DELETE_PERSONAL_INFO:
       return {
         ...state,
-        user: { ...state.user, personalInfo: {} }
-      }
+        user: { ...state.user, personalInfo: {} },
+      };
     case FOLLOW_USER:
       return {
         ...state,
-        user: { ...state.user, followers: payload }
-      }
+        user: { ...state.user, followers: payload },
+      };
     case FOLLOW_USERS:
       return {
         ...state,
-        user: localStorage.userId === state.user._id ? {
-            ...state.user,
-            following: state.user.following.filter(userId => userId !== payload.followedUserId)
-          } : state.user,
-        following: localStorage.userId === state.user._id ?
-          state.following.filter(user => user._id !== payload.followedUserId) :
-          state.following.map(user => {
-            if(user._id === payload.followedUserId) {
-              return {
-                ...user,
-                followers: payload.followers
+        user:
+          localStorage.userId === state.user._id
+            ? {
+                ...state.user,
+                following: state.user.following.filter(
+                  (userId) => userId !== payload.followedUserId
+                ),
               }
-            } else return user;
-          }),
-        followers: state.followers.map(user => {
-          if(user._id === payload.followedUserId) {
+            : state.user,
+        following:
+          localStorage.userId === state.user._id
+            ? state.following.filter(
+                (user) => user._id !== payload.followedUserId
+              )
+            : state.following.map((user) => {
+                if (user._id === payload.followedUserId) {
+                  return {
+                    ...user,
+                    followers: payload.followers,
+                  };
+                } else return user;
+              }),
+        followers: state.followers.map((user) => {
+          if (user._id === payload.followedUserId) {
             return {
               ...user,
-              followers: payload.followers
-            }
+              followers: payload.followers,
+            };
           } else return user;
-        })
-      }
+        }),
+      };
     case USER_RESET:
       return {
         user: {},
         loading: true,
         following: [],
         followers: [],
-      }
+      };
     case USER_ERROR:
       return {
         ...state,
         loading: false,
-      }
-    default: 
+      };
+    default:
       return state;
   }
 }

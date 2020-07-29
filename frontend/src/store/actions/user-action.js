@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { setAlert } from '../actions/alert-action';
 import { logout } from './auth-action';
-import { 
+import {
   GET_USER,
   USER_ERROR,
   FOLLOW_USER,
@@ -13,59 +13,60 @@ import {
   DELETE_PERSONAL_INFO,
 } from '../types';
 
-
 const baseUrl = 'http://localhost:5000/api/v1/';
 
-export const getUser = (userId) => async dispatch => {
+export const getUser = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(baseUrl + 'users/' + userId);
 
     dispatch({
       type: GET_USER,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
   }
-}
+};
 
-export const getUserFollowing = (userId, search) => async dispatch => {
+export const getUserFollowing = (userId, search) => async (dispatch) => {
   try {
-    const res = await axios.get(baseUrl + `users/${userId}/following?search=${search}`);
+    const res = await axios.get(
+      baseUrl + `users/${userId}/following?search=${search}`
+    );
 
     dispatch({
       type: GET_USER_FOLLOWING,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
   }
-}
+};
 
-export const getUserFollowers = (userId) => async dispatch => {
+export const getUserFollowers = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(baseUrl + `users/${userId}/followers`);
 
     dispatch({
       type: GET_USER_FOLLOWERS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
   }
-}
+};
 
-export const followUser = (userId, flag) => async dispatch => {
+export const followUser = (userId, flag) => async (dispatch) => {
   try {
     const res = await axios.put(baseUrl + `users/${userId}/follow`);
-    
-    if(flag) {
+
+    if (flag) {
       dispatch({
         type: FOLLOW_USERS,
-        payload: res.data
+        payload: res.data,
       });
 
       return;
@@ -73,54 +74,60 @@ export const followUser = (userId, flag) => async dispatch => {
 
     dispatch({
       type: FOLLOW_USER,
-      payload: res.data.followers
+      payload: res.data.followers,
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
   }
-}
+};
 
-export const addPersonalInfo = (personInfo, userId) => async dispatch => {
+export const addPersonalInfo = (personInfo, userId) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     };
-  
+
     const body = JSON.stringify({ personInfo, userId });
     const res = await axios.put(baseUrl + 'users/info', body, config);
 
     dispatch({
       type: ADD_PERSONAL_INFO,
-      payload: res.data
+      payload: res.data,
     });
-    
+
     dispatch(
-      setAlert(`You edit ${userId ? 'user' : 'your'} personal info success.`, 'success')
+      setAlert(
+        `You edit ${userId ? 'user' : 'your'} personal info success.`,
+        'success'
+      )
     );
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: USER_ERROR });
   }
-}
+};
 
-export const deletePersonalInfo = (userId) => async dispatch => {
+export const deletePersonalInfo = (userId) => async (dispatch) => {
   try {
     await axios.delete(baseUrl + 'users/info', { data: { userId } });
 
     dispatch({ type: DELETE_PERSONAL_INFO });
     dispatch(
-      setAlert(`You delete ${userId ? 'user' : 'your'} personal info seccess.`, 'success')
+      setAlert(
+        `You delete ${userId ? 'user' : 'your'} personal info seccess.`,
+        'success'
+      )
     );
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(setAlert(err.response.data.message, 'danger'));
   }
-}
+};
 
-export const deleteUserProfile = (history, userId) => async dispatch => {
+export const deleteUserProfile = (history, userId) => async (dispatch) => {
   try {
     await axios.delete(baseUrl + 'users/', { data: { userId } });
 
@@ -129,4 +136,4 @@ export const deleteUserProfile = (history, userId) => async dispatch => {
     dispatch({ type: USER_ERROR });
     dispatch(setAlert(err.response.data.message, 'danger'));
   }
-}
+};

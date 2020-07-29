@@ -5,45 +5,49 @@ import usePagination from '../hooks/usePagination';
 
 import { Button, Spinner, Pagination, CardsContainer } from '../common';
 
-
 const Users = () => {
   const [value, setValue] = useState('');
   const [search, setSearch] = useState('');
-  const { 
-    page, 
-    loading, 
+  const {
+    page,
+    loading,
     fetchedData,
-    countOfPages, 
-    choosedPage, 
-    prevPage, 
-    nextPage 
+    countOfPages,
+    choosedPage,
+    prevPage,
+    nextPage,
   } = usePagination('users', search);
 
   const changeHandler = (e) => {
     setValue(e.target.value);
-  }
-  
+  };
+
   const searchHandler = () => {
     setSearch(value);
     choosedPage(1);
-  }
-  
+  };
+
   return (
     <CardsContainer fetchedData={fetchedData}>
       {loading && <Spinner />}
-      <div className='search'>
+      <div className="search">
         <div className="search-wrapper">
           <i className="fas fa-search" />
-          <input 
-            type="search" 
-            value={value} 
-            placeholder="Search" 
+          <input
+            type="search"
+            value={value}
+            placeholder="Search"
             onChange={changeHandler}
           />
         </div>
-        <Button clickHandler={searchHandler} style={{display: 'inline-block'}}>Search</Button>
+        <Button
+          clickHandler={searchHandler}
+          style={{ display: 'inline-block' }}
+        >
+          Search
+        </Button>
       </div>
-      <Pagination 
+      <Pagination
         page={page}
         prevPage={prevPage}
         nextPage={nextPage}
@@ -52,6 +56,6 @@ const Users = () => {
       />
     </CardsContainer>
   );
-}
+};
 
 export default Users;

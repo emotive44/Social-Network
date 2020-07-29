@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
-
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -16,18 +15,17 @@ const userSchema = new mongoose.Schema({
     bio: { type: String, minlength: 6, maxlength: 45 },
     university: { type: String },
     job: { type: String },
-    city: {type: String },
+    city: { type: String },
     bDay: { type: Date },
-    relShip: { type: String }
+    relShip: { type: String },
   },
   role: { type: String, default: 'user' },
   created: { type: Date, default: Date.now },
   passwordResetToken: { type: String },
-  passwordResetExpires: { type: Date }
+  passwordResetExpires: { type: Date },
 });
 
-
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   try {
@@ -38,31 +36,25 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-
-userSchema.methods.createPasswordResetToken = function() {
+userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   this.passwordResetToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-  
+
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
-}
+};
 
-userSchema.methods.comparePassword = function(password) {
+userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password);
-}
+};
 
-userSchema.methods.createToken =  function(email, userId) {
-  return jwt.sign(
-    { email, userId },
-    'supersecret',
-    { expiresIn: '1h' }
-  );
-}
-
+userSchema.methods.createToken = function (email, userId) {
+  return jwt.sign({ email, userId }, 'supersecret', { expiresIn: '1h' });
+};
 
 module.exports = mongoose.model('User', userSchema);

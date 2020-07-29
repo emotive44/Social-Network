@@ -1,4 +1,4 @@
-import { 
+import {
   LOGOUT,
   LOAD_USER,
   AUTH_ERROR,
@@ -8,7 +8,6 @@ import {
 } from '../types';
 
 import setAuthToken from '../../utils/setAuthToken';
-
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -22,13 +21,13 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case LOAD_USER:
       return {
         ...state,
         ...payload,
-        loading: false
-      }
+        loading: false,
+      };
     case SOCIALLOGIN_SUCCESS:
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -51,7 +50,7 @@ export default function (state = initialState, action) {
         token: null,
         userId: null,
         avatar: null,
-        loading: false
+        loading: false,
       };
     default:
       return state;

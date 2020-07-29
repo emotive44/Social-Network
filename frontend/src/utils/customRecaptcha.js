@@ -1,7 +1,8 @@
 const customRecaptcha = (day) => {
   let dayCount;
 
-  switch(day.toLowerCase()) {
+  // eslint-disable-next-line default-case
+  switch (day.toLowerCase()) {
     case 'sunday':
       dayCount = 0;
       break;
@@ -26,9 +27,9 @@ const customRecaptcha = (day) => {
 
   if (dayCount === new Date().getDay()) {
     return true;
-  } 
+  }
 
   return false;
-}
+};
 
 export default customRecaptcha;

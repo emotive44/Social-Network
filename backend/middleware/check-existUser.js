@@ -6,17 +6,13 @@ module.exports = async (req, res, next) => {
   try {
     existUser = await User.findById(req.userId);
   } catch (err) {
-    if(!existUser) {
-      return next(
-        new HttpError('Could not found user with this id.', 404)
-      );
+    if (!existUser) {
+      return next(new HttpError('Could not found user with this id.', 404));
     }
 
-    return next(
-      new HttpError('Something went wrong, please try again.', 500)
-    );
+    return next(new HttpError('Something went wrong, please try again.', 500));
   }
 
   req.existUser = existUser;
   next();
-}
+};

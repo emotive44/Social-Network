@@ -1,41 +1,44 @@
 import React, { useState } from 'react';
 import './Input.scss';
 
-const Input = React.forwardRef((props, ref) =>  {
+const Input = React.forwardRef((props, ref) => {
   const [isHover, setIsHover] = useState(false);
 
   const hover = (e) => {
-    if(!e.target.value) {
+    if (!e.target.value) {
       setIsHover(true);
     }
-   }
+  };
 
   const blur = (e) => {
-    if(!e.target.value) {
+    if (!e.target.value) {
       setIsHover(false);
     }
-  }
-   
+  };
+
   return (
-    <div className="input">   
+    <div className="input">
       <div className="input-wrapper">
-        <label 
-          className={isHover || props.value || props.defaultValue ? 'top' : null}>
+        <label
+          className={
+            isHover || props.value || props.defaultValue ? 'top' : null
+          }
+        >
           {props.label}
         </label>
-        <input 
-            defaultValue={props.defaultValue && props.defaultValue}
-            className={props.err ? 'error' : null}
-            type={props.type} 
-            name={props.name}
-            onClick={hover}
-            onBlur={blur}
-            ref={ref}
+        <input
+          defaultValue={props.defaultValue && props.defaultValue}
+          className={props.err ? 'error' : null}
+          type={props.type}
+          name={props.name}
+          onClick={hover}
+          onBlur={blur}
+          ref={ref}
         />
       </div>
       {props.err && <span>{props.err}</span>}
     </div>
   );
-})
+});
 
 export default Input;

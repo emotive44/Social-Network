@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 
-
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
@@ -12,10 +11,11 @@ module.exports = class Email {
   newTransport() {
     return nodemailer.createTransport({
       service: 'SendGrid',
-      auth: { 
+      auth: {
         user: 'apikey',
-        pass: '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'
-      }
+        pass:
+          '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',
+      },
     });
   }
 
@@ -25,7 +25,7 @@ module.exports = class Email {
       to: this.to,
       html: template,
       from: this.from,
-    }
+    };
 
     try {
       await this.newTransport().sendMail(mailOptions);
@@ -53,6 +53,9 @@ module.exports = class Email {
     <p>If you didn't forget your password, please ignore this email!</p>
     `;
 
-    await this.send(template, 'Your reset password token is valid only for 10 minutes.');
+    await this.send(
+      template,
+      'Your reset password token is valid only for 10 minutes.'
+    );
   }
-}
+};

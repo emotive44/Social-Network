@@ -4,9 +4,9 @@ import './UserProfile.scss';
 import useModal from '../hooks/useModal';
 
 import { connect } from 'react-redux';
-import { 
-  getUser, 
-  followUser, 
+import {
+  getUser,
+  followUser,
   addPersonalInfo,
   getUserFollowing,
   getUserFollowers,
@@ -16,7 +16,7 @@ import {
 import { getPosts } from '../../store/actions/post-action';
 import { setAlert } from '../../store/actions/alert-action';
 import { loadUser } from '../../store/actions/auth-action';
-import { POST_RESET, USER_RESET } from '../../store/types'
+import { POST_RESET, USER_RESET } from '../../store/types';
 import store from '../../store/store';
 
 import PersonalInfoForm from './PersonalInfoForm';
@@ -26,20 +26,19 @@ import ProfileAside from './ProfileAside';
 import { Modal, Spinner } from '../common';
 import Post from '../post/Post';
 
-
-const UserProfile = ({ 
-  meId, 
-  user, 
+const UserProfile = ({
+  meId,
+  user,
   match,
   posts,
-  loading, 
-  getUser, 
+  loading,
+  getUser,
   getPosts,
   setAlert,
   loadUser,
   following,
   followers,
-  followUser, 
+  followUser,
   addPersonalInfo,
   getUserFollowing,
   getUserFollowers,
@@ -53,13 +52,13 @@ const UserProfile = ({
   const userId = match.params.userId;
 
   const showPosts = () => {
-    if(countOfPosts - 4 > posts.length) { 
+    if (countOfPosts - 4 > posts.length) {
       return;
     }
 
     setCountOfPosts(countOfPosts + 4);
     getPosts(userId, countOfPosts);
-  }
+  };
 
   useEffect(() => {
     getUser(userId);
@@ -68,34 +67,34 @@ const UserProfile = ({
     return () => {
       store.dispatch({ type: POST_RESET });
       store.dispatch({ type: USER_RESET });
-    }
+    };
   }, [getUser, getPosts, userId]);
 
   const toggleFollowers = (toggle) => {
     getUserFollowers(userId);
     setShowFollowers(toggle);
-  }
+  };
 
   const toggleFollowing = (toggle) => {
     getUserFollowing(userId, '');
     setShowFollowing(toggle);
-  }
+  };
 
   return (
-    <section className='user-profile'>
+    <section className="user-profile">
       {loading && <Spinner style={{ width: '13rem' }} />}
 
       {toggleModal && (
-        <Modal closeModal={closeModal} title='Edit Your Personal Information'>
-          <PersonalInfoForm 
-            info={user.personalInfo} 
+        <Modal closeModal={closeModal} title="Edit Your Personal Information">
+          <PersonalInfoForm
+            info={user.personalInfo}
             userId={userId}
             addPersonalInfo={addPersonalInfo}
           />
         </Modal>
       )}
 
-      <ProfileHeader  
+      <ProfileHeader
         user={user}
         meId={meId}
         setAlert={setAlert}
@@ -105,50 +104,57 @@ const UserProfile = ({
         toggleFollowing={toggleFollowing}
         deleteUserProfile={deleteUserProfile}
       />
-      {!showFollowers &&  !showFollowing &&(
+      {!showFollowers && !showFollowing && (
         <Fragment>
-          <ProfileAside 
-            meId={meId} 
+          <ProfileAside
+            meId={meId}
             userId={userId}
             showModal={showModal}
             deletePersonalInfo={deletePersonalInfo}
             personalInfo={user.personalInfo}
           />
           <main>
-            {posts.map(post => {
-              return <Post postD={post} key={post._id}/>
+            {posts.map((post) => {
+              return <Post postD={post} key={post._id} />;
             })}
 
-            {countOfPosts - 4 > posts.length ? 
-              posts.length < 1 ? 
-                <span className='no-more-items'>User does not have posts yet.</span> : 
-                <span className='no-more-items'>Does not have more posts.</span> : 
-              <span onClick={showPosts} className='more-items'>show more posts</span>
-            }
+            {countOfPosts - 4 > posts.length ? (
+              posts.length < 1 ? (
+                <span className="no-more-items">
+                  User does not have posts yet.
+                </span>
+              ) : (
+                <span className="no-more-items">Does not have more posts.</span>
+              )
+            ) : (
+              <span onClick={showPosts} className="more-items">
+                show more posts
+              </span>
+            )}
           </main>
-        </Fragment> 
+        </Fragment>
       )}
 
-      {showFollowers && !showFollowing && 
-        <UsersList 
+      {showFollowers && !showFollowing && (
+        <UsersList
           followers
           users={followers}
           toggleFollowers={toggleFollowers}
-          toggleFollowing={toggleFollowing} 
+          toggleFollowing={toggleFollowing}
         />
-      }
-      {showFollowing && !showFollowers && 
-        <UsersList 
-          users={following} 
+      )}
+      {showFollowing && !showFollowers && (
+        <UsersList
+          users={following}
           toggleFollowers={toggleFollowers}
           toggleFollowing={toggleFollowing}
         />
-      }
+      )}
     </section>
   );
-}
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user.user,
   following: state.user.following,
   followers: state.user.followers,
@@ -168,6 +174,6 @@ const mapDispatchToProps = {
   getUserFollowers,
   deleteUserProfile,
   deletePersonalInfo,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

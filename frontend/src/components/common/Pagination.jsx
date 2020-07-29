@@ -3,39 +3,38 @@ import './Pagination.scss';
 
 import Button from './Button';
 
-
-const Pagination = ({ prevPage, nextPage, page, choosedPage, countOfPages }) => {
+const Pagination = ({
+  prevPage,
+  nextPage,
+  page,
+  choosedPage,
+  countOfPages,
+}) => {
   return (
     <div className="pagination">
-      <Button
-        danger
-        clickHandler={prevPage}
-        style={{'margin': '0'}}
-      >
+      <Button danger clickHandler={prevPage} style={{ margin: '0' }}>
         Previous
       </Button>
 
       <div>
-        {countOfPages.map((p,i) => {
-          return <span 
-            key={i} 
-            onClick={() => choosedPage(p)}
-            className={page === p ? 'active' : null}
-          >
-            {p}
-          </span>
+        {countOfPages.map((p, i) => {
+          return (
+            <span
+              key={i}
+              onClick={() => choosedPage(p)}
+              className={page === p ? 'active' : null}
+            >
+              {p}
+            </span>
+          );
         })}
       </div>
-      
-      <Button
-        primary
-        clickHandler={nextPage}
-        style={{'margin': '0'}}
-      >
+
+      <Button primary clickHandler={nextPage} style={{ margin: '0' }}>
         Next
       </Button>
     </div>
   );
-}
+};
 
 export default Pagination;

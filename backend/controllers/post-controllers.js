@@ -6,15 +6,15 @@ const HttpError = require('../models/httpError-model');
 const Post = require('../models/post-model');
 const User = require('../models/user-model');
 
-
 const createPost = async (req, res, next) => {
   const errors = validationResult(req);
-  if(!errors.isEmpty()) {
-    const err = errors.array().map(e => e.msg).join(' ');
+  if (!errors.isEmpty()) {
+    const err = errors
+      .array()
+      .map((e) => e.msg)
+      .join(' ');
 
-    return next(
-      new HttpError(err, 422)
-    );
+    return next(new HttpError(err, 422));
   }
 
   const { text } = req.body;
@@ -23,78 +23,71 @@ const createPost = async (req, res, next) => {
   const newPost = new Post({
     text,
     image: req.file && req.file.path,
-    creator: req.userId
+    creator: req.userId,
   });
 
   try {
     const sess = await mongoose.startSession();
-    sess.startTransaction();              
+    sess.startTransaction();
     await newPost.save({ session: sess });
     existUser.posts.unshift(newPost);
-    await existUser.save({session: sess});
+    await existUser.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
-    return next(
-      new HttpError('Create post failed, please try again.', 500)
-    );
+    return next(new HttpError('Create post failed, please try again.', 500));
   }
-  
+
   res.status(201).json(newPost);
-}
+};
 
 const createComment = async (req, res, next) => {
   const existUser = req.existUser;
   const errors = validationResult(req);
-  if(!errors.isEmpty()) { 
-    const err = errors.array().map(e => e.msg).join(' ');
+  if (!errors.isEmpty()) {
+    const err = errors
+      .array()
+      .map((e) => e.msg)
+      .join(' ');
 
-    return next(
-      new HttpError(err, 422)
-    );
+    return next(new HttpError(err, 422));
   }
 
   let post;
   try {
     post = await Post.findById(req.params.postId);
   } catch (err) {
-    if(!post) {
-      return next(
-        new HttpError('Add comment failed, post was not found', 404)
-      );
+    if (!post) {
+      return next(new HttpError('Add comment failed, post was not found', 404));
     }
 
-    return next(
-      new HttpError('Add comment failed, please try again.', 500)
-    );
+    return next(new HttpError('Add comment failed, please try again.', 500));
   }
 
-  const comment = { 
+  const comment = {
     creator: req.userId,
     text: req.body.text,
-    avatar: existUser.avatar
-  }
+    avatar: existUser.avatar,
+  };
 
-  const currentComment = { 
+  const currentComment = {
     creator: {
       _id: existUser._id,
-      name: existUser.name
+      name: existUser.name,
     },
     text: req.body.text,
-    avatar: existUser.avatar
-  }
+    avatar: existUser.avatar,
+  };
 
   try {
     post.comments.unshift(comment);
     await post.save();
     currentComment._id = post.comments[0]._id;
   } catch (err) {
-    return next(
-      new HttpError('Add comment failed, please try again.', 500)
-    );
+    return next(new HttpError('Add comment failed, please try again.', 500));
   }
 
   res.status(201).json(currentComment);
-}
+};
 
 const getPostComments = async (req, res, next) => {
   const countOfComments = +req.query.count || 3;
@@ -108,21 +101,22 @@ const getPostComments = async (req, res, next) => {
         populate: {
           path: 'creator',
           select: 'name avatar',
-        }
+        },
       });
   } catch (err) {
-    if(!postComments) {
+    if (!postComments) {
       return next(
-        new HttpError('Fetching comments failed, does not exist any comments.', 404)
+        new HttpError(
+          'Fetching comments failed, does not exist any comments.',
+          404
+        )
       );
     }
-    return next(
-      new HttpError('Fetching post failed.', 500)
-    );
+    return next(new HttpError('Fetching post failed.', 500));
   }
 
   res.status(200).json(postComments);
-}
+};
 
 const getAllPosts = async (req, res, next) => {
   const currentPage = req.query.page || 1;
@@ -135,30 +129,26 @@ const getAllPosts = async (req, res, next) => {
       .populate('creator', 'name')
       .where('creator')
       .ne(req.userId)
-      .then(count => countPost = count);
-      
+      .then((count) => (countPost = count));
+
     posts = await Post.find({})
       .skip((currentPage - 1) * perPage)
-      .limit(perPage) 
+      .limit(perPage)
       .populate('creator', 'name')
       .where('creator')
       .ne(req.userId)
       .select('text image')
-      .sort({ date: -1 })
+      .sort({ date: -1 });
   } catch (err) {
-    return next(
-      new HttpError('Fetching posts failed, please try again.', 500)
-    );
+    return next(new HttpError('Fetching posts failed, please try again.', 500));
   }
 
-  if(posts.length < 1) {
-    return next(
-      new HttpError('Does not exist posts at data.', 404)
-    );
+  if (posts.length < 1) {
+    return next(new HttpError('Does not exist posts at data.', 404));
   }
 
   res.status(200).json({ posts, countPost });
-}
+};
 
 const getRecentPosts = async (req, res, next) => {
   const countOfPosts = +req.query.count || 1;
@@ -175,30 +165,26 @@ const getRecentPosts = async (req, res, next) => {
           path: 'posts',
           populate: {
             path: 'creator',
-            select: 'name _id avatar'
-          }
-        }
+            select: 'name _id avatar',
+          },
+        },
       });
-
   } catch (err) {
     return next(
       new HttpError('Fetching recent posts failed, please try again.', 500)
-      );
-    }
+    );
+  }
 
-    if(existUser.following.length < 1) {
-      return next(
-        new HttpError('You does not follow anyone.', 404)
-      );
-    }
+  if (existUser.following.length < 1) {
+    return next(new HttpError('You does not follow anyone.', 404));
+  }
 
   const recentPosts = existUser.following
-    .map(user => user.posts[0])
-    .filter(post => post !== undefined);
-
+    .map((user) => user.posts[0])
+    .filter((post) => post !== undefined);
 
   res.status(200).json(recentPosts);
-}
+};
 
 const getPostsByUser = async (req, res, next) => {
   const countOfPosts = +req.query.count || 4;
@@ -212,43 +198,37 @@ const getPostsByUser = async (req, res, next) => {
         populate: {
           path: 'creator',
           select: 'avatar _id name',
-        }
+        },
       });
   } catch (err) {
-    if(!user) {
-      return next(
-        new HttpError('User does not exist.', 404)
-      );
+    if (!user) {
+      return next(new HttpError('User does not exist.', 404));
     }
-    return next(
-      new HttpError('Fetching posts failed, please try again.', 500)
-    );
+    return next(new HttpError('Fetching posts failed, please try again.', 500));
   }
 
-  if(user.posts.length < 1) {
-    return next(
-      new HttpError('User does not have any posts.', 404)
-    );
+  if (user.posts.length < 1) {
+    return next(new HttpError('User does not have any posts.', 404));
   }
-  
+
   res.status(200).json(user.posts);
-}
+};
 
 const getPostById = async (req, res, next) => {
   let post;
   try {
-    post = await Post.findById(req.params.postId).populate('creator', 'avatar _id name')
-
+    post = await Post.findById(req.params.postId).populate(
+      'creator',
+      'avatar _id name'
+    );
   } catch (err) {
-    if(!post) {
+    if (!post) {
       return next(
         new HttpError('Fetching post failed, post was not found.', 404)
       );
     }
 
-    return next(
-      new HttpError('Fetching post failed.', 500)
-    );
+    return next(new HttpError('Fetching post failed.', 500));
   }
 
   const { _id, text, likes, creator, comments, image } = post;
@@ -259,11 +239,11 @@ const getPostById = async (req, res, next) => {
     likes,
     image,
     creator,
-    comments: comments.length
-  }
-  
+    comments: comments.length,
+  };
+
   res.status(200).json(currentPost);
-}
+};
 
 const likeUnlikePost = async (req, res, next) => {
   const existUser = req.existUser;
@@ -272,57 +252,48 @@ const likeUnlikePost = async (req, res, next) => {
   try {
     post = await Post.findById(req.params.postId);
   } catch (err) {
-    if(!post) {
-      return next(
-        new HttpError('Like post failed, post was not found.', 404)
-      );
+    if (!post) {
+      return next(new HttpError('Like post failed, post was not found.', 404));
     }
 
-    return next(
-      new HttpError('Like post failed, please try again.', 500)
-    );
+    return next(new HttpError('Like post failed, please try again.', 500));
   }
 
-  if(!post.likes.includes(existUser.id)){
+  if (!post.likes.includes(existUser.id)) {
     post.likes.unshift(existUser);
   } else {
-    post.likes = post.likes.filter(u => u.toString() !== existUser.id);
+    post.likes = post.likes.filter((u) => u.toString() !== existUser.id);
   }
 
   try {
     await post.save();
   } catch (err) {
-    return next(
-      new HttpError('Like post failed, please try again.', 500)
-    );
+    return next(new HttpError('Like post failed, please try again.', 500));
   }
 
-  res.status(201).json({likes:post.likes, postId: post._id});
-}
+  res.status(201).json({ likes: post.likes, postId: post._id });
+};
 
 const updatePost = async (req, res, next) => {
   const errors = validationResult(req);
-  if(!errors.isEmpty()) {
-    const err = errors.array().map(e => e.msg).join(' ');
+  if (!errors.isEmpty()) {
+    const err = errors
+      .array()
+      .map((e) => e.msg)
+      .join(' ');
 
-    return next(
-      new HttpError(err, 422)
-    );
+    return next(new HttpError(err, 422));
   }
 
   let post;
   try {
     post = await Post.findById(req.params.postId);
   } catch (err) {
-    if(!post) {
-      return next(
-        new HttpError('Post does not exist.', 404)
-      );
+    if (!post) {
+      return next(new HttpError('Post does not exist.', 404));
     }
 
-    return next(
-      new HttpError('Update post failed, please try again.', 500)
-    );
+    return next(new HttpError('Update post failed, please try again.', 500));
   }
 
   try {
@@ -330,13 +301,11 @@ const updatePost = async (req, res, next) => {
     post.date = Date.now();
     await post.save();
   } catch (err) {
-    return next(
-      new HttpError('Update post failed, please try again.', 500)
-    );
+    return next(new HttpError('Update post failed, please try again.', 500));
   }
-  
-  res.status(201).json({text: post.text, postId: post._id});
-}
+
+  res.status(201).json({ text: post.text, postId: post._id });
+};
 
 const deleteComment = async (req, res, next) => {
   const { postId, commentId } = req.params;
@@ -345,19 +314,17 @@ const deleteComment = async (req, res, next) => {
   try {
     post = await Post.findById(postId);
   } catch (err) {
-    if(!post) {
+    if (!post) {
       return next(
         new HttpError('Delete comment failed, post was not found', 404)
       );
     }
 
-    return next(
-      new HttpError('Delete comment failed, please trq again.', 500)
-    );
+    return next(new HttpError('Delete comment failed, please trq again.', 500));
   }
 
-  const comment = post.comments.find(comment => comment.id === commentId);
-  if(!comment) {
+  const comment = post.comments.find((comment) => comment.id === commentId);
+  if (!comment) {
     return next(
       new HttpError('Delete comment failed, comment was not found', 404)
     );
@@ -373,22 +340,18 @@ const deleteComment = async (req, res, next) => {
   }
 
   res.status(200).json(post);
-}
+};
 
 const deletePost = async (req, res, next) => {
   let post;
   try {
     post = await Post.findById(req.params.postId).populate('creator');
   } catch (err) {
-    return next(
-      new HttpError('Deleting post failed, please try again.', 500)
-    );
+    return next(new HttpError('Deleting post failed, please try again.', 500));
   }
 
-  if(!post) {
-    return next(
-      new HttpError('Post does not exist.', 404)
-    );
+  if (!post) {
+    return next(new HttpError('Post does not exist.', 404));
   }
 
   try {
@@ -399,20 +362,17 @@ const deletePost = async (req, res, next) => {
     await post.creator.save({ session: sess });
     sess.commitTransaction();
   } catch (err) {
-    return next(
-      new HttpError('Deleting post failed, please try again.', 500)
-    );
+    return next(new HttpError('Deleting post failed, please try again.', 500));
   }
 
-  if(post.image) {
+  if (post.image) {
     fs.unlink(post.image, (err) => {
-      console.log(err)
+      console.log(err);
     });
   }
-  
-  res.status(200).json(post._id);
-}
 
+  res.status(200).json(post._id);
+};
 
 module.exports = {
   createPost,
@@ -426,4 +386,4 @@ module.exports = {
   deleteComment,
   getPostComments,
   getRecentPosts,
-}
+};

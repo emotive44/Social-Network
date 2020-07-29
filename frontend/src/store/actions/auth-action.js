@@ -11,14 +11,13 @@ import {
 
 import { setAlert } from './alert-action';
 
-
 const baseUrl = 'http://localhost:5000/api/v1/';
 
-export const registerUser = (name, email, password) => async dispatch => {
+export const registerUser = (name, email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({ name, email, password });
@@ -26,9 +25,9 @@ export const registerUser = (name, email, password) => async dispatch => {
   try {
     const res = await axios.post(baseUrl + 'users/register', body, config);
 
-    dispatch({ 
+    dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
 
     dispatch(setAlert('You are register successfully.', 'success'));
@@ -36,13 +35,13 @@ export const registerUser = (name, email, password) => async dispatch => {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: AUTH_ERROR });
   }
-}
+};
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({ email, password });
@@ -52,7 +51,7 @@ export const login = (email, password) => async dispatch => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
 
     dispatch(setAlert('You are logged in successfully.', 'success'));
@@ -60,13 +59,13 @@ export const login = (email, password) => async dispatch => {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: AUTH_ERROR });
   }
-}
+};
 
-export const socialLogin = (user) => async dispatch => {
+export const socialLogin = (user) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify(user);
@@ -74,35 +73,35 @@ export const socialLogin = (user) => async dispatch => {
   try {
     const res = await axios.post(baseUrl + 'users/social-login', body, config);
 
-    dispatch({ 
+    dispatch({
       type: SOCIALLOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
     dispatch(setAlert('You are logged in successfully.', 'success'));
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: AUTH_ERROR });
   }
-}
+};
 
-export const logout = (deleteUser) => async dispatch => {
+export const logout = (deleteUser) => async (dispatch) => {
   dispatch({ type: LOGOUT });
-  if(deleteUser) {
+  if (deleteUser) {
     dispatch(setAlert('You delete your profile successfully.', 'success'));
   } else {
     dispatch(setAlert('You are logout successfully.', 'success'));
   }
-}
+};
 
-export const loadUser = () => async dispatch => {
+export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get(baseUrl + 'users/me');
-    dispatch({ 
+    dispatch({
       type: LOAD_USER,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch(setAlert(err.response.data.message, 'danger'));
     dispatch({ type: AUTH_ERROR });
   }
-}
+};

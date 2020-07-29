@@ -6,31 +6,32 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../store/actions/post-action';
 
-
 const Comment = ({ comment, isAuth, deleteComment, postId }) => {
   const isAdmin = localStorage.role === 'admin' ? true : false;
   const avatar = comment.creator.avatar;
 
   let avatarUrl;
-  if(avatar && avatar.startsWith('http')) {
+  if (avatar && avatar.startsWith('http')) {
     avatarUrl = avatar;
   } else {
     avatarUrl = avatar && avatar.split('images\\users').join('');
   }
 
   const deleteCurrComment = () => {
-    deleteComment(postId, comment._id)
-  }
+    deleteComment(postId, comment._id);
+  };
 
   return (
     <div className="post-comment">
-      <img 
+      <img
         src={`${
-          avatar ? 
-            avatarUrl.startsWith('http') ? avatarUrl : `http://localhost:5000/${comment.creator.avatar}` : 
-            '/avatar.jpg'
-        }`} 
-        alt='' 
+          avatar
+            ? avatarUrl.startsWith('http')
+              ? avatarUrl
+              : `http://localhost:5000/${comment.creator.avatar}`
+            : '/avatar.jpg'
+        }`}
+        alt=""
       />
       <div className="comment">
         <p>
@@ -38,25 +39,23 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
           {comment.text}
         </p>
         {(comment.creator._id === isAuth || isAdmin) && (
-          <Fragment>
+          <>
             <small className="delete-comment" onClick={deleteCurrComment}>
               Delete Comment
             </small>
-          </Fragment>
+          </>
         )}
-        <small className='comment-date'>
+        <small className="comment-date">
           Commented {'    '}
-          <Moment fromNow>
-            {comment.date}
-          </Moment>
+          <Moment fromNow>{comment.date}</Moment>
         </small>
       </div>
     </div>
   );
-}
+};
 
-const mapStateToProps = state => ({
-  isAuth: state.auth.userId
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.userId,
 });
 
 export default connect(mapStateToProps, { deleteComment })(Comment);

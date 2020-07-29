@@ -9,22 +9,24 @@ const existUser = require('../middleware/check-existUser');
 
 const router = express.Router();
 
-
 router.use(auth);
 router.use(existUser);
 
-router.post('/', 
+router.post(
+  '/',
   uploadPostImage,
-  [
-    check('text', 'Can not create post without content.').not().isEmpty()
-  ], 
+  [check('text', 'Can not create post without content.').not().isEmpty()],
   postControllers.createPost
 );
 
-router.post('/:postId/comments', 
+router.post(
+  '/:postId/comments',
   [
-    check('text', 'Content should be between 5 and 30 characters.').isLength({ min: 5, max: 30 })
-  ], 
+    check('text', 'Content should be between 5 and 30 characters.').isLength({
+      min: 5,
+      max: 30,
+    }),
+  ],
   postControllers.createComment
 );
 
@@ -40,17 +42,19 @@ router.get('/:postId', postControllers.getPostById);
 
 router.put('/:postId/like', postControllers.likeUnlikePost);
 
-router.put('/:postId',
+router.put(
+  '/:postId',
   admin,
-  [
-    check('text', 'Can not update post without content.').not().isEmpty()
-  ],
+  [check('text', 'Can not update post without content.').not().isEmpty()],
   postControllers.updatePost
 );
 
-router.delete('/:postId/comments/:commentId', admin, postControllers.deleteComment);
+router.delete(
+  '/:postId/comments/:commentId',
+  admin,
+  postControllers.deleteComment
+);
 
 router.delete('/:postId', admin, postControllers.deletePost);
-
 
 module.exports = router;
