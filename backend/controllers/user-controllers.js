@@ -8,7 +8,7 @@ const Post = require('../models/post-model');
 
 const getAllUsers = async (req, res, next) => {
   const currentPage = req.query.page || 1;
-  const perPage = 3;
+  const perPage = 5;
   let countPost;
   const query = req.query.user.trim();
 

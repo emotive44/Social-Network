@@ -137,8 +137,8 @@ const Dashboard = ({ setAlert }) => {
       <section className="diagram">
         <Line
           data={linedata}
-          width={150}
-          height={40}
+          // width={150}
+          // height={40}
           options={{
             title: {
               display: 'block',
@@ -150,7 +150,7 @@ const Dashboard = ({ setAlert }) => {
                 fontSize: 14,
               },
             },
-            // responsive: true
+            responsive: true,
           }}
         />
       </section>

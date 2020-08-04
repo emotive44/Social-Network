@@ -50,7 +50,7 @@ const usePagination = (collection, search) => {
   };
 
   const nextPage = () => {
-    if (page < Math.ceil(countArticles / 3)) {
+    if (page < Math.ceil(countArticles / 5)) {
       setPage((prev) => prev + 1);
     }
   };
@@ -60,7 +60,7 @@ const usePagination = (collection, search) => {
   };
 
   const countOfPages = [];
-  for (let i = 1; i <= Math.ceil(countArticles / 3); i++) {
+  for (let i = 1; i <= Math.ceil(countArticles / 5); i++) {
     countOfPages.push(i);
   }
 

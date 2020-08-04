@@ -120,7 +120,7 @@ const getPostComments = async (req, res, next) => {
 
 const getAllPosts = async (req, res, next) => {
   const currentPage = req.query.page || 1;
-  const perPage = 3;
+  const perPage = 5;
   let countPost;
 
   let posts;
