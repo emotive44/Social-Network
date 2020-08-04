@@ -17,6 +17,13 @@ const UserItem = ({
   toggleFollowers,
   toggleFollowing,
 }) => {
+  let avatarUrl;
+  if (avatar && avatar.startsWith('http')) {
+    avatarUrl = avatar;
+  } else {
+    avatarUrl = avatar && avatar.split('images\\users').join('');
+  }
+
   return (
     <article className="user-article">
       <Link
@@ -27,7 +34,13 @@ const UserItem = ({
         to={`/users/${_id}`}
       >
         <img
-          src={avatar ? `http://localhost:5000/${avatar}` : '/avatar.jpg'}
+          src={
+            avatar
+              ? avatarUrl.startsWith('http')
+                ? avatarUrl
+                : `http://localhost:5000/images/users/${avatarUrl}`
+              : '/avatar.jpg'
+          }
           alt=""
         />
       </Link>

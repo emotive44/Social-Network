@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +10,7 @@ const postRoutes = require('./routes/post-routes');
 const adminRoutes = require('./routes/admin-routes');
 const HttpError = require('./models/httpError-model');
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(bodyParser.json());
@@ -55,7 +56,7 @@ app.use((err, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://marko:9bafGtezejLTF7Lm@socialnetwork-y8epj.mongodb.net/test?retryWrites=true&w=majority',
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@socialnetwork-y8epj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useFindAndModify: false,

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './Comment.scss';
 
 import Moment from 'react-moment';

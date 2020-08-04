@@ -1,3 +1,4 @@
+require('dotenv').config();
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -54,7 +55,9 @@ userSchema.methods.comparePassword = function (password) {
 };
 
 userSchema.methods.createToken = function (email, userId) {
-  return jwt.sign({ email, userId }, 'supersecret', { expiresIn: '1h' });
+  return jwt.sign({ email, userId }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
 };
 
 module.exports = mongoose.model('User', userSchema);

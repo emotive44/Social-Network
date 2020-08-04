@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 module.exports = class Email {
   constructor(user, url) {
@@ -12,9 +13,8 @@ module.exports = class Email {
     return nodemailer.createTransport({
       service: 'SendGrid',
       auth: {
-        user: 'apikey',
-        pass:
-          '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',
+        user: process.env.SENDGRID_USER,
+        pass: process.env.SENDGRID_PASSWORD,
       },
     });
   }
