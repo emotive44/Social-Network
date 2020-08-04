@@ -28,7 +28,7 @@ const ProfileHeader = ({
   const isAdmin = localStorage.role === 'admin' ? true : false;
 
   const uploadAvatar = async (body) => {
-    const url = 'http://localhost:5000/api/v1/users/avatar';
+    const url = `${process.env.REACT_APP_BACKEND_URL}users/avatar`;
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const ProfileHeader = ({
                 : user.avatar
                 ? avatarUrl.startsWith('http')
                   ? avatarUrl
-                  : `http://localhost:5000/images/users/${avatarUrl}`
+                  : `${process.env.REACT_APP_ASSET_URL}images/users/${avatarUrl}`
                 : '/avatar.jpg'
             })`,
           }}

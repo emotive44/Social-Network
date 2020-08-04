@@ -13,7 +13,7 @@ import {
   DELETE_PERSONAL_INFO,
 } from '../types';
 
-const baseUrl = 'http://localhost:5000/api/v1/';
+const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 export const getUser = (userId) => async (dispatch) => {
   try {

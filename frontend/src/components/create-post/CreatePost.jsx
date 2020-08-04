@@ -22,7 +22,11 @@ const CreatePost = ({ setAlert, userId }) => {
     };
 
     try {
-      await axios.post('http://localhost:5000/api/v1/posts', body, config);
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}posts`,
+        body,
+        config
+      );
       setAlert('Creat post successfully.', 'success');
       history.push(`/users/${userId}`);
     } catch (err) {

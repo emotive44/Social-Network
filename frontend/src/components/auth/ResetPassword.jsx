@@ -19,11 +19,10 @@ const ResetPassword = ({ setAlert, match }) => {
       },
     };
     const body = JSON.stringify({ password });
-    const baseUrl = 'http://localhost:5000/api/v1/';
 
     try {
       await axios.patch(
-        `${baseUrl}users/reset-password/${match.params.token}`,
+        `${process.env.REACT_APP_BACKEND_URL}users/reset-password/${match.params.token}`,
         body,
         config
       );

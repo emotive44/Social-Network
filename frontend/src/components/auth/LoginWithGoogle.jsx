@@ -19,7 +19,7 @@ const LoginWithGoogle = ({ socialLogin }) => {
 
   return (
     <GoogleLogin
-      clientId="909923509075-7otdb7e55tablj3qi3f3n1i84qcmjqis.apps.googleusercontent.com"
+      clientId={process.env.REACT_APP_GOOGLELOGIN_CLIENTID}
       buttonText="Login with Google"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}

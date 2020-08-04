@@ -38,6 +38,7 @@ const Post = ({
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
   const isAdmin = localStorage.role === 'admin' ? true : false;
+  const assetUrl = process.env.REACT_APP_ASSET_URL;
 
   useEffect(() => {
     getPost((match && match.params && match.params.postId) || postD._id);
@@ -93,7 +94,7 @@ const Post = ({
                   <img
                     src={
                       post.creator.avatar
-                        ? `http://localhost:5000/${post.creator.avatar}`
+                        ? `${assetUrl}${post.creator.avatar}`
                         : '/avatar.jpg'
                     }
                     alt=""
@@ -104,7 +105,7 @@ const Post = ({
                   <img
                     src={
                       postD.creator.avatar
-                        ? `http://localhost:5000/${postD.creator.avatar}`
+                        ? `${assetUrl}${postD.creator.avatar}`
                         : '/avatar.jpg'
                     }
                     alt=""

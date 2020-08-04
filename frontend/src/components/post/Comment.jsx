@@ -28,7 +28,7 @@ const Comment = ({ comment, isAuth, deleteComment, postId }) => {
           avatar
             ? avatarUrl.startsWith('http')
               ? avatarUrl
-              : `http://localhost:5000/${comment.creator.avatar}`
+              : `${process.env.REACT_APP_ASSET_URL}${comment.creator.avatar}`
             : '/avatar.jpg'
         }`}
         alt=""

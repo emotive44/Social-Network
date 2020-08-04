@@ -11,7 +11,7 @@ const Recaptcha = ({ verify, verifyMsg, setVerify }) => {
   return (
     <div style={{ width: '30rem', margin: '1rem auto' }}>
       <ReCAPTCHA
-        sitekey="6LcWr7MZAAAAACcy-tn0TQH2qGPdCEBOcQKcruXI"
+        sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
         onChange={recaptchaHandler}
       />
       {verifyMsg && !verify && (

@@ -7,6 +7,8 @@ import { imageOrientation } from '../../utils/imageOrientation';
 import Button from './Button';
 
 const Card = ({ avatar, name, email, _id, text, image, creator }) => {
+  const assetUrl = process.env.REACT_APP_ASSET_URL;
+
   return (
     <article
       className={`card 
@@ -17,7 +19,7 @@ const Card = ({ avatar, name, email, _id, text, image, creator }) => {
     >
       {!email ? (
         image ? (
-          <img src={`http://localhost:5000/${image}`} alt="" />
+          <img src={`${assetUrl}${image}`} alt="" />
         ) : null
       ) : (
         <img
@@ -26,7 +28,7 @@ const Card = ({ avatar, name, email, _id, text, image, creator }) => {
             avatar
               ? avatar.startsWith('http')
                 ? avatar
-                : `http://localhost:5000/${avatar}`
+                : `${assetUrl}${avatar}`
               : '/avatar.jpg'
           }
           alt=""

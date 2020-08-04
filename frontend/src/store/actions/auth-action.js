@@ -11,7 +11,7 @@ import {
 
 import { setAlert } from './alert-action';
 
-const baseUrl = 'http://localhost:5000/api/v1/';
+const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 export const registerUser = (name, email, password) => async (dispatch) => {
   const config = {

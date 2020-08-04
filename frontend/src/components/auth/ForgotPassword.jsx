@@ -21,11 +21,14 @@ const ForgotPassword = ({ setAlert }) => {
       },
     };
     const body = JSON.stringify({ email });
-    const baseUrl = 'http://localhost:5000/api/v1/';
 
     try {
       setSpinner(true);
-      await axios.post(`${baseUrl}users/forgot-password`, body, config);
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}users/forgot-password`,
+        body,
+        config
+      );
       setSpinner(false);
       setAlert(`Email has been send to ${email} successfully.`, 'success');
     } catch (err) {

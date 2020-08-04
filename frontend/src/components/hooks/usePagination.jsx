@@ -17,7 +17,7 @@ const usePagination = (collection, search) => {
         setErr(null);
 
         const res = await axios.get(
-          `http://localhost:5000/api/v1/${collection}?page=${page}&user=${search}`
+          `${process.env.REACT_APP_BACKEND_URL}${collection}?page=${page}&user=${search}`
         );
 
         setCountArticles(res.data.countPost);

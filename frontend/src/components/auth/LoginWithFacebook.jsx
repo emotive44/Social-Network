@@ -20,7 +20,7 @@ const LoginWithFacebook = ({ socialLogin }) => {
   return (
     <FacebookLogin
       icon="fa-facebook"
-      appId="617903875531791"
+      appId={process.env.REACT_APP_FBLOGIN_APPID}
       callback={responseFacebook}
       fields="name,email,picture"
     />

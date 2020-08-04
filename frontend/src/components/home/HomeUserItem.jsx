@@ -18,7 +18,7 @@ const HomeUserItem = ({ avatar, _id, name }) => {
             avatar
               ? avatarUrl.startsWith('http')
                 ? avatarUrl
-                : `http://localhost:5000/images/users/${avatarUrl}`
+                : `${process.env.REACT_APP_ASSET_URL}/images/users/${avatarUrl}`
               : '/avatar.jpg'
           }
           alt=""
