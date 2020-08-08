@@ -23,6 +23,8 @@ const Home = ({
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
+    getRecentPosts(1);
+
     return () => {
       store.dispatch({ type: POST_RESET });
       store.dispatch({ type: USER_RESET });
