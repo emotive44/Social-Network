@@ -7,11 +7,41 @@ The users can register with their credentials or login with Facebook or Google. 
 
 ## Screenshots
 
-![LandingPage](./screenshots/landingpage.png)
+![LandingPage](./frontend/screenshots/landingpage.png)
 
-![LogingPage](screenshots/logingpage.png)
+![LogingPage](./frontend/screenshots/logingpage.png)
 
-![RegistergPage](registerpage.png)
+![RegisterPage](./frontend/screenshots/registerpage.png)
+
+![ForgotPassword](./frontend/screenshots/forgotpassword.png)
+
+![ResetPassword](./frontend/screenshots/resetpassword.png)
+
+![AdminPanel](./frontend/screenshots/adminpanel.png)
+
+![HomePage](./frontend/screenshots/homepage.png)
+
+![PostsPage](./frontend/screenshots/postspage.png)
+
+![CreatePost](./frontend/screenshots/createpostpage.png)
+
+![UsersPage](./frontend/screenshots/userspage.png)
+
+![UserProfilePage](./frontend/screenshots/userprofilepage.png)
+
+![UserPosts](./frontend/screenshots/userposts.png)
+
+![PersonalInfoForm](./frontend/screenshots/personalinfoform.png)
+
+![UserFollowing](./frontend/screenshots/userfollowing.png)
+
+![PostPage](./frontend/screenshots/postpage.png)
+
+![PostComments](./frontend/screenshots/postcomments.png)
+
+![ResponsiveView](./frontend/screenshots/responsiveview.png)
+
+![NotFoundPage](./frontend/screenshots/notfoundpage.png)
 
 ## Technologies
 
