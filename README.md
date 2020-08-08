@@ -7,41 +7,41 @@ The users can register with their credentials or login with Facebook or Google. 
 
 ## Screenshots
 
-![LandingPage](./frontend/screenshots/landingpage.png)
+![LandingPage](./frontend/src/screenshots/landingpage.png)
 
-![LogingPage](./frontend/screenshots/logingpage.png)
+![LogingPage](./frontend/src/screenshots/logingpage.png)
 
-![RegisterPage](./frontend/screenshots/registerpage.png)
+![RegisterPage](./frontend/src/screenshots/registerpage.png)
 
-![ForgotPassword](./frontend/screenshots/forgotpassword.png)
+![ForgotPassword](./frontend/src/screenshots/forgotpassword.png)
 
-![ResetPassword](./frontend/screenshots/resetpassword.png)
+![ResetPassword](./frontend/src/screenshots/resetpassword.png)
 
-![AdminPanel](./frontend/screenshots/adminpanel.png)
+![AdminPanel](./frontend/src/screenshots/adminpanel.png)
 
-![HomePage](./frontend/screenshots/homepage.png)
+![HomePage](./frontend/src/screenshots/homepage.png)
 
-![PostsPage](./frontend/screenshots/postspage.png)
+![PostsPage](./frontend/src/screenshots/postspage.png)
 
-![CreatePost](./frontend/screenshots/createpostpage.png)
+![CreatePost](./frontend/src/screenshots/createpostpage.png)
 
-![UsersPage](./frontend/screenshots/userspage.png)
+![UsersPage](./frontend/src/screenshots/userspage.png)
 
-![UserProfilePage](./frontend/screenshots/userprofilepage.png)
+![UserProfilePage](./frontend/src/screenshots/userprofilepage.png)
 
-![UserPosts](./frontend/screenshots/userposts.png)
+![UserPosts](./frontend/src/screenshots/userposts.png)
 
-![PersonalInfoForm](./frontend/screenshots/personalinfoform.png)
+![PersonalInfoForm](./frontend/src/screenshots/personalinfoform.png)
 
-![UserFollowing](./frontend/screenshots/userfollowing.png)
+![UserFollowing](./frontend/src/screenshots/userfollowing.png)
 
-![PostPage](./frontend/screenshots/postpage.png)
+![PostPage](./frontend/src/screenshots/postpage.png)
 
-![PostComments](./frontend/screenshots/postcomments.png)
+![PostComments](./frontend/src/screenshots/postcomments.png)
 
-![ResponsiveView](./frontend/screenshots/responsiveview.png)
+![ResponsiveView](./frontend/src/screenshots/responsiveview.png)
 
-![NotFoundPage](./frontend/screenshots/notfoundpage.png)
+![NotFoundPage](./frontend/src/screenshots/notfoundpage.png)
 
 ## Technologies
 
