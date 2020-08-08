@@ -7,40 +7,92 @@ The users can register with their credentials or login with Facebook or Google. 
 
 ## Screenshots
 
+**LandingPage:**
 ![LandingPage](./frontend/src/screenshots/landingpage.png)
 
-![LogingPage](./frontend/src/screenshots/logingpage.png)
+-
 
+**LoginPage:**
+![LoginPage](./frontend/src/screenshots/loginpage.png)
+
+-
+
+**RegisterPage:**
 ![RegisterPage](./frontend/src/screenshots/registerpage.png)
 
+-
+
+**ForgotPassword:**
 ![ForgotPassword](./frontend/src/screenshots/forgotpassword.png)
 
+-
+
+**ResetPassword:**
 ![ResetPassword](./frontend/src/screenshots/resetpassword.png)
 
+-
+
+**AdminPanel:**
 ![AdminPanel](./frontend/src/screenshots/adminpanel.png)
 
+-
+
+**HomePage:**
 ![HomePage](./frontend/src/screenshots/homepage.png)
 
+-
+
+**PostsPage:**
 ![PostsPage](./frontend/src/screenshots/postspage.png)
 
+-
+
+**CreatePost:**
 ![CreatePost](./frontend/src/screenshots/createpostpage.png)
 
+-
+
+**UsersPage:**
 ![UsersPage](./frontend/src/screenshots/userspage.png)
 
+-
+
+**UserProfilePage:**
 ![UserProfilePage](./frontend/src/screenshots/userprofilepage.png)
 
+-
+
+**UsersPosts:**
 ![UserPosts](./frontend/src/screenshots/userposts.png)
 
+-
+
+**PersonalInfoForm:**
 ![PersonalInfoForm](./frontend/src/screenshots/personalinfoform.png)
 
+-
+
+**UserFollowings:**
 ![UserFollowing](./frontend/src/screenshots/userfollowing.png)
 
+-
+
+**PostPage:**
 ![PostPage](./frontend/src/screenshots/postpage.png)
 
+-
+
+**PostsComments:**
 ![PostComments](./frontend/src/screenshots/postcomments.png)
 
+-
+
+**ResponsiveView:**
 ![ResponsiveView](./frontend/src/screenshots/responsiveview.png)
 
+-
+
+**NotFoundPage:**
 ![NotFoundPage](./frontend/src/screenshots/notfoundpage.png)
 
 ## Technologies
