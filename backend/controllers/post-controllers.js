@@ -157,7 +157,7 @@ const getRecentPosts = async (req, res, next) => {
   try {
     existUser = await User.findById(req.userId)
       .select('following')
-      .slice('following', countOfPosts + 1)
+      .slice('following', countOfPosts)
       .populate({
         path: 'following',
         select: 'posts',

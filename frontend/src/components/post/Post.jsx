@@ -40,9 +40,36 @@ const Post = ({
   const isAdmin = localStorage.role === 'admin' ? true : false;
   const assetUrl = process.env.REACT_APP_ASSET_URL;
 
+  let avatarUrl;
+
+  if (single && post) {
+    post &&
+    post.creator &&
+    post.creator.avatar &&
+    post.creator.avatar.startsWith('http')
+      ? (avatarUrl = post.creator.avatar)
+      : (avatarUrl =
+          post &&
+          post.creator &&
+          post.creator.avatar &&
+          post.creator.avatar.split('images\\users').join(''));
+  }
+
+  if (!single && postD) {
+    postD &&
+    postD.creator &&
+    postD.creator.avatar &&
+    postD.creator.avatar.startsWith('http')
+      ? (avatarUrl = postD.creator.avatar)
+      : (avatarUrl =
+          postD &&
+          postD.creator &&
+          postD.creator.avatar &&
+          postD.creator.avatar.split('images\\users').join(''));
+  }
+
   useEffect(() => {
     getPost((match && match.params && match.params.postId) || postD._id);
-
     return () => {
       if (single) {
         store.dispatch({ type: POST_RESET });
@@ -94,7 +121,9 @@ const Post = ({
                   <img
                     src={
                       post.creator.avatar
-                        ? `${assetUrl}${post.creator.avatar}`
+                        ? avatarUrl && avatarUrl.startsWith('http')
+                          ? avatarUrl
+                          : `${assetUrl}images/users/${avatarUrl}`
                         : '/avatar.jpg'
                     }
                     alt=""
@@ -105,7 +134,9 @@ const Post = ({
                   <img
                     src={
                       postD.creator.avatar
-                        ? `${assetUrl}${postD.creator.avatar}`
+                        ? avatarUrl && avatarUrl.startsWith('http')
+                          ? avatarUrl
+                          : `${assetUrl}images/users/${avatarUrl}`
                         : '/avatar.jpg'
                     }
                     alt=""
@@ -160,11 +191,9 @@ const Post = ({
           )}
 
           {single && post && post.image && (
-            <img src={`http://localhost:5000/${post.image}`} alt="" />
+            <img src={`${assetUrl}${post.image}`} alt="" />
           )}
-          {!single && postD && (
-            <img src={`http://localhost:5000/${postD.image}`} alt="" />
-          )}
+          {!single && postD && <img src={`${assetUrl}${postD.image}`} alt="" />}
 
           <div className="post-contents_footer">
             <span>
