@@ -15,6 +15,26 @@ $warning-color: yellow;
 html {
   font-family: 'Open Sans', sans-serif;
   font-size: 10px;
+  background-color: #fefefe;
+
+  &.dark-mode { 
+    background-color: #fefefe;
+    filter: invert(95%);
+
+    .user-image,
+    .avatar-image,
+    img:not([src*=".svg"]) {  
+      filter: invert(90%) !important;
+    }
+    
+    button {
+      filter: invert(90%);
+    }
+    
+    button:hover {
+      filter: invert(30%);
+    }
+  }
 
   body {
     font-size: 1.6rem;

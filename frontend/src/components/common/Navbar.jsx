@@ -8,6 +8,7 @@ import { logout } from '../../store/actions/auth-action';
 
 const NavBar = ({ isAuth, userName, avatar, logout }) => {
   const [toggle, setToggle] = useState(false);
+  const [themeMode, setThemeMode] = useState(false);
   const isAdmin = localStorage.getItem('role') === 'admin';
 
   let avatarUrl;
@@ -24,6 +25,18 @@ const NavBar = ({ isAuth, userName, avatar, logout }) => {
   const closeMenu = () => {
     setToggle(false);
   };
+
+  const changeTheme = (e) => {
+    const html = document.getElementsByTagName('html')[0];
+
+    if (e.target.checked) {
+      html.className = 'dark-mode';
+      setThemeMode(true);
+    } else {
+      html.classList.remove('dark-mode');
+      setThemeMode(false);
+    }
+  }
 
   return (
     <nav>
@@ -83,7 +96,16 @@ const NavBar = ({ isAuth, userName, avatar, logout }) => {
 
       {isAuth && (
         <p className="user">
-          <span>
+          <div className="theme">
+            <span>
+              {themeMode ? 'Dark' : 'Light'} Mode
+          </span>
+            <label className="switch">
+              <input type="checkbox" onChange={changeTheme} />
+              <span className="slider round"></span>
+            </label>
+          </div>
+          <span className="user_name">
             Hello
             <small>,</small>
             {'    '}
@@ -93,13 +115,12 @@ const NavBar = ({ isAuth, userName, avatar, logout }) => {
             to={`/users/${isAuth}`}
             className="user-image"
             style={{
-              backgroundImage: `url(${
-                avatar
-                  ? avatarUrl.startsWith('http')
-                    ? avatarUrl
-                    : `${process.env.REACT_APP_ASSET_URL}images/users/${avatarUrl}`
-                  : '/avatar.jpg'
-              })`,
+              backgroundImage: `url(${avatar
+                ? avatarUrl.startsWith('http')
+                  ? avatarUrl
+                  : `${process.env.REACT_APP_ASSET_URL}images/users/${avatarUrl}`
+                : '/avatar.jpg'
+                })`,
             }}
           />
         </p>

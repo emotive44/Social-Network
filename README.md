@@ -92,6 +92,11 @@ The users can register with their credentials or login with Facebook or Google. 
 
 -
 
+**DarkMode:**
+![DarkMode](./frontend/src/screenshots/darkmode.png)
+
+-
+
 **NotFoundPage:**
 ![NotFoundPage](./frontend/src/screenshots/notfoundpage.png)
 
